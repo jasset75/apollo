@@ -1,6 +1,3 @@
-# Spark Folders
-spark-warehouse
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -102,4 +99,8 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+
+[ branch "develop"]
+docs/
 
