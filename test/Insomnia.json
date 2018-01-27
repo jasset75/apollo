@@ -1,0 +1,436 @@
+{
+	"_type": "export",
+	"__export_format": 3,
+	"__export_date": "2018-01-27T10:54:51.469Z",
+	"__export_source": "insomnia.desktop.app:v5.12.4",
+	"resources": [
+		{
+			"_id": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"created": 1515967238053,
+			"description": "",
+			"modified": 1515967238053,
+			"name": "Insomnia",
+			"parentId": null,
+			"_type": "workspace"
+		},
+		{
+			"_id": "env_549c1b25e4674c189d0f863f42535fa7",
+			"color": null,
+			"created": 1515967238149,
+			"data": {},
+			"isPrivate": false,
+			"modified": 1515967265983,
+			"name": "Spark",
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"_type": "environment"
+		},
+		{
+			"_id": "jar_616fc0ad94b94cbf843d3c4c18f03993",
+			"cookies": [],
+			"created": 1515967238251,
+			"modified": 1515967238251,
+			"name": "Default Jar",
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"_type": "cookie_jar"
+		},
+		{
+			"_id": "req_b849cb0673b844d48e89a1c052f32dc4",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"filter\": \"email like \\\"%am%\\\"\",\n\t\"sortby\": [\n\t\t{\"gender\": \"asc\"},\n\t\t{\"first_name\": \"asc\"}\n\t]\n}"
+			},
+			"created": 1515967325554,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325554,
+			"method": "POST",
+			"modified": 1516456845649,
+			"name": "get_table mock_data",
+			"parameters": [],
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_19fe39bd1c864e6fb0b25ac7de437d80",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"edad > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"edad\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t},\t\n\t\"sortby\": [\n\t\t{\n\t\t\t\"count(id)\": \"desc\"\t\t}\n\t]\n}"
+			},
+			"created": 1516022455409,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325504,
+			"method": "POST",
+			"modified": 1516651442968,
+			"name": "group by example 1",
+			"parameters": [],
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_32d6712d87d84a428d78192d6ff2b846",
+			"authentication": {},
+			"body": {},
+			"created": 1516191223419,
+			"description": "",
+			"headers": [],
+			"metaSortKey": -1516191223419,
+			"method": "GET",
+			"modified": 1516191249936,
+			"name": "Version",
+			"parameters": [],
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/version",
+			"_type": "request"
+		},
+		{
+			"_id": "req_9554163e0cb54d38916e58498e64814d",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples_bis\",\n\t\"tablename\":\"mock_drugs\"\n}"
+			},
+			"created": 1516226475916,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325529,
+			"method": "POST",
+			"modified": 1516456837065,
+			"name": "get_table mock_drugs",
+			"parameters": [],
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_a26a27d5839a4462b3f4c3702627540d",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"filter\": \"months_between(current_date(),birth_date)/12 between 36 and 54\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"drinker\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t},\t\n\t\"sortby\": [\n\t\t{\"count(id)\": \"desc\"}\n\t]\t\n}"
+			},
+			"created": 1516302473286,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325479,
+			"method": "POST",
+			"modified": 1516473903814,
+			"name": "group by example 2",
+			"parameters": [],
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_6ade0162754448a5a5fe81fa6ccd76f3",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"table_a\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"mock_data\",\n\t\t\"join_key\": [\"id\"],\n\t\t\"select\": [\"first_name\",\"last_name\",\"email\",\"gender\",\"drinker\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mock_drugs\",\n\t\t\"join_key\": [\"id_patient\"],\n\t\t\"select\": [\"drug_name\"]\n\t},\n\t\"sortby\": [\n\t\t{\"drug_name\": \"asc\"},\n\t\t{\"first_name\": \"asc\"}\n\t],\n\t\"join-type\": \"left\"\n}"
+			},
+			"created": 1516457479062,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325354,
+			"method": "POST",
+			"modified": 1516545428476,
+			"name": "inner join people-drugs",
+			"parameters": [],
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_64567e6c75a64c92aa3d3ae3b1f77067",
+			"authentication": {},
+			"body": {},
+			"created": 1516472366923,
+			"description": "",
+			"headers": [],
+			"metaSortKey": -1516079274486.5,
+			"method": "GET",
+			"modified": 1516472376860,
+			"name": "404",
+			"parameters": [],
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/version_fake",
+			"_type": "request"
+		},
+		{
+			"_id": "req_a1a747cd4fda458ca5af2680daeadaa9",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"table_a\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"mock_data\",\n\t\t\"join_key\": [\"id\"],\n\t\t\"select\": [\"first_name\",\"last_name\",\"email\",\"gender\",\"drinker\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"mock_cars\",\n\t\t\"join_key\": [\"id_owner\"],\n\t\t\"select\": [\"car_make\",\"car_model\",\"car_model_year\"]\n\t},\n\t\"groupby\": { \n\t\t\"grouped\": [\"drinker\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t}\t\n}"
+			},
+			"created": 1516473716955,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325429,
+			"method": "POST",
+			"modified": 1516477606718,
+			"name": "inner join people-cars grouped",
+			"parameters": [],
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_ed03ac19704e4f5490aee4aac2ba8890",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"join_a\": {\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\"join_key\": [\"id\"],\n\t\t\t\"select\": [{\"first_name\": \"name\"},\"last_name\",\"email\",\"gender\",\"drinker\"]\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"join_key\": [\"id_owner\"],\n\t\t\t\"select\": [\"car_id\"]\n\t\t},\n\t\t\"join_key\": [\"id\",\"car_id\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"cars_owned_by_drinkers\",\n\t\t\"join_key\": [\"id\",\"car_id\"],\n\t\t\"select\": [\"car_make\",\"car_model\"]\n\t}\n}\n"
+			},
+			"created": 1516477047253,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325304,
+			"method": "POST",
+			"modified": 1516535581714,
+			"name": "inner join multiple double key",
+			"parameters": [],
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_7a64a5d282734849b77522efd24b1c7b",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"join_key\": [\"car_id\"],\n\t\t\t\"select\": []\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"cars_owned_by_drinkers\",\n\t\t\t\"join_key\": [\"car_id\"],\n\t\t\t\"select\": [\"car_make\",\"car_model\"]\n\t\t}\n\t}"
+			},
+			"created": 1516488095811,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325454,
+			"method": "POST",
+			"modified": 1516526005500,
+			"name": "inner join people-cars",
+			"parameters": [],
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_14e1757a5f614f86a761cdbda5ba05b7",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"join_a\": {\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\"join_key\": [{\"id\": \"id_person\"}],\n\t\t\t\"calculated\": {\n\t\t\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t\t\t},\n\t\t\t\"select\": [\"first_name\",\"last_name\",\"email\",\"gender\",\"drinker\",\"smoker_bool\",\"language\",\"edad\"]\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples_bis\",\n\t\t\t\"tablename\": \"mock_drugs\",\n\t\t\t\"join_key\": [\"id_patient\"],\n\t\t\t\"select\": [\"drug_name\",\"id_company\"]\n\t\t},\n\t\t\"join_key\": [\"id_company\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mock_companies\",\n\t\t\"join_key\": [\"id_company\"],\n\t\t\"select\": [\"annual_budget\",\"city\",\"company_name\",\"country\",{\"id\": \"id_company\"}]\n\t},\n\t\"sortby\": [\n\t\t{\"country\": \"desc\"},\n\t\t{\"annual_budget\": \"asc\"}\n\t]\n}"
+			},
+			"created": 1516533250177,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325254,
+			"method": "POST",
+			"modified": 1516567522443,
+			"name": "inner join multiple 3",
+			"parameters": [],
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_d0fbc536477241a78ec2db8e5f566f39",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"table_a\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mock_drugs\",\n\t\t\"join_key\": [\"id_patient\"],\n\t\t\"select\": [\"drug_name\",\"id_company\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mock_companies\",\n\t\t\"join_key\": [{\"id\": \"id_company\"}],\n\t\t\"select\": [{\"id\": \"id_company\"},\"company_name\"]\n\t},\n\t\"join-type\": \"inner\"\n}"
+			},
+			"created": 1516543677418,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325329,
+			"method": "POST",
+			"modified": 1516559417059,
+			"name": "inner join drugs-companies",
+			"parameters": [],
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_58761fa26f7f422a8638b630505136cf",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"join_a\": {\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\"join_key\": [{\"id\": \"id_person\"}],\n\t\t\t\"calculated\": {\n\t\t\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t\t\t},\n\t\t\t\"select\": [\"first_name\",\"last_name\",\"email\",\"gender\",\"drinker\",\"smoker_bool\",\"language\",\"edad\"]\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples_bis\",\n\t\t\t\"tablename\": \"mock_drugs\",\n\t\t\t\"join_key\": [\"id_patient\"],\n\t\t\t\"select\": [\"drug_name\",\"id_company\"]\n\t\t},\n\t\t\"join_key\": [\"id_company\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mock_companies\",\n\t\t\"join_key\": [\"id_company\"],\n\t\t\"select\": [\"annual_budget\",\"city\",\"company_name\",\"country\",{\"id\": \"id_company\"}]\n\t},\n\t\"filter\": \"annual_budget > 10000000000\",\t\n\t\"groupby\": { \n\t\t\"grouped\": [\"country\"],\n\t\t\"agg\": {\n\t\t\t\"sum\": [\"annual_budget\"]\n\t\t}\n\t},\n\t\"sortby\": [\n\t\t{\"sum(annual_budget)\": \"desc\"}\n\t]\t\n}"
+			},
+			"created": 1516567662655,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325204,
+			"method": "POST",
+			"modified": 1516570699023,
+			"name": "inner join multiple 3 groupby",
+			"parameters": [],
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_cb580de802084977beac92cb9274c092",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"edad > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"edad\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t},\t\n\t\"sortby\": [\n\t\t{\n\t\t\t\"count(id)\": \"desc\"\t\t}\n\t],\t\n\t\"save\": {\n\t\t\"keyspace\": \"resultados\",\n\t\t\"tablename\": \"mayores_de_40\",\n\t\t\"partition_key\": \"edad\"\n\t}\n}"
+			},
+			"created": 1516651434670,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325491.5,
+			"method": "POST",
+			"modified": 1516651464854,
+			"name": "group by and save",
+			"parameters": [],
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "env_e90c924568a34906af60dc1d8f4f7d87",
+			"color": "#3400ff",
+			"created": 1516473998747,
+			"data": {},
+			"isPrivate": false,
+			"modified": 1516474032373,
+			"name": "Apollo",
+			"parentId": "env_549c1b25e4674c189d0f863f42535fa7",
+			"_type": "environment"
+		}
+	]
+}
