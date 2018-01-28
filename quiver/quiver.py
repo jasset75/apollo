@@ -175,15 +175,20 @@ def _include(list_1,list_2):
 
 def _select(ds_table,select,join_key):
   """
-  select clause always execute before join_key statement
-  with another table
-  in other words: select values are possible keys for join
+    select clause always execute before join_key statement
+    with another table
+    in other words: select values are possible keys for join
+
+    if not select but join_key, all fields are select and include join_key
   """
-  if join_key:
-    select = _include(join_key,select)
+  if join_key and not select:
+    select = ds_table.columns
   if select:
+    if join_key:
+      select = _include(join_key,select)
     fields = map(_field_or_alias,select)
     ds_table = ds_table.select(*fields)
+
   return ds_table  
 
 def _get_table(keyspace, tablename, select=None, calculated=None, s_filter=None, groupby=None, sortby=None, join_key=None, save=None):

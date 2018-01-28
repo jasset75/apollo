@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2018-01-27T10:54:51.469Z",
+	"__export_date": "2018-01-28T23:28:24.701Z",
 	"__export_source": "insomnia.desktop.app:v5.12.4",
 	"resources": [
 		{
@@ -223,7 +223,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"table_a\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"mock_data\",\n\t\t\"join_key\": [\"id\"],\n\t\t\"select\": [\"first_name\",\"last_name\",\"email\",\"gender\",\"drinker\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"mock_cars\",\n\t\t\"join_key\": [\"id_owner\"],\n\t\t\"select\": [\"car_make\",\"car_model\",\"car_model_year\"]\n\t},\n\t\"groupby\": { \n\t\t\"grouped\": [\"drinker\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t}\t\n}"
+				"text": "{\n\t\"table_a\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"mock_data\",\n\t\t\"join_key\": [\"id\"],\n\t\t\"select\": [\"first_name\",\"last_name\",\"email\",\"gender\",\"drinker\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"mock_cars\",\n\t\t\"join_key\": [\"id_owner\"],\n\t\t\"select\": [\"car_make\",\"car_model\",\"car_model_year\"]\n\t},\n\t\"groupby\": { \n\t\t\"grouped\": [\"drinker\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t}\t\n}\n\n//"
 			},
 			"created": 1516473716955,
 			"description": "",
@@ -236,7 +236,7 @@
 			],
 			"metaSortKey": -1515967325429,
 			"method": "POST",
-			"modified": 1516477606718,
+			"modified": 1517172288271,
 			"name": "inner join people-cars grouped",
 			"parameters": [],
 			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
@@ -252,7 +252,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"join_a\": {\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\"join_key\": [\"id\"],\n\t\t\t\"select\": [{\"first_name\": \"name\"},\"last_name\",\"email\",\"gender\",\"drinker\"]\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"join_key\": [\"id_owner\"],\n\t\t\t\"select\": [\"car_id\"]\n\t\t},\n\t\t\"join_key\": [\"id\",\"car_id\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"cars_owned_by_drinkers\",\n\t\t\"join_key\": [\"id\",\"car_id\"],\n\t\t\"select\": [\"car_make\",\"car_model\"]\n\t}\n}\n"
+				"text": "{\n\t\"join_a\": {\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\"join_key\": [\"id_people\"],\n\t\t\t\"select\": [{\"id\": \"id_people\"},{\"first_name\": \"name\"},\"last_name\",\"email\",\"gender\",\"drinker\"]\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"join_key\": [\"id_owner\"],\n\t\t\t\"select\": [\"car_id\"]\n\t\t},\n\t\t\"join_key\": [\"id_people\",\"car_id\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"cars_owned_by_drinkers\",\n\t\t\"join_key\": [\"id\",\"car_id\"],\n\t\t\"select\": [\"car_make\",\"car_model\"]\n\t}\n}\n"
 			},
 			"created": 1516477047253,
 			"description": "",
@@ -265,7 +265,7 @@
 			],
 			"metaSortKey": -1515967325304,
 			"method": "POST",
-			"modified": 1516535581714,
+			"modified": 1517176577634,
 			"name": "inner join multiple double key",
 			"parameters": [],
 			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
@@ -397,7 +397,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"edad > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"edad\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t},\t\n\t\"sortby\": [\n\t\t{\n\t\t\t\"count(id)\": \"desc\"\t\t}\n\t],\t\n\t\"save\": {\n\t\t\"keyspace\": \"resultados\",\n\t\t\"tablename\": \"mayores_de_40\",\n\t\t\"partition_key\": \"edad\"\n\t}\n}"
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"edad > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"edad\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t},\t\n\t\"sortby\": [\n\t\t{\n\t\t\t\"count(id)\": \"desc\"\t\t}\n\t],\t\n\t\"save\": {\n\t\t\"keyspace\": \"resultados\",\n\t\t\"tablename\": \"mayores_de_40\",\n\t\t\"partition_key\": \"edad\",\n\t\t\"create_if_not_exists\": \"false\"\n\t}\n}"
 			},
 			"created": 1516651434670,
 			"description": "",
@@ -408,9 +408,9 @@
 					"value": "application/json"
 				}
 			],
-			"metaSortKey": -1515967325491.5,
+			"metaSortKey": -1515967325154,
 			"method": "POST",
-			"modified": 1516651464854,
+			"modified": 1517080825209,
 			"name": "group by and save",
 			"parameters": [],
 			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
@@ -419,6 +419,35 @@
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
 			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_19b318b6d2e64d87ad8e32b9650bdd3a",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"join_a\": {\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\"join_key\": [\"id_people\"],\n\t\t\t\"select\": [{\"id\": \"id_people\"},{\"first_name\": \"name\"},\"last_name\",\"email\",\"gender\",\"drinker\"]\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"join_key\": [\"id_owner\"],\n\t\t\t\"select\": [\"car_id\"]\n\t\t},\n\t\t\"join_key\": [\"id_people\",\"car_id\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"cars_owned_by_drinkers\",\n\t\t\"join_key\": [\"id\",{\"car_id\": \"car_id_2\"}],\n\t\t\"select\": [\"car_make\",\"car_model\"]\n\t},\n\t\"select\": [\"id_people\",\"name\",\"car_id\",\"car_make\"]\t\n}\n"
+			},
+			"created": 1517176566247,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325104,
+			"method": "POST",
+			"modified": 1517182061749,
+			"name": "select on multiple join",
+			"parameters": [],
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
 			"_type": "request"
 		},
 		{
