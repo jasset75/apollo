@@ -6,14 +6,14 @@ from quiver import unpack_params as unpack
 from flask import Response
 
 
-VERSION=1.0
+VERSION=0.1
 app = Flask(__name__)
 
 DEF_ERROR_CODE = 500
 
 @app.route("/")
 def about():
-  return 'Apollo v{0}'.format(VERSION)
+  return 'Apollo alpha v{0}'.format(VERSION)
 
 @app.route("/version")
 def version():

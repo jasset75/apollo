@@ -24,6 +24,7 @@ def join(join_json):
   metadata['sortby'] = join_json.get('sortby',None)
   metadata['join_type'] = join_json.get('join_type',None)
   metadata['join_key'] = join_json.get('join_key',None)
+  metadata['save'] = join_json.get('save',None)
   return metadata
 
 def save(save_json):
@@ -31,5 +32,6 @@ def save(save_json):
   metadata['keyspace'] = save_json.get('keyspace',None)
   metadata['tablename'] = save_json.get('tablename',None)
   metadata['partition_key'] = save_json.get('partition_key',None)
+  metadata['create_if_not_exists'] = save_json.get('create_if_not_exists',None)
   return metadata
 

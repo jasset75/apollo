@@ -1,9 +1,11 @@
 import os, sys
+from . import unpack_params as unpack
+from misc.config import settings as conf
 
-os.putenv('PYTHONIOENCODING','UTF-8')
+os.putenv('PYTHONIOENCODING',conf.encoding)
 
 # auxiliar library to unpack operation parameters
-from . import unpack_params as unpack
+
 
 from cassandra.cluster import Cluster
 
@@ -17,29 +19,12 @@ import pyspark.sql.functions as func
 def _spark_cassandra_type_mapping(spark_type):
   return ''
 
-def _create_cassandra_table(dataset,keyspace,tablename,partition_key,clustering_key=None):
-  # Cluster takes ip cluster leader. TO-DO: get from conf
-  cluster = Cluster()
+def _create_cassandra_table(dataset,keyspace,tablename,partition_key,clustering_key=None,create_if_not_exists=False):
+  # checks if creating flag is active
+  if create_if_not_exists:
+    # Cluster takes ip cluster leader. TO-DO: get from conf
+    None
 
-  session = cluster.connect()
-
-  column_names = [f.name for f in df.dataset.fields]
-  column_types = [f.dataType for f in df.dataset.fields]
-
-  import pdb;pdb.set_trace()
-
-  _spark_cassandra_type_mapping()
-
-  column_str = ', '.join(column_list)
-  partition_key_str = ', '.join(partition_key)
-  clustering_str = ', '.join(clustering_key)
-
-  session.execute("""
-    CREATE TABLE IF NOT EXISTS {0}.{1} (
-        {2}
-        PRIMARY KEY (({3}) {4})
-    )
-  """.format(keyspace,tablename,column_list,partition_key_list,clustering_list))
 
 """
 allowed funcs:
@@ -61,23 +46,45 @@ _agg_allowed_funcs = {
   'sumDistinct': func.sumDistinct
 }
 
+spark_conf = SparkConf().setAll([
+  ('spark.executor.memory', conf.executor.memory), 
+  ('spark.executor.cores', conf.executor.cores), 
+  ('spark.cores.max', conf.max_cores),
+  ('spark.driver.memory',conf.driver.memory)
+])
+
 # setting up Cassandra-ready spark session
 # ONE consistency level is mandatory in clusters with one node
 spark = (
   SparkSession.builder
     .appName('SparkCassandraApp')
-    .config('spark.cassandra.connection.host', 'localhost')
-    .config('spark.cassandra.connection.port', '9042')
+    .config('spark.cassandra.connection.host', conf.cassandra.host)
+    .config('spark.cassandra.connection.port', conf.cassandra.port)
     .config('spark.cassandra.output.consistency.level','ONE')
-    .master('local[2]')
+    .config(conf=spark_conf)
+    .master('local')
     .getOrCreate()
 )  
+
 
 # setting error level to coherent threshold                
 spark.sparkContext.setLogLevel('OFF')
 
 # creating sql spark context
 sqlContext = SQLContext(spark.sparkContext)
+
+def _save(ds_table,save):
+  if save:
+    msave = unpack.save(save)
+
+    _create_cassandra_table(ds_table,**msave)
+
+    (ds_table.write
+      .mode('append')
+      .format('org.apache.spark.sql.cassandra')
+      .options(keyspace = msave["keyspace"], table = msave["tablename"])
+      .save())
+
 
 def _group_by(ds_table,groupby,join_key=None):
   """
@@ -179,7 +186,7 @@ def _select(ds_table,select,join_key):
     ds_table = ds_table.select(*fields)
   return ds_table  
 
-def _get_table(keyspace, tablename, select=None, calculated=None, s_filter=None, groupby=None, sortby=None, join_key=None):
+def _get_table(keyspace, tablename, select=None, calculated=None, s_filter=None, groupby=None, sortby=None, join_key=None, save=None):
   """
     Gets data table from Cassandra.
 
@@ -216,10 +223,13 @@ def _get_table(keyspace, tablename, select=None, calculated=None, s_filter=None,
   # sort by clause 
   ds_table = _sort_by(ds_table,sortby)
 
+  # save clause
+  _save(ds_table,save)
+
   # reply dataset with transformation
   return ds_table
 
-def _join(table_a = None, table_b = None, join_a = None, join_b = None, select = None, calculated = None, s_filter = None, join_groupby=None, sortby=None, join_key=None, join_type='inner'):
+def _join(table_a = None, table_b = None, join_a = None, join_b = None, select = None, calculated = None, s_filter = None, join_groupby=None, sortby=None, join_key=None, save=None, join_type='inner'):
   """
     makes a join between two tables, join and table, table and join, or two joins
     this is a recursive function which explores json structure
@@ -282,6 +292,9 @@ def _join(table_a = None, table_b = None, join_a = None, join_b = None, select =
   # sort by clause 
   ds_join = _sort_by(ds_join,sortby)
 
+  # save clause
+  _save(ds_join,save)
+
   # final datase
   return ds_join
 
@@ -292,17 +305,6 @@ def get_table(keyspace, tablename, select = None, calculated = None, s_filter = 
   """
   # retrieving dataset from Cassandra
   ds_table = _get_table(keyspace, tablename, select, calculated, s_filter, groupby, sortby, join_key)
-
-  if save:
-    msave = unpack.save(save)
-
-    _create_cassandra_table(ds_table,**msave)
-
-    (ds_table.write
-      .mode('append')
-      .format('org.apache.spark.sql.cassandra')
-      .options(keyspace = msave["keyspace"], table = msave["tablename"])
-      .save())
 
   # convert to pandas
   pdf = ds_table.toPandas()
@@ -317,7 +319,7 @@ def get_table(keyspace, tablename, select = None, calculated = None, s_filter = 
 
 
 def join(table_a = None, table_b = None, join_a = None, join_b = None, calculated = None, select = None,
-         s_filter=None, join_groupby=None, sortby=None, join_key=None, join_type='inner', format='dict'):
+         s_filter=None, join_groupby=None, sortby=None, join_key=None, save=None, join_type='inner', format='dict'):
   """
     join function entry point
 
@@ -332,7 +334,7 @@ def join(table_a = None, table_b = None, join_a = None, join_b = None, calculate
     format:
       dict or str (json serialized)
   """
-  ds_join = _join(table_a, table_b, join_a, join_b, select, calculated, s_filter, join_groupby, sortby, join_key, join_type)
+  ds_join = _join(table_a, table_b, join_a, join_b, select, calculated, s_filter, join_groupby, sortby, join_key, save, join_type)
 
   # convert to pandas
   pdf = ds_join.toPandas()

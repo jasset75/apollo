@@ -1,0 +1,10 @@
+encoding: UTF-8
+executor:
+  cores: 6
+  memory: 8g
+driver:
+  memory: 8g
+max_cores: 6
+cassandra: 
+  host: localhost
+  port: 9042
