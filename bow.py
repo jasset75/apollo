@@ -70,6 +70,25 @@ def join():
     metadata['error_message']=str(e)
     return Response(json.dumps(metadata), status=metadata['status_code'], mimetype='application/json')
 
+@app.route('/union', methods=['POST'])
+def union():
+  metadata = {}
+  try:
+    if request.method == 'POST':
+      request_json = request.get_json()
+      # data fill in
+      metadata = unpack.union(request_json)
+      # spark call
+      metadata['data'] = quiver.union(**metadata, format='dict')
+      # return data
+      metadata['success'] = True
+      return jsonify(metadata)
+  except Exception as e:
+    metadata['status_code']=DEF_ERROR_CODE
+    metadata['error_message']=str(e)
+    return Response(json.dumps(metadata), status=metadata['status_code'], mimetype='application/json')
+
+
 
 if __name__ == "__main__":
   app.run()
