@@ -303,7 +303,7 @@ def _join(table_a = None, table_b = None, join_a = None, join_b = None, select =
   # final datase
   return ds_join
 
-def _union(table_a = None, table_b = None, join_a = None, join_b = None, select = None, calculated = None, s_filter = None, union_groupby=None, sortby=None, join_key=None, save=None, union_type='union_all'):
+def _union(table_a = None, table_b = None, join_a = None, join_b = None, union_a = None, union_b = None, select = None, calculated = None, s_filter = None, union_groupby=None, sortby=None, join_key=None, save=None, union_type='union_all'):
   """
     makes a union between two tables, join and table, table and join, or two joins
     this is a recursive function which explores json structure
@@ -316,8 +316,11 @@ def _union(table_a = None, table_b = None, join_a = None, join_b = None, select 
   elif join_a:
     mdata_a = unpack.join(join_a)
     ds_table_a = _join(**mdata_a)
+  elif union_a:
+    mdata_a = unpack.union(union_a)
+    ds_table_a = _union(**mdata_a)
   else:
-    raise Exception('At least join or table would be defined as *a* operand to join operator.'.format(format))
+    raise Exception('At least join, table or union would be defined as *a* operand to join operator.'.format(format))
 
   # right operand
   if table_b:
@@ -325,6 +328,10 @@ def _union(table_a = None, table_b = None, join_a = None, join_b = None, select 
     ds_table_b = _get_table(**mdata_b)
   elif join_b:
     mdata_b = unpack.table(join_b)
+    ds_table_b = _join(**mdata_b)
+  elif union_b:
+    mdata_b = unpack.union(union_b)
+    ds_table_b = _union(**mdata_b)
   else:
     raise Exception('At least join or table would be defined as *b* operand to join operator.'.format(format))
 
@@ -422,7 +429,7 @@ def join(table_a = None, table_b = None, join_a = None, join_b = None, calculate
   else:
     raise Exception('Internal Error: Unknow format {0}.'.format(format))
 
-def union(table_a = None, table_b = None, join_a = None, join_b = None, calculated = None, select = None,
+def union(table_a = None, table_b = None, join_a = None, join_b = None, union_a = None, union_b = None, calculated = None, select = None,
          s_filter=None, union_groupby=None, sortby=None, join_key=[], save=None, union_type='union_all', format='dict'):
   """
     union function entry point
@@ -435,7 +442,7 @@ def union(table_a = None, table_b = None, join_a = None, join_b = None, calculat
     format:
       dict or str (json serialized)
   """
-  ds_union = _union(table_a, table_b, join_a, join_b, select, calculated, s_filter, union_groupby, sortby, join_key, save, union_type)
+  ds_union = _union(table_a, table_b, join_a, join_b, union_a, union_b, select, calculated, s_filter, union_groupby, sortby, join_key, save, union_type)
 
   # convert to pandas
   pdf = ds_union.toPandas()
