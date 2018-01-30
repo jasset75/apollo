@@ -17,9 +17,25 @@ def about():
 
 @app.route("/version")
 def version():
-  version = dict(api_name='Apollo',version=VERSION,author='juanantonioaguilar@gmail.com',license='Apache 2.0')
+  version = dict(
+    api_name='Apollo',
+    version=VERSION,
+    license='Apache 2.0'
+  )
   return jsonify(version)
 
+@app.route("/about")
+def version():
+  version = dict(
+    api_name='Apollo',
+    version=VERSION,
+    author_name='Juan A. Aguilar'
+    author_email='juanantonioaguilar@gmail.com',
+    project_repository='https://github.com/jasset75/apollo.github'
+    documentation='http://jasset75.github.io/apollo'
+    license='Apache 2.0',
+  )
+  return jsonify(version)
 
 @app.errorhandler(404)
 def page_not_found(e):
