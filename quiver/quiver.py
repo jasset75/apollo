@@ -327,7 +327,7 @@ def _union(table_a = None, table_b = None, join_a = None, join_b = None, union_a
     mdata_b = unpack.table(table_b)
     ds_table_b = _get_table(**mdata_b)
   elif join_b:
-    mdata_b = unpack.table(join_b)
+    mdata_b = unpack.join(join_b)
     ds_table_b = _join(**mdata_b)
   elif union_b:
     mdata_b = unpack.union(union_b)
