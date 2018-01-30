@@ -12,7 +12,7 @@ app = Flask(__name__)
 DEF_ERROR_CODE = 500
 
 @app.route("/")
-def about():
+def root():
   return 'Apollo alpha v{0}'.format(VERSION)
 
 @app.route("/version")
