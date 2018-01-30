@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2018-01-30T22:22:33.837Z",
+	"__export_date": "2018-01-30T22:51:39.329Z",
 	"__export_source": "insomnia.desktop.app:v5.12.4",
 	"resources": [
 		{
@@ -471,6 +471,35 @@
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
 			"url": "http://localhost:5000/union",
+			"_type": "request"
+		},
+		{
+			"_id": "req_e295922e4f1542879d7eb4b14cd05104",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\"select\": [],\n\t\t\t\"join_key\": [{\"id\": \"id_people\"}]\n\t\t},\n\t\t\"union_b\": {\n\t\t\t\"table_a\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\t\"select\": [],\n\t\t\t\t\t\"filter\": \"color == \\\"Red\\\"\"\n\t\t\t},\t\t\t\n\t\t\t\"table_b\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\t\"select\": [],\n\t\t\t\t\t\"filter\": \"color == \\\"Yellow\\\"\"\n\t\t\t},\n\t\t\t\"join_key\": [\"id_owner\"]\n\t\t}\n\t}"
+			},
+			"created": 1517352486194,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967324904,
+			"method": "POST",
+			"modified": 1517352606081,
+			"name": "join table-union",
+			"parameters": [],
+			"parentId": "fld_7c2a5a87683a472996b7b49718f74cf8",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
 			"_type": "request"
 		},
 		{
