@@ -234,30 +234,31 @@ def _get_table(keyspace, tablename, select=None, calculated=None, s_filter=None,
   # reply dataset with transformation
   return ds_table
 
-def _join(table_a = None, table_b = None, join_a = None, join_b = None, select = None, calculated = None, s_filter = None, join_groupby=None, sortby=None, join_key=None, save=None, join_type='inner'):
+def _resolve_operand(table,join,union):
+  # left operand
+  if table:
+    mdata = unpack.table(table)
+    ds_table = _get_table(**mdata)
+  elif join:
+    mdata = unpack.join(join)
+    ds_table = _join(**mdata)
+  elif union:
+    mdata = unpack.union(union)
+    ds_table = _union(**mdata)
+  else:
+    raise Exception('At least join or table would be defined as *a* operand to join operator.')
+  return ds_table, mdata
+
+def _join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None, union_b=None, select=None, calculated=None, s_filter=None, join_groupby=None, sortby=None, join_key=None, save=None, join_type='inner'):
   """
     makes a join between two tables, join and table, table and join, or two joins
     this is a recursive function which explores json structure
   """  
+  # left operand resolution
+  ds_table_a, mdata_a = _resolve_operand(table_a, join_a, union_a)
 
-  # left operand
-  if table_a:
-    mdata_a = unpack.table(table_a)
-    ds_table_a = _get_table(**mdata_a)
-  elif join_a:
-    mdata_a = unpack.join(join_a)
-    ds_table_a = _join(**mdata_a)
-  else:
-    raise Exception('At least join or table would be defined as *a* operand to join operator.'.format(format))
-
-  # right operand
-  if table_b:
-    mdata_b = unpack.table(table_b)
-    ds_table_b = _get_table(**mdata_b)
-  elif join_b:
-    mdata_b = unpack.table(join_b)
-  else:
-    raise Exception('At least join or table would be defined as *b* operand to join operator.'.format(format))
+  # right operand resolution
+  ds_table_b, mdata_b = _resolve_operand(table_b, join_b, union_b)
 
   # join_key list of two operands must be congruent  
   if len(mdata_a['join_key']) != len(mdata_b['join_key']):
@@ -303,36 +304,23 @@ def _join(table_a = None, table_b = None, join_a = None, join_b = None, select =
   # final datase
   return ds_join
 
-def _union(table_a = None, table_b = None, join_a = None, join_b = None, select = None, calculated = None, s_filter = None, union_groupby=None, sortby=None, join_key=None, save=None, union_type='union_all'):
+def _union(table_a = None, table_b = None, join_a = None, join_b = None, union_a = None, union_b = None, select = None, calculated = None, s_filter = None, union_groupby=None, sortby=None, join_key=None, save=None, union_type='union_all'):
   """
     makes a union between two tables, join and table, table and join, or two joins
     this is a recursive function which explores json structure
   """  
 
-  # left operand
-  if table_a:
-    mdata_a = unpack.table(table_a)
-    ds_table_a = _get_table(**mdata_a)
-  elif join_a:
-    mdata_a = unpack.join(join_a)
-    ds_table_a = _join(**mdata_a)
-  else:
-    raise Exception('At least join or table would be defined as *a* operand to join operator.'.format(format))
+  # left operand resolution
+  ds_table_a, mdata_a = _resolve_operand(table_a, join_a, union_a)
 
-  # right operand
-  if table_b:
-    mdata_b = unpack.table(table_b)
-    ds_table_b = _get_table(**mdata_b)
-  elif join_b:
-    mdata_b = unpack.table(join_b)
-  else:
-    raise Exception('At least join or table would be defined as *b* operand to join operator.'.format(format))
+  # right operand resolution
+  ds_table_b, mdata_b = _resolve_operand(table_b, join_b, union_b)
 
   # join_key list of two operands must be congruent  
   if len(mdata_a['join_key']) != len(mdata_b['join_key']):
     raise Exception('join keys must be congruent in length: join_key a {}, join_key b {}'.format(mdata_a,mdata_b))
 
-  #prepare join keys
+  # prepare join keys
   zip_join = zip(map(_get_term_value,mdata_a['join_key']),map(_get_term_value,mdata_b['join_key']))
   join_clause = []
   for key in zip_join:
@@ -394,7 +382,7 @@ def get_table(keyspace, tablename, select = None, calculated = None, s_filter = 
     raise Exception('Internal Error: Unknow format {0}.'.format(format))
 
 
-def join(table_a = None, table_b = None, join_a = None, join_b = None, calculated = None, select = None,
+def join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None, union_b=None, calculated=None, select=None,
          s_filter=None, join_groupby=None, sortby=None, join_key=[], save=None, join_type='inner', format='dict'):
   """
     join function entry point
@@ -410,7 +398,7 @@ def join(table_a = None, table_b = None, join_a = None, join_b = None, calculate
     format:
       dict or str (json serialized)
   """
-  ds_join = _join(table_a, table_b, join_a, join_b, select, calculated, s_filter, join_groupby, sortby, join_key, save, join_type)
+  ds_join = _join(table_a, table_b, join_a, join_b, union_a, union_b, select, calculated, s_filter, join_groupby, sortby, join_key, save, join_type)
 
   # convert to pandas
   pdf = ds_join.toPandas()
@@ -422,7 +410,7 @@ def join(table_a = None, table_b = None, join_a = None, join_b = None, calculate
   else:
     raise Exception('Internal Error: Unknow format {0}.'.format(format))
 
-def union(table_a = None, table_b = None, join_a = None, join_b = None, calculated = None, select = None,
+def union(table_a = None, table_b = None, join_a = None, join_b = None, union_a = None, union_b = None, calculated = None, select = None,
          s_filter=None, union_groupby=None, sortby=None, join_key=[], save=None, union_type='union_all', format='dict'):
   """
     union function entry point
@@ -435,7 +423,7 @@ def union(table_a = None, table_b = None, join_a = None, join_b = None, calculat
     format:
       dict or str (json serialized)
   """
-  ds_union = _union(table_a, table_b, join_a, join_b, select, calculated, s_filter, union_groupby, sortby, join_key, save, union_type)
+  ds_union = _union(table_a, table_b, join_a, join_b, union_a, union_b, select, calculated, s_filter, union_groupby, sortby, join_key, save, union_type)
 
   # convert to pandas
   pdf = ds_union.toPandas()

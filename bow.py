@@ -12,7 +12,7 @@ app = Flask(__name__)
 DEF_ERROR_CODE = 500
 
 @app.route("/")
-def about():
+def root():
   return 'Apollo alpha v{0}'.format(VERSION)
 
 @app.route("/version")
@@ -25,17 +25,17 @@ def version():
   return jsonify(version)
 
 @app.route("/about")
-def version():
-  version = dict(
+def about():
+  about = dict(
     api_name='Apollo',
     version=VERSION,
-    author_name='Juan A. Aguilar'
+    author_name='Juan A. Aguilar',
     author_email='juanantonioaguilar@gmail.com',
-    project_repository='https://github.com/jasset75/apollo.github'
-    documentation='http://jasset75.github.io/apollo'
+    project_repository='https://github.com/jasset75/apollo.github',
+    documentation='http://jasset75.github.io/apollo',
     license='Apache 2.0',
   )
-  return jsonify(version)
+  return jsonify(about)
 
 @app.errorhandler(404)
 def page_not_found(e):
