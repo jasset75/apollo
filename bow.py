@@ -1,5 +1,5 @@
 import json
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask import request, jsonify
 from quiver import quiver
 from quiver import unpack_params as unpack
@@ -9,15 +9,17 @@ from flask import Response
 VERSION=0.1
 app = Flask(__name__)
 
+OK_STATUS = 200
 DEF_ERROR_CODE = 500
 
 @app.route("/")
 def root():
-  return 'Apollo alpha v{0}'.format(VERSION)
+  return redirect(url_for("about"))
 
 @app.route("/version")
 def version():
   version = dict(
+    status=OK_STATUS,
     api_name='Apollo',
     version=VERSION,
     license='Apache 2.0'
@@ -39,7 +41,7 @@ def about():
 
 @app.errorhandler(404)
 def page_not_found(e):
-  error_api_404 = dict(error=404,error_message='Apollo API endpoint not found.',api_name='Apollo',version=VERSION,author='juanantonioaguilar@gmail.com',license='Apache 2.0')
+  error_api_404 = dict(status=404,error_message='Apollo API endpoint not found.',api_name='Apollo',version=VERSION,author='juanantonioaguilar@gmail.com',license='Apache 2.0')
   return jsonify(error_api_404)
 
 @app.route("/help/aggregate")
