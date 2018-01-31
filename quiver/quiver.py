@@ -84,31 +84,6 @@ def _save(ds_table,save):
       .format('org.apache.spark.sql.cassandra')
       .options(keyspace = msave["keyspace"], table = msave["tablename"])
       .save())
-
-
-def _group_by(ds_table,groupby,join_key=None):
-  """
-    group by clause:
-      parses a group by clause and applies it over dataset
-  """
-  if groupby:
-    columns = []
-    #list of columns grouped
-    grouped = groupby.get('grouped',None)
-    # union two lists of fields: join_key and grouped
-    if join_key:
-      grouped = list(set().union(grouped,map(_get_term_value,join_key)))
-    # parsing aggregated fields
-    agg = groupby.get('agg',None)
-    for key, val in agg.items():
-      # key is the operator and value is the list of columns
-      f_operator = _agg_allowed_funcs.get(key,None)
-      if not f_operator:
-        raise Exception("Unknown or missing aggragate operator {0}",key)
-      for v in val:
-        columns.append(f_operator(v))
-    ds_table = ds_table.groupby(*grouped).agg(*columns)
-  return ds_table
     
 def _sort_by(ds_table,sortby):
   """
@@ -137,10 +112,21 @@ def _field_or_alias(term):
   else:
     return func.col(term)
 
+def _get_term_key(term):
+  """
+    auxiliar function:
+      gets str or key from list of value or {key: value}
+  """
+  if isinstance(term,dict):
+    [(k,v)] = term.items()
+    return k
+  else:
+    return term
+
 def _get_term_value(term):
   """
     auxiliar function:
-      gets str or v from list of value or {key: value}
+      gets str or value from list of value or {key: value}
   """
   if isinstance(term,dict):
     [(k,v)] = term.items()
@@ -190,6 +176,34 @@ def _select(ds_table,select,join_key):
     ds_table = ds_table.select(*fields)
 
   return ds_table  
+
+def _group_by(ds_table,groupby,join_key=None):
+  """
+    group by clause:
+      parses a group by clause and applies it over dataset
+  """
+  if groupby:
+    columns = []
+    #list of columns grouped
+    grouped = groupby.get('grouped',None)
+    # union two lists of fields: join_key and grouped
+    if join_key:
+      grouped = _include(join_key,grouped)
+    # parsing aggregated fields
+    agg = groupby.get('agg',None)
+    for key, val in agg.items():
+      # key is the operator and value is the list of columns
+      f_operator = _agg_allowed_funcs.get(key,None)
+      if not f_operator:
+        raise Exception("Unknown or missing aggragate operator {0}",key)
+      for v in val:
+        if isinstance(v,dict):
+          columns.append(f_operator(_get_term_key(v)).alias(_get_term_value(v)))
+        elif isinstance(v,str):
+          columns.append(f_operator(v))
+    ds_table = ds_table.groupby(*grouped).agg(*columns)
+  return ds_table
+
 
 def _get_table(keyspace, tablename, select=None, calculated=None, s_filter=None, groupby=None, sortby=None, join_key=None, save=None):
   """
