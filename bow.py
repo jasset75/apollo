@@ -17,9 +17,25 @@ def about():
 
 @app.route("/version")
 def version():
-  version = dict(api_name='Apollo',version=VERSION,author='juanantonioaguilar@gmail.com',license='Apache 2.0')
+  version = dict(
+    api_name='Apollo',
+    version=VERSION,
+    license='Apache 2.0'
+  )
   return jsonify(version)
 
+@app.route("/about")
+def version():
+  version = dict(
+    api_name='Apollo',
+    version=VERSION,
+    author_name='Juan A. Aguilar'
+    author_email='juanantonioaguilar@gmail.com',
+    project_repository='https://github.com/jasset75/apollo.github'
+    documentation='http://jasset75.github.io/apollo'
+    license='Apache 2.0',
+  )
+  return jsonify(version)
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -69,6 +85,25 @@ def join():
     metadata['status_code']=DEF_ERROR_CODE
     metadata['error_message']=str(e)
     return Response(json.dumps(metadata), status=metadata['status_code'], mimetype='application/json')
+
+@app.route('/union', methods=['POST'])
+def union():
+  metadata = {}
+  try:
+    if request.method == 'POST':
+      request_json = request.get_json()
+      # data fill in
+      metadata = unpack.union(request_json)
+      # spark call
+      metadata['data'] = quiver.union(**metadata, format='dict')
+      # return data
+      metadata['success'] = True
+      return jsonify(metadata)
+  except Exception as e:
+    metadata['status_code']=DEF_ERROR_CODE
+    metadata['error_message']=str(e)
+    return Response(json.dumps(metadata), status=metadata['status_code'], mimetype='application/json')
+
 
 
 if __name__ == "__main__":

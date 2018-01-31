@@ -303,7 +303,78 @@ def _join(table_a = None, table_b = None, join_a = None, join_b = None, select =
   # final datase
   return ds_join
 
-def get_table(keyspace, tablename, select = None, calculated = None, s_filter = None, groupby = None, sortby = None, join_key = None, format = 'dict', save = None):
+def _union(table_a = None, table_b = None, join_a = None, join_b = None, select = None, calculated = None, s_filter = None, union_groupby=None, sortby=None, join_key=None, save=None, union_type='union_all'):
+  """
+    makes a union between two tables, join and table, table and join, or two joins
+    this is a recursive function which explores json structure
+  """  
+
+  # left operand
+  if table_a:
+    mdata_a = unpack.table(table_a)
+    ds_table_a = _get_table(**mdata_a)
+  elif join_a:
+    mdata_a = unpack.join(join_a)
+    ds_table_a = _join(**mdata_a)
+  else:
+    raise Exception('At least join or table would be defined as *a* operand to join operator.'.format(format))
+
+  # right operand
+  if table_b:
+    mdata_b = unpack.table(table_b)
+    ds_table_b = _get_table(**mdata_b)
+  elif join_b:
+    mdata_b = unpack.table(join_b)
+  else:
+    raise Exception('At least join or table would be defined as *b* operand to join operator.'.format(format))
+
+  # join_key list of two operands must be congruent  
+  if len(mdata_a['join_key']) != len(mdata_b['join_key']):
+    raise Exception('join keys must be congruent in length: join_key a {}, join_key b {}'.format(mdata_a,mdata_b))
+
+  #prepare join keys
+  zip_join = zip(map(_get_term_value,mdata_a['join_key']),map(_get_term_value,mdata_b['join_key']))
+  join_clause = []
+  for key in zip_join:
+    join_clause.append(ds_table_a[key[0]] == ds_table_b[key[1]])
+
+  # nuts and bolts 
+  if union_type == 'union_all':
+    ds_union = ds_table_a.unionAll(ds_table_b)
+  elif union_type == 'intersect':
+    ds_union = ds_table_a.intersect(ds_table_b)
+  elif union_type == 'except':
+    ds_union = ds_table_a.minus(ds_table_b)
+  elif union_type == 'xor':
+    ds_union = ds_table_a.unionAll(ds_table_b).minus(ds_table_a.intersect(ds_table_b))
+  else:
+    raise Exception('Union type unknown: {}'.format(union_type))
+
+  # any calculated fields
+  if calculated:
+    for key,val in calculated.items():
+      ds_union = ds_union.withColumn(key,func.expr(val))
+
+  # apply select statement
+  ds_union = _select(ds_union,select,join_key)
+
+  # filtering records
+  if s_filter:
+    ds_union = ds_union.filter(s_filter)
+
+  # group by clause
+  ds_union = _group_by(ds_union,union_groupby,join_key)
+
+  # sort by clause 
+  ds_union = _sort_by(ds_union,sortby)
+
+  # save clause
+  _save(ds_union,save)
+
+  # final datase
+  return ds_union
+
+def get_table(keyspace, tablename, select = None, calculated = None, s_filter = None, groupby = None, sortby = None, join_key = [], format = 'dict', save = None):
   """
     get_table entry point
       this function computes data from a table
@@ -324,7 +395,7 @@ def get_table(keyspace, tablename, select = None, calculated = None, s_filter = 
 
 
 def join(table_a = None, table_b = None, join_a = None, join_b = None, calculated = None, select = None,
-         s_filter=None, join_groupby=None, sortby=None, join_key=None, save=None, join_type='inner', format='dict'):
+         s_filter=None, join_groupby=None, sortby=None, join_key=[], save=None, join_type='inner', format='dict'):
   """
     join function entry point
 
@@ -343,6 +414,31 @@ def join(table_a = None, table_b = None, join_a = None, join_b = None, calculate
 
   # convert to pandas
   pdf = ds_join.toPandas()
+  # returning results
+  if format == 'dict':
+    return pdf.to_dict()
+  elif format == 'json':
+    return pdf.to_json()
+  else:
+    raise Exception('Internal Error: Unknow format {0}.'.format(format))
+
+def union(table_a = None, table_b = None, join_a = None, join_b = None, calculated = None, select = None,
+         s_filter=None, union_groupby=None, sortby=None, join_key=[], save=None, union_type='union_all', format='dict'):
+  """
+    union function entry point
+
+    union_type:
+      "union_all"
+      "intersect"
+      "minus"
+      "xor"
+    format:
+      dict or str (json serialized)
+  """
+  ds_union = _union(table_a, table_b, join_a, join_b, select, calculated, s_filter, union_groupby, sortby, join_key, save, union_type)
+
+  # convert to pandas
+  pdf = ds_union.toPandas()
   # returning results
   if format == 'dict':
     return pdf.to_dict()
