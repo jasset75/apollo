@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2018-01-30T22:51:39.329Z",
+	"__export_date": "2018-02-01T06:02:36.322Z",
 	"__export_source": "insomnia.desktop.app:v5.12.4",
 	"resources": [
 		{
@@ -85,6 +85,17 @@
 			"metaSortKey": -1516053087771.4375,
 			"modified": 1517345354555,
 			"name": "hybrid",
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
+			"created": 1517433909300,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1516996473513.25,
+			"modified": 1517433920991,
+			"name": "create_table",
 			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
 			"_type": "request_group"
 		},
@@ -503,6 +514,35 @@
 			"_type": "request"
 		},
 		{
+			"_id": "req_441ddff98d424296bf542898f15fd949",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test\",\n\t\"fields\": [{\"name_1\": \"Text\"},{}]\n}"
+			},
+			"created": 1517434441984,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_209ed5abea15430da027d8209da3a3ea",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1517434441984,
+			"method": "POST",
+			"modified": 1517434676015,
+			"name": "Create Table",
+			"parameters": [],
+			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/create-table",
+			"_type": "request"
+		},
+		{
 			"_id": "req_19fe39bd1c864e6fb0b25ac7de437d80",
 			"authentication": {},
 			"body": {
@@ -565,7 +605,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"edad > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"edad\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t},\t\n\t\"sortby\": [\n\t\t{\n\t\t\t\"count(id)\": \"desc\"\t\t}\n\t]\n}"
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"edad > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"edad\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"total\"}]\n\t\t}\n\t},\n\t\"sortby\": [{\"count(id)\": \"desc\"}],\n\t\"save\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mayores_de_40_total\"\n\t}\n}\t"
 			},
 			"created": 1516651434670,
 			"description": "",
@@ -578,7 +618,7 @@
 			],
 			"metaSortKey": -1516138849988.875,
 			"method": "POST",
-			"modified": 1517339959684,
+			"modified": 1517433767524,
 			"name": "group by and save",
 			"parameters": [],
 			"parentId": "fld_1f27e5a9056d4808a9067fc0cff37026",
