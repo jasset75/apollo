@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2018-02-01T06:02:36.322Z",
+	"__export_date": "2018-02-01T13:52:23.826Z",
 	"__export_source": "insomnia.desktop.app:v5.12.4",
 	"resources": [
 		{
@@ -518,7 +518,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test\",\n\t\"fields\": [{\"name_1\": \"Text\"},{}]\n}"
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"campo_1\",\n\t\t\t\"db_type\": \"Text\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"campo_2\",\n\t\t\t\"db_type\": \"Integer\", \n\t\t\t\"primary_key\": \"true\"\n\t\t}\n\t]\n}"
 			},
 			"created": 1517434441984,
 			"description": "",
@@ -531,7 +531,7 @@
 			],
 			"metaSortKey": -1517434441984,
 			"method": "POST",
-			"modified": 1517434676015,
+			"modified": 1517493075483,
 			"name": "Create Table",
 			"parameters": [],
 			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
@@ -539,7 +539,7 @@
 			"settingEncodeUrl": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "http://localhost:5000/create-table",
+			"url": "http://localhost:5000/create_table",
 			"_type": "request"
 		},
 		{

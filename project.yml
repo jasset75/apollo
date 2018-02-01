@@ -5,6 +5,6 @@ executor:
 driver:
   memory: 8g
 max_cores: 6
-cassandra: 
+cassandra:
   host: localhost
   port: 9042
