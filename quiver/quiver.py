@@ -1,12 +1,13 @@
 import os, sys
+# auxiliar library to unpack operation parameters
 from . import unpack_params as unpack
+# project configuration wrapper: yaml formatted file
 from misc.config import settings as conf
 
+#environment variable with character encoding
 os.putenv('PYTHONIOENCODING',conf.encoding)
 
-# auxiliar library to unpack operation parameters
-
-
+# cassandra driver
 from cassandra.cluster import Cluster
 
 # pyspark modules
@@ -60,9 +61,9 @@ spark = (
     .appName('SparkCassandraApp')
     .config('spark.cassandra.connection.host', conf.cassandra.host)
     .config('spark.cassandra.connection.port', conf.cassandra.port)
-    .config('spark.cassandra.output.consistency.level','ONE')
+    .config('spark.cassandra.output.consistency.level',conf.cassandra.consistency_level)
     .config(conf=spark_conf)
-    .master('local')
+    .master('local[{}]'.format(conf.executor.cores))
     .getOrCreate()
 )  
 

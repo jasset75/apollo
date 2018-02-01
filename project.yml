@@ -1,10 +1,11 @@
 encoding: UTF-8
 executor:
   cores: 6
-  memory: 8g
+  memory: 4g
 driver:
-  memory: 8g
+  memory: 4g
 max_cores: 6
 cassandra:
   host: localhost
   port: 9042
+  consistency_level: 'ONE'

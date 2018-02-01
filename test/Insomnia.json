@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2018-02-01T13:52:23.826Z",
+	"__export_date": "2018-02-01T20:18:42.210Z",
 	"__export_source": "insomnia.desktop.app:v5.12.4",
 	"resources": [
 		{
@@ -219,7 +219,7 @@
 			],
 			"metaSortKey": -1516310374873.75,
 			"method": "POST",
-			"modified": 1517350206186,
+			"modified": 1517500295235,
 			"name": "get_table mock_data",
 			"parameters": [],
 			"parentId": "fld_606acdb8fa674fdd969423c92620a962",
@@ -543,6 +543,35 @@
 			"_type": "request"
 		},
 		{
+			"_id": "req_bb377050166f41839a2599fa26dc6f2f",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples_bis\",\n\t\"tablename\": \"mayores_de_40_total\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"edata\",\n\t\t\t\"db_type\": \"Integer\",\n\t\t\t\"primary_key\": \"true\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"total\",\n\t\t\t\"db_type\": \"Integer\" \n\t\t}\n\t]\n}"
+			},
+			"created": 1517502823572,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_209ed5abea15430da027d8209da3a3ea",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1517387248157.25,
+			"method": "POST",
+			"modified": 1517502979509,
+			"name": "Create Table (Copy)",
+			"parameters": [],
+			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/create_table",
+			"_type": "request"
+		},
+		{
 			"_id": "req_19fe39bd1c864e6fb0b25ac7de437d80",
 			"authentication": {},
 			"body": {
@@ -605,7 +634,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"edad > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"edad\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"total\"}]\n\t\t}\n\t},\n\t\"sortby\": [{\"count(id)\": \"desc\"}],\n\t\"save\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mayores_de_40_total\"\n\t}\n}\t"
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"edad > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"edad\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"total\"}]\n\t\t}\n\t},\n\t\"sortby\": [{\"total\": \"desc\"}],\n\t\"save\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mayores_de_40_total\"\n\t}\n}\t"
 			},
 			"created": 1516651434670,
 			"description": "",
@@ -618,7 +647,7 @@
 			],
 			"metaSortKey": -1516138849988.875,
 			"method": "POST",
-			"modified": 1517433767524,
+			"modified": 1517512878892,
 			"name": "group by and save",
 			"parameters": [],
 			"parentId": "fld_1f27e5a9056d4808a9067fc0cff37026",
@@ -645,7 +674,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"table_a\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"mock_data\",\n\t\t\"join_key\": [\"id\"],\n\t\t\"select\": [\"first_name\",\"last_name\",\"email\",\"gender\",\"drinker\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mock_drugs\",\n\t\t\"join_key\": [\"id_patient\"],\n\t\t\"select\": [\"drug_name\"]\n\t},\n\t\"sortby\": [\n\t\t{\"drug_name\": \"asc\"},\n\t\t{\"first_name\": \"asc\"}\n\t],\n\t\"join-type\": \"left\"\n}"
+				"text": "{\n\t\"table_a\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"mock_data\",\n\t\t\"join_key\": [\"id\"],\n\t\t\"select\": [\"first_name\",\"last_name\",\"email\",\"gender\",\"drinker\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mock_drugs\",\n\t\t\"join_key\": [\"id_patient\"],\n\t\t\"select\": [\"drug_name\"]\n\t},\n\t\"sortby\": [\n\t\t{\"drug_name\": \"asc\"},\n\t\t{\"first_name\": \"asc\"}\n\t]\n}"
 			},
 			"created": 1516457479062,
 			"description": "",
@@ -658,7 +687,7 @@
 			],
 			"metaSortKey": -1515967325554,
 			"method": "POST",
-			"modified": 1517340016602,
+			"modified": 1517499788356,
 			"name": "inner join people-drugs",
 			"parameters": [],
 			"parentId": "fld_f34377261b624640947b73c3aceea967",
@@ -832,8 +861,8 @@
 			],
 			"metaSortKey": -1517340054330.5,
 			"method": "POST",
-			"modified": 1517340180950,
-			"name": "right join filtered drugs-companies (Copy)",
+			"modified": 1517502863028,
+			"name": "right join filtered drugs-companies",
 			"parameters": [],
 			"parentId": "fld_746198b6c1f0457a92f11af7f55c496f",
 			"settingDisableRenderRequestBody": false,
