@@ -7,7 +7,23 @@ Spark-Cassandra Rest API
 
 Apollo is a Microservice's interface which allows data computing with Apache Spark from Apache Cassandra database.
 
+## About [/about]
 
+### About [GET]
+
+Gets detail about authorship, version number, documentation, etc.
+
++ Response 200 (application/json)
+
+        {
+            "api_name": "Apollo",
+            "author_email": "juanantonioaguilar@gmail.com",
+            "author_name": "Juan A. Aguilar",
+            "documentation": "http://jasset75.github.io/apollo",
+            "license": "Apache 2.0",
+            "project_repository": "https://github.com/jasset75/apollo.github",
+            "version": 0.1
+        }
 
 ## Version [/version]
 
@@ -1985,3 +2001,46 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
                 "success": true,
                 "tablename": "mock_data"
             }
+
+## Group by
+
+Gets data from Cassandra table which is applied a group by statement. 
+
+
+> Test Details
+> People from mock_data table who is older than 40 years old and grouped by age with count aggregation.
+>
+> Age is calculated from `birth_date` field, indicated by `calculated` clause.
+
+
++ Request (application/json)
+
+        {
+            "keyspace": "examples",
+            "tablename":"mock_data",
+            "calculated": {
+                "age": "round(months_between(current_date(),birth_date)/12,0)"
+            },
+            "filter": "age > 40",
+            "groupby": { 
+                "grouped": ["age"],
+                "agg": {
+                    "count": ["id"]
+                }
+            },  
+            "sortby": [
+                {
+                    "count(id)": "desc"     }
+            ]
+        }
+
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /get-table
+
+    + Body
+
+ 
