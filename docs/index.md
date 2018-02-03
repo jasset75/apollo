@@ -1,5 +1,7 @@
 # Apollo Microservice v0.1
 
+This project implements a REST API to select data from Apache Cassandra through Apache Spark. The Spark cluster computes commands requested by HTTP client.
+
 ## Apollo REST API
 
 ## Useful tools
