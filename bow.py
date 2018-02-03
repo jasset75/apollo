@@ -1,6 +1,6 @@
 import json
-from flask import Flask, redirect, url_for
-from flask import request, jsonify
+from functools import wraps
+from flask import Flask, make_response, redirect, url_for, request, jsonify
 from quiver import quiver
 from quiver import unpack_params as unpack
 import admix
@@ -11,13 +11,29 @@ VERSION=0.1
 app = Flask(__name__)
 
 OK_STATUS = 200
+OK_CREATE_STATUS = 201
 DEF_ERROR_CODE = 500
 
+def add_response_headers(headers={}):
+    """This decorator adds the headers passed in to the response"""
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            resp = make_response(f(*args, **kwargs))
+            h = resp.headers
+            for header, value in headers.items():
+                h[header] = value
+            return resp
+        return decorated_function
+    return decorator
+
 @app.route("/")
+@add_response_headers(dict(Location="/about"))
 def root():
   return redirect(url_for("about"))
 
 @app.route("/version")
+@add_response_headers(dict(Location="/version"))
 def version():
   version = dict(
     status=OK_STATUS,
@@ -28,6 +44,7 @@ def version():
   return jsonify(version)
 
 @app.route("/about")
+@add_response_headers(dict(Location="/about"))
 def about():
   about = dict(
     api_name='Apollo',
@@ -45,11 +62,8 @@ def page_not_found(e):
   error_api_404 = dict(status=404,error_message='Apollo API endpoint not found.',api_name='Apollo',version=VERSION,author='juanantonioaguilar@gmail.com',license='Apache 2.0')
   return jsonify(error_api_404)
 
-@app.route("/help/aggregate")
-def help():
-  return 'Apollo v{0}'.format(VERSION)
-
 @app.route('/get-table', methods=['POST'])
+@add_response_headers(dict(Location="/get-table"))
 def get_table():
   metadata = {}
   try:
@@ -73,6 +87,7 @@ def get_table():
 
 
 @app.route('/join', methods=['POST'])
+@add_response_headers(dict(Location="/join"))
 def join():
   metadata = {}
   try:
@@ -92,6 +107,7 @@ def join():
     return Response(json.dumps(metadata), status=metadata['status_code'], mimetype='application/json')
 
 @app.route('/union', methods=['POST'])
+@add_response_headers(dict(Location="/union"))
 def union():
   metadata = {}
   try:
@@ -111,6 +127,7 @@ def union():
     return Response(json.dumps(metadata), status=metadata['status_code'], mimetype='application/json')
 
 @app.route('/create_table', methods=['POST'])
+@add_response_headers(dict(Location="/create-table"))
 def create_table():
   metadata = {}
   try:
@@ -124,7 +141,7 @@ def create_table():
       metadata['data'] = admix.create_table(**metadata)
       # return data
       metadata['success'] = True
-      metadata['status'] = OK_STATUS
+      metadata['status'] = OK_CREATE_STATUS
       return jsonify(metadata)
   except Exception as e:
     metadata['status_code']=DEF_ERROR_CODE

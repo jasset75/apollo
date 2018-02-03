@@ -24,6 +24,44 @@ Gets version information.
             "version": 0.1
         }
 
+
+## Create Table [/create-table]
+
+### Create Table [POST]
+
+Creates Cassandra Table.
+
+Accepted parameters:
+
+    - *keyspace*: Cassandra keyspace where the table will lays. Created if not exists. 
+
+    - *tablename*: Cassandra table name to be created. 
+
+    - *columns*: JSON list of objects defining table's columns to be created. Each columns has these own properties:
+
+        - *db_field*: Column name
+        - *db_type*: Column type correspondig to Cassandra column types:
+
+
++ Request (application/json)
+
+
+        {
+              "keyspace": "examples",
+              "tablename": "test",
+              "columns": [
+                    {
+                          "db_field": "campo_1",
+                          "db_type": "Text"
+                    }, 
+                    {
+                          "db_field": "campo_2",
+                          "db_type": "Integer", 
+                          "primary_key": "true"
+                    }
+              ]
+        }
+
 ## Get Table [/get-table]
 
 ### Get Table [POST]
