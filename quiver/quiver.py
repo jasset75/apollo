@@ -71,7 +71,7 @@ spark.sparkContext.setLogLevel('OFF')
 sqlContext = SQLContext(spark.sparkContext)
 
 
-def _return_formatted(dataset, format='dict'):
+def _formatted(dataset, format='dict'):
 
     # convert to pandas
     pdf = dataset.toPandas()
@@ -94,6 +94,7 @@ def _save(ds_table, save):
             .options(keyspace=msave["keyspace"], table=msave["tablename"])
             .save())
 
+    return ds_table
 
 def _sort_by(ds_table, sortby):
     """
@@ -227,7 +228,7 @@ def _group_by(ds_table, groupby, join_key=None):
 
         ds_table = ds_table.groupby(*grouped).agg(*columns)
 
-        return ds_table
+    return ds_table
 
 
 def _get_table(keyspace, tablename, select=None, calculated=None,
@@ -442,7 +443,7 @@ def get_table(keyspace, tablename, select=None, calculated=None, s_filter=None,
     ds_table = _get_table(keyspace, tablename, select, calculated,
                           s_filter, groupby, sortby, join_key)
 
-    _return_formatted(ds_table, format)
+    return _formatted(ds_table, format)
 
 
 def join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
@@ -467,7 +468,7 @@ def join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
                     select, calculated, s_filter, join_groupby, sortby,
                     join_key, save, join_type)
 
-    _return_formatted(ds_join, format)
+    return _formatted(ds_join, format)
 
 
 def union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
@@ -489,4 +490,4 @@ def union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
                       select, calculated, s_filter, union_groupby, sortby,
                       join_key, save, union_type)
 
-    _return_formatted(ds_union, format)
+    return _formatted(ds_union, format)

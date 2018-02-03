@@ -33,18 +33,66 @@ Creates Cassandra Table.
 
 Accepted parameters:
 
-    - *keyspace*: Cassandra keyspace where the table will lays. Created if not exists. 
+    - *keyspace*
 
-    - *tablename*: Cassandra table name to be created. 
+        Cassandra keyspace where the table will lays. Created if not exists. 
 
-    - *columns*: JSON list of objects defining table's columns to be created. Each columns has these own properties:
+    - *tablename*
 
-        - *db_field*: Column name
-        - *db_type*: Column type correspondig to Cassandra column types:
+        Cassandra table name to be created. 
+
+    - *columns*
+
+        JSON list of objects defining table's columns to be created. Each columns has these own properties:
+
+
+        - *db_field* = None
+
+            The fieldname this field will map to in the database
+
+        - *db_type*: 
+
+            Column type correspondig to Cassandra column types:
+
+        - *primary_key*  = False
+
+            bool flag, indicates this column is a primary key. The first primary key defined on a model is the partition key (unless partition keys are set), all others are cluster keys
+
+        - partition_key = False
+
+            indicates that this column should be the partition key, defining more than one partition key column creates a compound partition key
+
+        - index = False
+
+            bool flag, indicates an index should be created for this column
+
+
+        - default = None
+
+            the default value, can be a value or a callable (no args)
+
+        - required = False
+
+            boolean, is the field required? Model validation will raise and exception if required is set to True and there is a None value assigned
+
+        - clustering_order = None
+
+            only applicable on clustering keys (primary keys that are not partition keys) determines the order that the clustering keys are sorted on disk
+
+        - discriminator_column = False
+
+            boolean, if set to True, this column will be used for discriminating records of inherited models.
+
+            Should only be set on a column of an abstract model being used for inheritance.
+
+            There may only be one discriminator column per model. See __discriminator_value__ for how to specify the value of this column on specialized models.
+
+        - static = False
+
+            boolean, if set to True, this is a static column, with a single value per partition
 
 
 + Request (application/json)
-
 
         {
               "keyspace": "examples",
@@ -61,6 +109,32 @@ Accepted parameters:
                     }
               ]
         }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /create-table
+
+    + Body
+
+        {
+            "columns": [
+                {
+                    "db_field": "campo_1"
+                },
+                {
+                    "db_field": "campo_2",
+                    "primary_key": "true"
+                }
+            ],
+            "data": null,
+            "keyspace": "examples",
+            "status": 200,
+            "success": true,
+            "tablename": "test"
+        }
+
 
 ## Get Table [/get-table]
 

@@ -1,3 +1,4 @@
+import os
 from misc.config import settings as conf
 from cassandra.cluster import Cluster
 from cassandra.policies import TokenAwarePolicy, RoundRobinPolicy
@@ -8,6 +9,9 @@ from cassandra.cqlengine.columns import Text, Integer
 from cassandra.cqlengine.management import sync_table, create_keyspace_simple
 
 import atexit
+
+# environment variable allow schema management
+os.putenv('CQLENG_ALLOW_SCHEMA_MANAGEMENT', 'CQLENG_ALLOW_SCHEMA_MANAGEMENT')
 
 # Apache Cassandra connection
 list_of_ip = [conf.cassandra.host]
