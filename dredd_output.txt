@@ -1,8 +1,6 @@
-[33mwarn[39m: Parser warning in file 'apiary.apib': message-body asset is expected to be a pre-formatted code block, every of its line indented by exactly 12 spaces or 3 tabson lines 137-152
 [34minfo[39m: Beginning Dredd testing...
-[32mpass[39m: GET (200) /about duration: 27ms
+[32mpass[39m: GET (200) /about duration: 28ms
 [32mpass[39m: GET (200) /version duration: 7ms
 [32mpass[39m: POST (201) /create-table duration: 11ms
-[32mpass[39m: POST (200) /get-table duration: 922ms
-[32mcomplete[39m: 4 passing, 0 failing, 0 errors, 0 skipped, 4 total
-[32mcomplete[39m: Tests took 972ms
+[32mcomplete[39m: 3 passing, 0 failing, 0 errors, 0 skipped, 3 total
+[32mcomplete[39m: Tests took 52ms

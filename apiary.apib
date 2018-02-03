@@ -159,6 +159,16 @@ Accepted parameters:
 Retrieve data from Cassandra table. It takes a few parameters which identify 
 the data source `keyspace` and `tablename`. Other optional parameters are aimed to apply DML functionality: `groupby`, `select`, `calculated`, etc.
 
+Group by
+
+Gets data from Cassandra table which is applied a group by statement. 
+
+
+> Test Details
+> People from mock_data table who is older than 40 years old and grouped by age with count aggregation.
+> Age is calculated from `birth_date` field, indicated by `calculated` clause.
+
+
 + Request (application/json)
 
         {
@@ -2003,17 +2013,8 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
             }
 
 
-### Group by
++ Request with group by statement (application/json)
 
-Gets data from Cassandra table which is applied a group by statement. 
-
-
-Test Details
-People from mock_data table who is older than 40 years old and grouped by age with count aggregation.
-Age is calculated from `birth_date` field, indicated by `calculated` clause.
-
-
-+ Request (application/json)
 
         {
             "keyspace": "examples",
