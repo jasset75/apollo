@@ -134,22 +134,22 @@ Accepted parameters:
 
     + Body
 
-        {
-            "columns": [
-                {
-                    "db_field": "campo_1"
-                },
-                {
-                    "db_field": "campo_2",
-                    "primary_key": "true"
-                }
-            ],
-            "data": null,
-            "keyspace": "examples",
-            "status": 200,
-            "success": true,
-            "tablename": "test"
-        }
+            {
+                "columns": [
+                    {
+                        "db_field": "campo_1"
+                    },
+                    {
+                        "db_field": "campo_2",
+                        "primary_key": "true"
+                    }
+                ],
+                "data": null,
+                "keyspace": "examples",
+                "status": 200,
+                "success": true,
+                "tablename": "test"
+            }
 
 
 ## Get Table [/get-table]
@@ -2002,15 +2002,15 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
                 "tablename": "mock_data"
             }
 
-## Group by
+
+### Group by
 
 Gets data from Cassandra table which is applied a group by statement. 
 
 
-> Test Details
-> People from mock_data table who is older than 40 years old and grouped by age with count aggregation.
->
-> Age is calculated from `birth_date` field, indicated by `calculated` clause.
+Test Details
+People from mock_data table who is older than 40 years old and grouped by age with count aggregation.
+Age is calculated from `birth_date` field, indicated by `calculated` clause.
 
 
 + Request (application/json)
@@ -2043,4 +2043,84 @@ Gets data from Cassandra table which is applied a group by statement.
 
     + Body
 
- 
+            {
+                "calculated": {
+                    "age": "round(months_between(current_date(),birth_date)/12,0)"
+                },
+                "data": {
+                    "age": {
+                        "0": 51.0,
+                        "1": 48.0,
+                        "2": 61.0,
+                        "3": 63.0,
+                        "4": 62.0,
+                        "5": 55.0,
+                        "6": 57.0,
+                        "7": 41.0,
+                        "8": 49.0,
+                        "9": 42.0,
+                        "10": 47.0,
+                        "11": 44.0,
+                        "12": 52.0,
+                        "13": 54.0,
+                        "14": 56.0,
+                        "15": 58.0,
+                        "16": 45.0,
+                        "17": 46.0,
+                        "18": 43.0,
+                        "19": 50.0,
+                        "20": 59.0,
+                        "21": 53.0,
+                        "22": 60.0
+                    },
+                    "count(id)": {
+                        "0": 56,
+                        "1": 56,
+                        "2": 54,
+                        "3": 53,
+                        "4": 52,
+                        "5": 50,
+                        "6": 49,
+                        "7": 48,
+                        "8": 47,
+                        "9": 47,
+                        "10": 46,
+                        "11": 43,
+                        "12": 43,
+                        "13": 43,
+                        "14": 42,
+                        "15": 42,
+                        "16": 39,
+                        "17": 39,
+                        "18": 38,
+                        "19": 37,
+                        "20": 37,
+                        "21": 36,
+                        "22": 32
+                    }
+                },
+                "groupby": {
+                    "agg": {
+                        "count": [
+                            "id"
+                        ]
+                    },
+                    "grouped": [
+                        "age"
+                    ]
+                },
+                "join_key": [],
+                "keyspace": "examples",
+                "s_filter": "age > 40",
+                "save": null,
+                "select": null,
+                "sortby": [
+                    {
+                        "count(id)": "desc"
+                    }
+                ],
+                "status": 200,
+                "success": true,
+                "tablename": "mock_data"
+            }
+
