@@ -2621,3 +2621,189 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
                 "success": true,
                 "tablename": "mock_data"
             }
+
++ Request - Group by example 01 (application/json)
+
+        {
+            "keyspace": "examples",
+            "tablename":"mock_data",
+            "calculated": {
+                "age": "round(months_between(current_date(),birth_date)/12,0)"
+            },
+            "filter": "age > 40",
+            "groupby": { 
+                "grouped": ["age"],
+                "agg": {
+                    "count": ["id"]
+                }
+            },  
+            "sortby": [
+                {
+                    "count(id)": "desc"     }
+            ]
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /create-table
+
+    + Body
+
+            {
+                "calculated": {
+                    "age": "round(months_between(current_date(),birth_date)/12,0)"
+                },
+                "data": {
+                    "age": {
+                        "0": 51.0,
+                        "1": 48.0,
+                        "2": 61.0,
+                        "3": 63.0,
+                        "4": 62.0,
+                        "5": 57.0,
+                        "6": 55.0,
+                        "7": 41.0,
+                        "8": 49.0,
+                        "9": 47.0,
+                        "10": 42.0,
+                        "11": 44.0,
+                        "12": 56.0,
+                        "13": 52.0,
+                        "14": 54.0,
+                        "15": 58.0,
+                        "16": 45.0,
+                        "17": 46.0,
+                        "18": 43.0,
+                        "19": 50.0,
+                        "20": 59.0,
+                        "21": 53.0,
+                        "22": 60.0
+                    },
+                    "count(id)": {
+                        "0": 56,
+                        "1": 56,
+                        "2": 54,
+                        "3": 53,
+                        "4": 52,
+                        "5": 49,
+                        "6": 49,
+                        "7": 48,
+                        "8": 47,
+                        "9": 47,
+                        "10": 47,
+                        "11": 43,
+                        "12": 43,
+                        "13": 43,
+                        "14": 43,
+                        "15": 42,
+                        "16": 39,
+                        "17": 38,
+                        "18": 38,
+                        "19": 37,
+                        "20": 37,
+                        "21": 36,
+                        "22": 32
+                    }
+                },
+                "groupby": {
+                    "agg": {
+                        "count": [
+                            "id"
+                        ]
+                    },
+                    "grouped": [
+                        "age"
+                    ]
+                },
+                "join_key": [],
+                "keyspace": "examples",
+                "s_filter": "age > 40",
+                "save": null,
+                "select": null,
+                "sortby": [
+                    {
+                        "count(id)": "desc"
+                    }
+                ],
+                "status": 200,
+                "success": true,
+                "tablename": "mock_data"
+            }
+
++ Request - Group by example 01 (application/json)
+
+        {
+            "keyspace": "examples",
+            "tablename":"mock_data",
+            "filter": "months_between(current_date(),birth_date)/12 between 36 and 54",
+            "groupby": { 
+                "grouped": ["drinker"],
+                "agg": {
+                    "count": [{"id": "num_people_36_54"}]
+                }
+            },  
+            "sortby": [
+                {"num_people_36_54": "desc"}
+            ]   
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /create-table
+
+    + Body
+
+            {
+                "calculated": null,
+                "data": {
+                    "drinker": {
+                        "0": "Daily",
+                        "1": "Weekly",
+                        "2": "Monthly",
+                        "3": "Never",
+                        "4": "Once",
+                        "5": "Often",
+                        "6": "Seldom",
+                        "7": "Yearly"
+                    },
+                    "num_people_36_54": {
+                        "0": 111,
+                        "1": 108,
+                        "2": 101,
+                        "3": 101,
+                        "4": 100,
+                        "5": 95,
+                        "6": 91,
+                        "7": 88
+                    }
+                },
+                "groupby": {
+                    "agg": {
+                        "count": [
+                            {
+                                "id": "num_people_36_54"
+                            }
+                        ]
+                    },
+                    "grouped": [
+                        "drinker"
+                    ]
+                },
+                "join_key": [],
+                "keyspace": "examples",
+                "s_filter": "months_between(current_date(),birth_date)/12 between 36 and 54",
+                "save": null,
+                "select": null,
+                "sortby": [
+                    {
+                        "num_people_36_54": "desc"
+                    }
+                ],
+                "status": 200,
+                "success": true,
+                "tablename": "mock_data"
+            }

@@ -1,6 +1,175 @@
 [34minfo[39m: Beginning Dredd testing...
-[32mpass[39m: GET (200) /about duration: 28ms
-[32mpass[39m: GET (200) /version duration: 7ms
-[32mpass[39m: POST (201) /create-table duration: 11ms
-[32mcomplete[39m: 3 passing, 0 failing, 0 errors, 0 skipped, 3 total
-[32mcomplete[39m: Tests took 52ms
+[32mpass[39m: GET (200) /about duration: 69ms
+[32mpass[39m: GET (200) /version duration: 17ms
+[32mpass[39m: POST (201) /create-table duration: 25ms
+[32mpass[39m: POST (201) /create-table duration: 28ms
+[32mpass[39m: POST (201) /create-table duration: 21ms
+[32mpass[39m: POST (201) /create-table duration: 28ms
+[32mpass[39m: POST (201) /create-table duration: 26ms
+[32mpass[39m: POST (201) /create-table duration: 29ms
+[32mpass[39m: POST (201) /create-table duration: 17ms
+[32mpass[39m: POST (200) /get-table duration: 1120ms
+[32mpass[39m: POST (200) /get-table duration: 1169ms
+[32mpass[39m: POST (200) /get-table duration: 1236ms
+[31mfail[39m: POST (201) /get-table duration: 1015ms
+[34minfo[39m: Displaying failed tests...
+[31mfail[39m: POST (201) /get-table duration: 1015ms
+[31mfail[39m: statusCode: Status code is not '201'
+
+[32mrequest[39m: 
+method: POST
+uri: /get-table
+headers: 
+    Content-Type: application/json
+    User-Agent: Dredd/5.0.0 (Linux 4.13.0-32-generic; x64)
+    Content-Length: 339
+
+body: 
+{
+  "keyspace": "examples",
+  "tablename": "mock_data",
+  "filter": "months_between(current_date(),birth_date)/12 between 36 and 54",
+  "groupby": {
+    "grouped": [
+      "drinker"
+    ],
+    "agg": {
+      "count": [
+        {
+          "id": "num_people_36_54"
+        }
+      ]
+    }
+  },
+  "sortby": [
+    {
+      "num_people_36_54": "desc"
+    }
+  ]
+}
+
+
+[31mexpected[39m: 
+headers: 
+    Content-Type: application/json
+    Location: /create-table
+
+body: 
+{
+  "calculated": null,
+  "data": {
+    "drinker": {
+      "0": "Daily",
+      "1": "Weekly",
+      "2": "Monthly",
+      "3": "Never",
+      "4": "Once",
+      "5": "Often",
+      "6": "Seldom",
+      "7": "Yearly"
+    },
+    "num_people_36_54": {
+      "0": 111,
+      "1": 108,
+      "2": 101,
+      "3": 101,
+      "4": 100,
+      "5": 95,
+      "6": 91,
+      "7": 88
+    }
+  },
+  "groupby": {
+    "agg": {
+      "count": [
+        {
+          "id": "num_people_36_54"
+        }
+      ]
+    },
+    "grouped": [
+      "drinker"
+    ]
+  },
+  "join_key": [],
+  "keyspace": "examples",
+  "s_filter": "months_between(current_date(),birth_date)/12 between 36 and 54",
+  "save": null,
+  "select": null,
+  "sortby": [
+    {
+      "num_people_36_54": "desc"
+    }
+  ],
+  "status": 200,
+  "success": true,
+  "tablename": "mock_data"
+}
+statusCode: 201
+
+
+[31mactual[39m: 
+statusCode: 200
+headers: 
+    content-type: application/json
+    location: http://localhost:5000/get-table
+    content-length: 857
+    server: Werkzeug/0.14.1 Python/3.5.2
+    date: Sun, 04 Feb 2018 20:09:57 GMT
+
+body: 
+{
+  "calculated": null,
+  "data": {
+    "drinker": {
+      "0": "Daily",
+      "1": "Weekly",
+      "2": "Monthly",
+      "3": "Never",
+      "4": "Once",
+      "5": "Often",
+      "6": "Seldom",
+      "7": "Yearly"
+    },
+    "num_people_36_54": {
+      "0": 111,
+      "1": 108,
+      "2": 101,
+      "3": 101,
+      "4": 100,
+      "5": 95,
+      "6": 91,
+      "7": 88
+    }
+  },
+  "groupby": {
+    "agg": {
+      "count": [
+        {
+          "id": "num_people_36_54"
+        }
+      ]
+    },
+    "grouped": [
+      "drinker"
+    ]
+  },
+  "join_key": [],
+  "keyspace": "examples",
+  "s_filter": "months_between(current_date(),birth_date)/12 between 36 and 54",
+  "save": null,
+  "select": null,
+  "sortby": [
+    {
+      "num_people_36_54": "desc"
+    }
+  ],
+  "status": 200,
+  "success": true,
+  "tablename": "mock_data"
+}
+
+
+
+[32mcomplete[39m: 12 passing, 1 failing, 0 errors, 0 skipped, 13 total
+[32mcomplete[39m: Tests took 4815ms
