@@ -680,7 +680,7 @@ var settings = {
     "content-type": "application/json"
   },
   "processData": false,
-  "data": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"filter\": \"email like \\\"%am%\\\"\",\n\t\"sortby\": [\n\t\t{\"gender\": \"asc\"},\n\t\t{\"first_name\": \"asc\"}\n\t]\n}"
+  "data": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"age\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"age > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"age\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"total\"}]\n\t\t}\n\t},\n\t\"sortby\": [{\"total\": \"desc\"}],\n\t\"save\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"older_than_40_summarized\"\n\t}\n}\t"
 }
 
 $.ajax(settings).done(function (response) {
@@ -688,6 +688,29 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
+Python snippet
+
+```python
+import requests
+
+url = "http://localhost:5000/get-table"
+
+payload = "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"age\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"age > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"age\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"total\"}]\n\t\t}\n\t},\n\t\"sortby\": [{\"total\": \"desc\"}],\n\t\"save\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"older_than_40_summarized\"\n\t}\n}\t"
+headers = {'content-type': 'application/json'}
+
+response = requests.request("POST", url, data=payload, headers=headers)
+
+print(response.text)
+```
+
+Java snippet
+
+```java
+HttpResponse<String> response = Unirest.post("http://localhost:5000/get-table")
+  .header("content-type", "application/json")
+  .body("{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"age\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"age > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"age\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"total\"}]\n\t\t}\n\t},\n\t\"sortby\": [{\"total\": \"desc\"}],\n\t\"save\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"older_than_40_summarized\"\n\t}\n}\t")
+  .asString();
+```
 
 + Request (application/json)
 
