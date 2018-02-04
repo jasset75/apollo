@@ -375,33 +375,33 @@ Accepted parameters:
 
 + Request Simple Test - Set 3 (application/json)
 
-    {
-        "keyspace": "examples",
-        "tablename": "test_3",
-        "columns": [
-            {
-                "db_field": "field_1",
-                "db_type": "date",
-                "primary_key": "true"
-            }, 
-            {
-                "db_field": "field_2",
-                "db_type": "datetime" 
-            },
-            {
-                "db_field": "field_3",
-                "db_type": "decimal" 
-            },
-            {
-                "db_field": "field_4",
-                "db_type": "double" 
-            },
-            {
-                "db_field": "field_5",
-                "db_type": "float" 
-            }
-        ]
-    }
+        {
+            "keyspace": "examples",
+            "tablename": "test_3",
+            "columns": [
+                {
+                    "db_field": "field_1",
+                    "db_type": "date",
+                    "primary_key": "true"
+                }, 
+                {
+                    "db_field": "field_2",
+                    "db_type": "datetime" 
+                },
+                {
+                    "db_field": "field_3",
+                    "db_type": "decimal" 
+                },
+                {
+                    "db_field": "field_4",
+                    "db_type": "double" 
+                },
+                {
+                    "db_field": "field_5",
+                    "db_type": "float" 
+                }
+            ]
+        }
 
 + Response 201 (application/json)
 
@@ -440,6 +440,198 @@ Accepted parameters:
                         "db_field": "field_5"
                     }
                 ]
+            }
+
++ Request Simple Test - Set 4 (application/json)
+
+        {
+            "keyspace": "examples",
+            "tablename": "test_4",
+            "columns": [
+                {
+                    "db_field": "field_1",
+                    "db_type": "list",
+                    "value_type": "text"
+                }, 
+                {
+                    "db_field": "field_2",
+                    "db_type": "map",
+                    "key_type": "timestamp",
+                    "value_type": "text"
+                },
+                {
+                    "db_field": "field_3",
+                    "db_type": "set",
+                    "value_type": "text"
+                },
+                {
+                    "db_field": "field_4",
+                    "db_type": "smallint",
+                    "primary_key": "true"           
+                }
+            ]
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /create-table
+
+    + Body
+
+            {
+                "success": true,
+                "data": null,
+                "columns": [
+                    {
+                        "value_type": "text",
+                        "db_field": "field_1",
+                        "db_type": "list"
+                    },
+                    {
+                        "key_type": "timestamp",
+                        "db_field": "field_2",
+                        "value_type": "text",
+                        "db_type": "map"
+                    },
+                    {
+                        "value_type": "text",
+                        "db_field": "field_3",
+                        "db_type": "set"
+                    },
+                    {
+                        "db_field": "field_4",
+                        "db_type": "smallint",
+                        "primary_key": "true"
+                    }
+                ],
+                "status": 201,
+                "tablename": "test_4",
+                "keyspace": "examples"
+            }
++ Request Simple Test - Set 5 (application/json)
+
+        {
+            "keyspace": "examples",
+            "tablename": "test_5",
+            "columns": [
+                {
+                    "db_field": "field_1",
+                    "db_type": "text"
+                }, 
+                {
+                    "db_field": "field_2",
+                    "db_type": "time"
+                },
+                {
+                    "db_field": "field_3",
+                    "db_type": "timeuuid",
+                    "primary_key": "true"
+                },
+                {
+                    "db_field": "field_4",
+                    "db_type": "tinyint"
+                },
+                {
+                    "db_field": "field_5",
+                    "db_type": "uuid",
+                    "primary_key": "true"
+                },
+                {
+                    "db_field": "field_6",
+                    "db_type": "varint"
+                }       
+            ]
+        }
+        
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /create-table
+
+    + Body
+
+            {
+                "success": true,
+                "data": null,
+                "columns": [
+                    {
+                        "db_field": "field_1",
+                        "db_type": "text"
+                    },
+                    {
+                        "db_field": "field_2",
+                        "db_type": "time"
+                    },
+                    {
+                        "db_field": "field_3",
+                        "db_type": "timeuuid",
+                        "primary_key": "true"
+                    },
+                    {
+                        "db_field": "field_4",
+                        "db_type": "tinyint"
+                    },
+                    {
+                        "db_field": "field_5",
+                        "db_type": "uuid",
+                        "primary_key": "true"
+                    },
+                    {
+                        "db_field": "field_6",
+                        "db_type": "varint"
+                    }
+                ],
+                "status": 201,
+                "tablename": "test_5",
+                "keyspace": "examples"
+            }
+
++ Request - Older than 40 summarized (application/json)
+
+        {
+            "keyspace": "examples_bis",
+            "tablename": "older_than_40_summarized",
+            "columns": [
+                {
+                    "db_field": "age",
+                    "db_type": "integer",
+                    "primary_key": "true"
+                }, 
+                {
+                    "db_field": "total",
+                    "db_type": "Integer" 
+                }
+            ]
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /create-table
+
+    + Body
+
+            {
+                "success": true,
+                "data": null,
+                "columns": [
+                    {
+                        "db_field": "age",
+                        "db_type": "integer",
+                        "primary_key": "true"
+                    },
+                    {
+                        "db_field": "total",
+                        "db_type": "Integer"
+                    }
+                ],
+                "status": 201,
+                "tablename": "older_than_40_summarized",
+                "keyspace": "examples_bis"
             }
 
 
