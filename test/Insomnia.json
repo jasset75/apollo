@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2018-02-01T20:18:42.210Z",
+	"__export_date": "2018-02-04T17:47:25.966Z",
 	"__export_source": "insomnia.desktop.app:v5.12.4",
 	"resources": [
 		{
@@ -518,7 +518,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"campo_1\",\n\t\t\t\"db_type\": \"Text\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"campo_2\",\n\t\t\t\"db_type\": \"Integer\", \n\t\t\t\"primary_key\": \"true\"\n\t\t}\n\t]\n}"
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"field_1\",\n\t\t\t\"db_type\": \"text\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"field_2\",\n\t\t\t\"db_type\": \"integer\", \n\t\t\t\"primary_key\": \"true\"\n\t\t}\n\t]\n}"
 			},
 			"created": 1517434441984,
 			"description": "",
@@ -531,15 +531,15 @@
 			],
 			"metaSortKey": -1517434441984,
 			"method": "POST",
-			"modified": 1517493075483,
-			"name": "Create Table",
+			"modified": 1517739208696,
+			"name": "types simple",
 			"parameters": [],
 			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
 			"settingDisableRenderRequestBody": false,
 			"settingEncodeUrl": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "http://localhost:5000/create_table",
+			"url": "http://localhost:5000/create-table",
 			"_type": "request"
 		},
 		{
@@ -547,7 +547,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples_bis\",\n\t\"tablename\": \"mayores_de_40_total\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"edata\",\n\t\t\t\"db_type\": \"Integer\",\n\t\t\t\"primary_key\": \"true\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"total\",\n\t\t\t\"db_type\": \"Integer\" \n\t\t}\n\t]\n}"
+				"text": "{\n\t\"keyspace\": \"examples_bis\",\n\t\"tablename\": \"older_than_40_summarized\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"edata\",\n\t\t\t\"db_type\": \"integer\",\n\t\t\t\"primary_key\": \"true\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"total\",\n\t\t\t\"db_type\": \"Integer\" \n\t\t}\n\t]\n}"
 			},
 			"created": 1517502823572,
 			"description": "",
@@ -558,17 +558,162 @@
 					"value": "application/json"
 				}
 			],
-			"metaSortKey": -1517387248157.25,
+			"metaSortKey": -1517387248057.25,
 			"method": "POST",
-			"modified": 1517502979509,
-			"name": "Create Table (Copy)",
+			"modified": 1517740786299,
+			"name": "older_than_40_summarized",
 			"parameters": [],
 			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
 			"settingDisableRenderRequestBody": false,
 			"settingEncodeUrl": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "http://localhost:5000/create_table",
+			"url": "http://localhost:5000/create-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_b37ad95190294cf5947ef6fbbd4a18c9",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test_1\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"field_1\",\n\t\t\t\"db_type\": \"ascii\",\n\t\t\t\"primary_key\": \"true\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"field_2\",\n\t\t\t\"db_type\": \"bigInt\" \n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_3\",\n\t\t\t\"db_type\": \"blob\" \n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_4\",\n\t\t\t\"db_type\": \"bytes\" \n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_5\",\n\t\t\t\"db_type\": \"boolean\" \n\t\t}\n\t]\n}"
+			},
+			"created": 1517736696693,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_209ed5abea15430da027d8209da3a3ea",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1517387248107.25,
+			"method": "POST",
+			"modified": 1517739197415,
+			"name": "types simple set 1",
+			"parameters": [],
+			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/create-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_cf68347ff644443aa8929d709d78b644",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test_2\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"field_1\",\n\t\t\t\"db_type\": \"integer\",\n\t\t\t\"primary_key\": \"true\"\n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_2\",\n\t\t\t\"db_type\": \"counter\"\n\t\t}\n\t]\n}"
+			},
+			"created": 1517742336676,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_209ed5abea15430da027d8209da3a3ea",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1517387248082.25,
+			"method": "POST",
+			"modified": 1517743993973,
+			"name": "types simple set 2",
+			"parameters": [],
+			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/create-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_88ac4d2160034a94bcf272f691a25838",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test_3\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"field_1\",\n\t\t\t\"db_type\": \"date\",\n\t\t\t\"primary_key\": \"true\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"field_2\",\n\t\t\t\"db_type\": \"datetime\" \n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_3\",\n\t\t\t\"db_type\": \"decimal\" \n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_4\",\n\t\t\t\"db_type\": \"double\" \n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_5\",\n\t\t\t\"db_type\": \"float\" \n\t\t}\n\t]\n}"
+			},
+			"created": 1517743317452,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_209ed5abea15430da027d8209da3a3ea",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1517387248069.75,
+			"method": "POST",
+			"modified": 1517744101821,
+			"name": "types simple set 3",
+			"parameters": [],
+			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/create-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_3533d611b04449bf81b9ed939dd00e27",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test_4\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"field_1\",\n\t\t\t\"db_type\": \"list\",\n\t\t\t\"value_type\": \"text\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"field_2\",\n\t\t\t\"db_type\": \"map\",\n\t\t\t\"key_type\": \"timestamp\",\n\t\t\t\"value_type\": \"text\"\n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_3\",\n\t\t\t\"db_type\": \"set\",\n\t\t\t\"value_type\": \"text\"\n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_4\",\n\t\t\t\"db_type\": \"smallint\",\n\t\t\t\"primary_key\": \"true\"\t\t\t\n\t\t}\n\t]\n}"
+			},
+			"created": 1517745780691,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_209ed5abea15430da027d8209da3a3ea",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1517387248063.5,
+			"method": "POST",
+			"modified": 1517757266079,
+			"name": "types simple set 4",
+			"parameters": [],
+			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/create-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_417e8f41b0ae454ab9318b219a9ad7e8",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test_5\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"field_1\",\n\t\t\t\"db_type\": \"text\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"field_2\",\n\t\t\t\"db_type\": \"time\"\n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_3\",\n\t\t\t\"db_type\": \"timeuuid\",\n\t\t\t\"primary_key\": \"true\"\n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_4\",\n\t\t\t\"db_type\": \"tinyint\"\n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_5\",\n\t\t\t\"db_type\": \"uuid\",\n\t\t\t\"primary_key\": \"true\"\n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_6\",\n\t\t\t\"db_type\": \"varint\"\n\t\t}\t\t\n\t]\n}"
+			},
+			"created": 1517765902061,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_209ed5abea15430da027d8209da3a3ea",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1517387248060.375,
+			"method": "POST",
+			"modified": 1517766423129,
+			"name": "types simple set 5",
+			"parameters": [],
+			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/create-table",
 			"_type": "request"
 		},
 		{
@@ -576,7 +721,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"edad > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"edad\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t},\t\n\t\"sortby\": [\n\t\t{\n\t\t\t\"count(id)\": \"desc\"\t\t}\n\t]\n}"
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"age\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"age > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"age\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t},\t\n\t\"sortby\": [\n\t\t{\n\t\t\t\"count(id)\": \"desc\"\t\t}\n\t]\n}"
 			},
 			"created": 1516022455409,
 			"description": "",
@@ -589,7 +734,7 @@
 			],
 			"metaSortKey": -1516138850088.875,
 			"method": "POST",
-			"modified": 1517339905301,
+			"modified": 1517681680720,
 			"name": "group by example 1",
 			"parameters": [],
 			"parentId": "fld_1f27e5a9056d4808a9067fc0cff37026",
@@ -634,7 +779,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"edad > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"edad\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"total\"}]\n\t\t}\n\t},\n\t\"sortby\": [{\"total\": \"desc\"}],\n\t\"save\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mayores_de_40_total\"\n\t}\n}\t"
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"edad > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"edad\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"total\"}]\n\t\t}\n\t},\n\t\"sortby\": [{\"total\": \"desc\"}],\n\t\"save\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"older_than_40_summarized\"\n\t}\n}\t"
 			},
 			"created": 1516651434670,
 			"description": "",
@@ -647,7 +792,7 @@
 			],
 			"metaSortKey": -1516138849988.875,
 			"method": "POST",
-			"modified": 1517512878892,
+			"modified": 1517740701947,
 			"name": "group by and save",
 			"parameters": [],
 			"parentId": "fld_1f27e5a9056d4808a9067fc0cff37026",

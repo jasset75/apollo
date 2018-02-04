@@ -69,6 +69,110 @@ Accepted parameters:
         - *db_type*: 
 
             Column type correspondig to Cassandra column types:
+            
+            - Ascii
+
+                Stores a US-ASCII character string
+
+            - BigInt
+
+                Stores a 64-bit signed long value
+
+            - Blob
+
+                Stores a raw binary value
+
+            - Bytes
+
+                alias of Blob
+
+            - Boolean
+
+                Stores a boolean True or False value
+
+            - Counter
+
+                Stores a counter that can be inremented and decremented
+
+            - Date
+
+                Note: this type is overloaded, and will likely be changed or removed to accommodate distinct date type in a future version
+
+                Stores a date value, with no time-of-day
+
+            - DateTime
+
+                Stores a datetime value
+
+            - Decimal
+
+                Stores a variable precision decimal value
+
+            - Float
+
+                double_precision
+
+                Stores a floating point value
+
+            - Integer
+
+                Stores a 32-bit signed integer value
+
+            - List
+
+                Stores a list of ordered values
+
+                [Datastax documentation about use of lists](http://www.datastax.com/documentation/cql/3.1/cql/cql_using/use_list_t.html)
+               
+                > Parameters: value_type – a column class indicating the types of the value
+
+            - Map
+
+                Stores a key -> value map (dictionary)
+
+                http://www.datastax.com/documentation/cql/3.1/cql/cql_using/use_map_t.html
+
+                > Parameters: 
+
+                >    key_type – a column class indicating the types of the key
+                >    value_type – a column class indicating the types of the value
+
+            - Set
+
+                Stores a set of unordered, unique values
+
+                [Datastax documentation about use of sets](http://www.datastax.com/documentation/cql/3.1/cql/cql_using/use_set_t.html)
+               
+                > Parameters: 
+
+                >    value_type – a column class indicating the types of the value
+                >    strict – sets whether non set values will be coerced to set type on validation, or raise a validation error, defaults to True
+
+            - Text
+
+                Stores a UTF-8 encoded string
+
+                > Parameters: 
+
+                >    min_length (int) – Sets the minimum length of this string, for validation purposes. Defaults to 1 if this is a required column. Otherwise, None.
+                >    max_lemgth (int) – Sets the maximum length of this string, for validation purposes.
+
+            - TimeUUID
+
+                UUID containing timestamp
+
+            - UUID
+
+                Stores a type 1 or 4 UUID
+
+            - VarInt
+
+                Stores an arbitrary-precision integer
+
+
+        - *value_type*:
+
+            Some types (i.e.: map, list, set) are complex types which needs to define value type within the collection
 
         - *primary_key*  = False
 
@@ -107,8 +211,7 @@ Accepted parameters:
 
             boolean, if set to True, this is a static column, with a single value per partition
 
-
-+ Request (application/json)
++ Request Simple Test (application/json)
 
         {
               "keyspace": "examples",
@@ -116,11 +219,11 @@ Accepted parameters:
               "columns": [
                     {
                           "db_field": "field_1",
-                          "db_type": "Text"
+                          "db_type": "text"
                     }, 
                     {
                           "db_field": "field_2",
-                          "db_type": "Integer", 
+                          "db_type": "integer", 
                           "primary_key": "true"
                     }
               ]
@@ -135,20 +238,205 @@ Accepted parameters:
     + Body
 
             {
+                "tablename": "test",
+                "status": 201,
+                "success": true,
+                "keyspace": "examples",
+                "data": null,
                 "columns": [
                     {
+                        "db_type": "text",
                         "db_field": "field_1"
                     },
                     {
+                        "db_type": "integer",
                         "db_field": "field_2",
                         "primary_key": "true"
                     }
-                ],
-                "data": null,
-                "keyspace": "examples",
-                "status": 200,
+                ]
+            }
+
++ Request Simple Test - Set 1 (application/json)
+
+        {
+            "keyspace": "examples",
+            "tablename": "test_1",
+            "columns": [
+                {
+                    "db_field": "field_1",
+                    "db_type": "ascii",
+                    "primary_key": "true"
+                }, 
+                {
+                    "db_field": "field_2",
+                    "db_type": "bigInt" 
+                },
+                {
+                    "db_field": "field_3",
+                    "db_type": "blob" 
+                },
+                {
+                    "db_field": "field_4",
+                    "db_type": "bytes" 
+                },
+                {
+                    "db_field": "field_5",
+                    "db_type": "boolean" 
+                }
+            ]
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /create-table
+
+    + Body
+
+            {
+                "tablename": "test_1",
+                "status": 201,
                 "success": true,
-                "tablename": "test"
+                "keyspace": "examples",
+                "data": null,
+                "columns": [
+                    {
+                        "db_type": "ascii",
+                        "db_field": "field_1",
+                        "primary_key": "true"
+                    },
+                    {
+                        "db_type": "bigInt",
+                        "db_field": "field_2"
+                    },
+                    {
+                        "db_type": "blob",
+                        "db_field": "field_3"
+                    },
+                    {
+                        "db_type": "bytes",
+                        "db_field": "field_4"
+                    },
+                    {
+                        "db_type": "boolean",
+                        "db_field": "field_5"
+                    }
+                ]
+            }
+
++ Request Simple Test - Set 2 (application/json)
+
+        {
+            "keyspace": "examples",
+            "tablename": "test_2",
+            "columns": [
+                {
+                    "db_field": "field_1",
+                    "db_type": "integer",
+                    "primary_key": "true"
+                },
+                {
+                    "db_field": "field_2",
+                    "db_type": "counter"
+                }
+            ]
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /create-table
+
+    + Body
+
+            {
+                "tablename": "test_2",
+                "status": 201,
+                "success": true,
+                "keyspace": "examples",
+                "data": null,
+                "columns": [
+                    {
+                        "db_type": "integer",
+                        "db_field": "field_1",
+                        "primary_key": "true"
+                    },
+                    {
+                        "db_type": "counter",
+                        "db_field": "field_2"
+                    }
+                ]
+            }
+
++ Request Simple Test - Set 3 (application/json)
+
+    {
+        "keyspace": "examples",
+        "tablename": "test_3",
+        "columns": [
+            {
+                "db_field": "field_1",
+                "db_type": "date",
+                "primary_key": "true"
+            }, 
+            {
+                "db_field": "field_2",
+                "db_type": "datetime" 
+            },
+            {
+                "db_field": "field_3",
+                "db_type": "decimal" 
+            },
+            {
+                "db_field": "field_4",
+                "db_type": "double" 
+            },
+            {
+                "db_field": "field_5",
+                "db_type": "float" 
+            }
+        ]
+    }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /create-table
+
+    + Body
+
+            {
+                "tablename": "test_3",
+                "status": 201,
+                "success": true,
+                "keyspace": "examples",
+                "data": null,
+                "columns": [
+                    {
+                        "db_type": "date",
+                        "db_field": "field_1",
+                        "primary_key": "true"
+                    },
+                    {
+                        "db_type": "datetime",
+                        "db_field": "field_2"
+                    },
+                    {
+                        "db_type": "decimal",
+                        "db_field": "field_3"
+                    },
+                    {
+                        "db_type": "double",
+                        "db_field": "field_4"
+                    },
+                    {
+                        "db_type": "float",
+                        "db_field": "field_5"
+                    }
+                ]
             }
 
 

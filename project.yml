@@ -1,10 +1,13 @@
-encoding: UTF-8
-executor:
-  cores: 6
-  memory: 4g
-driver:
-  memory: 4g
-max_cores: 6
+app:
+  encoding: UTF-8
+  debug: true
+spark:
+  executor:
+    cores: 6
+    memory: 4g
+  driver:
+    memory: 4g
+  max_cores: 6
 cassandra:
   host: localhost
   port: 9042

@@ -1,11 +1,12 @@
 import json
 from functools import wraps
 from flask import Flask, make_response, redirect, url_for, request, jsonify
+from flask import Response
+# project configuration wrapper: yaml formatted file
+from misc.config import settings as conf
 from quiver import quiver
 from quiver import unpack_params as unpack
 import admix
-from flask import Response
-
 
 VERSION = 0.1
 app = Flask(__name__)
@@ -204,4 +205,4 @@ def create_table():
 
 if __name__ == "__main__":
 
-    app.run(debug=True)
+    app.run(debug=conf.app.debug)

@@ -12,7 +12,7 @@ from pyspark.sql import SQLContext, SparkSession
 import pyspark.sql.functions as func
 
 # environment variable with character encoding
-os.putenv('PYTHONIOENCODING', conf.encoding)
+os.putenv('PYTHONIOENCODING', conf.app.encoding)
 
 """
     allowed funcs:
@@ -42,10 +42,10 @@ _agg_allowed_funcs = {
 }
 
 spark_conf = SparkConf().setAll([
-    ('spark.executor.memory', conf.executor.memory),
-    ('spark.executor.cores', conf.executor.cores),
-    ('spark.cores.max', conf.max_cores),
-    ('spark.driver.memory', conf.driver.memory)
+    ('spark.executor.memory', conf.spark.executor.memory),
+    ('spark.executor.cores', conf.spark.executor.cores),
+    ('spark.cores.max', conf.spark.max_cores),
+    ('spark.driver.memory', conf.spark.driver.memory)
 ])
 
 # setting up Cassandra-ready spark session
@@ -59,7 +59,7 @@ spark = (
     .config('spark.cassandra.output.consistency.level',
             conf.cassandra.consistency_level)
     .config(conf=spark_conf)
-    .master('local[{}]'.format(conf.executor.cores))
+    .master('local[{}]'.format(conf.spark.executor.cores))
     .getOrCreate()
 )
 
@@ -440,8 +440,10 @@ def get_table(keyspace, tablename, select=None, calculated=None, s_filter=None,
     """
 
     # retrieving dataset from Cassandra
-    ds_table = _get_table(keyspace, tablename, select, calculated,
-                          s_filter, groupby, sortby, join_key)
+    ds_table = _get_table(keyspace, tablename, select=select,
+                          calculated=calculated, s_filter=s_filter,
+                          groupby=groupby, sortby=sortby, join_key=join_key,
+                          save=save)
 
     return _formatted(ds_table, format)
 
@@ -464,9 +466,12 @@ def join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
         format:
             dict or str (json serialized)
     """
-    ds_join = _join(table_a, table_b, join_a, join_b, union_a, union_b,
-                    select, calculated, s_filter, join_groupby, sortby,
-                    join_key, save, join_type)
+
+    ds_join = _join(table_a=table_a, table_b=table_b, join_a=join_a,
+                    join_b=join_b, union_a=union_a, union_b=union_b,
+                    select=select, calculated=calculated, s_filter=s_filter,
+                    join_groupby=join_groupby, sortby=sortby,
+                    join_key=join_key, save=save, join_type=join_type)
 
     return _formatted(ds_join, format)
 
@@ -486,8 +491,10 @@ def union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
         format:
             dict or str (json serialized)
     """
-    ds_union = _union(table_a, table_b, join_a, join_b, union_a, union_b,
-                      select, calculated, s_filter, union_groupby, sortby,
-                      join_key, save, union_type)
+    ds_union = _union(table_a=table_a, table_b=table_b, join_a=join_a,
+                      join_b=join_b, union_a=union_a, union_b=union_b,
+                      select=select, calculated=calculated, s_filter=s_filter,
+                      union_groupby=union_groupby, sortby=sortby,
+                      join_key=join_key, save=save, union_type=union_type)
 
     return _formatted(ds_union, format)
