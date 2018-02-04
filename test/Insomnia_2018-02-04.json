@@ -1,0 +1,1079 @@
+{
+	"_type": "export",
+	"__export_format": 3,
+	"__export_date": "2018-02-04T20:11:36.854Z",
+	"__export_source": "insomnia.desktop.app:v5.12.4",
+	"resources": [
+		{
+			"_id": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"created": 1515967238053,
+			"description": "",
+			"modified": 1515967238053,
+			"name": "Insomnia",
+			"parentId": null,
+			"_type": "workspace"
+		},
+		{
+			"_id": "env_549c1b25e4674c189d0f863f42535fa7",
+			"color": null,
+			"created": 1515967238149,
+			"data": {},
+			"isPrivate": false,
+			"modified": 1515967265983,
+			"name": "Spark",
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"_type": "environment"
+		},
+		{
+			"_id": "jar_616fc0ad94b94cbf843d3c4c18f03993",
+			"cookies": [],
+			"created": 1515967238251,
+			"modified": 1515967238251,
+			"name": "Default Jar",
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"_type": "cookie_jar"
+		},
+		{
+			"_id": "fld_4ff917511ccc496c864adde8696bea59",
+			"created": 1517339522832,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1517339522833,
+			"modified": 1517339522832,
+			"name": "basic",
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_606acdb8fa674fdd969423c92620a962",
+			"created": 1517339686791,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1516653424193.5,
+			"modified": 1517339689613,
+			"name": "get_table",
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_c1b45609b5b74252863f511f9db732b7",
+			"created": 1517339846260,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1516310374823.75,
+			"modified": 1517339930481,
+			"name": "join",
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_e3762f9b467846fca151b331a95412ff",
+			"created": 1517340307582,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1516138849938.875,
+			"modified": 1517340320625,
+			"name": "union",
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_7c2a5a87683a472996b7b49718f74cf8",
+			"created": 1517345331937,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1516053087771.4375,
+			"modified": 1517345354555,
+			"name": "hybrid",
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
+			"created": 1517433909300,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1516996473513.25,
+			"modified": 1517433920991,
+			"name": "create_table",
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"_type": "request_group"
+		},
+		{
+			"_id": "env_e90c924568a34906af60dc1d8f4f7d87",
+			"color": "#3400ff",
+			"created": 1516473998747,
+			"data": {},
+			"isPrivate": false,
+			"modified": 1516474032373,
+			"name": "Apollo",
+			"parentId": "env_549c1b25e4674c189d0f863f42535fa7",
+			"_type": "environment"
+		},
+		{
+			"_id": "req_32d6712d87d84a428d78192d6ff2b846",
+			"authentication": {},
+			"body": {},
+			"created": 1516191223419,
+			"description": "",
+			"headers": [],
+			"metaSortKey": -1517339522858,
+			"method": "GET",
+			"modified": 1517339538975,
+			"name": "Version",
+			"parameters": [],
+			"parentId": "fld_4ff917511ccc496c864adde8696bea59",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/version",
+			"_type": "request"
+		},
+		{
+			"_id": "req_64567e6c75a64c92aa3d3ae3b1f77067",
+			"authentication": {},
+			"body": {},
+			"created": 1516472366923,
+			"description": "",
+			"headers": [],
+			"metaSortKey": -1517339522908,
+			"method": "GET",
+			"modified": 1517339545960,
+			"name": "404",
+			"parameters": [],
+			"parentId": "fld_4ff917511ccc496c864adde8696bea59",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/version_fake",
+			"_type": "request"
+		},
+		{
+			"_id": "req_81237a61c2214f769f9683bada09854c",
+			"authentication": {},
+			"body": {},
+			"created": 1517339558855,
+			"description": "",
+			"headers": [],
+			"metaSortKey": -1517339522958,
+			"method": "GET",
+			"modified": 1517339586569,
+			"name": "About",
+			"parameters": [],
+			"parentId": "fld_4ff917511ccc496c864adde8696bea59",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/about",
+			"_type": "request"
+		},
+		{
+			"_id": "req_06333bb62d7747cfb3a823b941d24565",
+			"authentication": {},
+			"body": {},
+			"created": 1517339638120,
+			"description": "",
+			"headers": [],
+			"metaSortKey": -1517339522933,
+			"method": "GET",
+			"modified": 1517339657493,
+			"name": "Root",
+			"parameters": [],
+			"parentId": "fld_4ff917511ccc496c864adde8696bea59",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/",
+			"_type": "request"
+		},
+		{
+			"_id": "fld_1f27e5a9056d4808a9067fc0cff37026",
+			"created": 1517339882772,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1516310374923.75,
+			"modified": 1517340133002,
+			"name": "group by",
+			"parentId": "fld_606acdb8fa674fdd969423c92620a962",
+			"_type": "request_group"
+		},
+		{
+			"_id": "req_b849cb0673b844d48e89a1c052f32dc4",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"filter\": \"email like \\\"%am%\\\"\",\n\t\"sortby\": [\n\t\t{\"gender\": \"asc\"},\n\t\t{\"first_name\": \"asc\"}\n\t]\n}"
+			},
+			"created": 1515967325554,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1516310374873.75,
+			"method": "POST",
+			"modified": 1517500295235,
+			"name": "get_table mock_data",
+			"parameters": [],
+			"parentId": "fld_606acdb8fa674fdd969423c92620a962",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_9554163e0cb54d38916e58498e64814d",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples_bis\",\n\t\"tablename\":\"mock_drugs\"\n}"
+			},
+			"created": 1516226475916,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1516310374823.75,
+			"method": "POST",
+			"modified": 1517339701432,
+			"name": "get_table mock_drugs",
+			"parameters": [],
+			"parentId": "fld_606acdb8fa674fdd969423c92620a962",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_b7ad8b7d47c84cac95bfd564799d0f6c",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"mock_cars\",\n\t\"select\": [],\n\t\"filter\": \"color == \\\"Blue\\\"\"\n}"
+			},
+			"created": 1517249448978,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1516310374848.75,
+			"method": "POST",
+			"modified": 1517349962363,
+			"name": "get_table mock_cars",
+			"parameters": [],
+			"parentId": "fld_606acdb8fa674fdd969423c92620a962",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_8b0a6b77b66c4947b2caa5c6300e42b5",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples_bis\",\n\t\"tablename\":\"mock_companies\"\n}"
+			},
+			"created": 1517339763403,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1516138850163.875,
+			"method": "POST",
+			"modified": 1517339793435,
+			"name": "get_table mock_companies",
+			"parameters": [],
+			"parentId": "fld_606acdb8fa674fdd969423c92620a962",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "fld_f34377261b624640947b73c3aceea967",
+			"created": 1517339940771,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1517339940771,
+			"modified": 1517339940771,
+			"name": "inner",
+			"parentId": "fld_c1b45609b5b74252863f511f9db732b7",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_746198b6c1f0457a92f11af7f55c496f",
+			"created": 1517340167890,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1517340167890,
+			"modified": 1517340167890,
+			"name": "right",
+			"parentId": "fld_c1b45609b5b74252863f511f9db732b7",
+			"_type": "request_group"
+		},
+		{
+			"_id": "req_63d8860be3b04f828d69e1264b8ee6ea",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"select\": [],\n\t\t\t\"filter\": \"color == \\\"Blue\\\"\"\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"select\": [],\n\t\t\t\"filter\": \"color == \\\"Red\\\"\"\n\t\t}\n\t}"
+			},
+			"created": 1517247264113,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325054,
+			"method": "POST",
+			"modified": 1517340407573,
+			"name": "union simple",
+			"parameters": [],
+			"parentId": "fld_e3762f9b467846fca151b331a95412ff",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/union",
+			"_type": "request"
+		},
+		{
+			"_id": "req_630a612e1f934b009022bcd8d636a95e",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"select\": [],\n\t\t\t\"filter\": \"color == \\\"Blue\\\"\"\n\t\t},\n\t\t\"union_b\": {\n\t\t\t\"table_a\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\t\"select\": [],\n\t\t\t\t\t\"filter\": \"color == \\\"Red\\\"\"\n\t\t\t},\t\t\t\n\t\t\t\"table_b\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\t\"select\": [],\n\t\t\t\t\t\"filter\": \"color == \\\"Yellow\\\"\"\n\t\t\t}\t\t\t\n\t\t}\n\t}"
+			},
+			"created": 1517344178961,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325004,
+			"method": "POST",
+			"modified": 1517345217395,
+			"name": "union multiple",
+			"parameters": [],
+			"parentId": "fld_e3762f9b467846fca151b331a95412ff",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/union",
+			"_type": "request"
+		},
+		{
+			"_id": "req_38985480eebb4171bb6ab9627d3ae4dc",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"select\": [],\n\t\t\t\"filter\": \"color == \\\"Blue\\\"\"\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"select\": [],\n\t\t\t\"filter\": \"color == \\\"Red\\\"\"\n\t\t}\n\t}"
+			},
+			"created": 1517345331945,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325054,
+			"method": "POST",
+			"modified": 1517345331945,
+			"name": "union simple",
+			"parameters": [],
+			"parentId": "fld_7c2a5a87683a472996b7b49718f74cf8",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/union",
+			"_type": "request"
+		},
+		{
+			"_id": "req_64d83c0b158a45abb13e3ba2e94d5214",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"select\": [],\n\t\t\t\"filter\": \"color == \\\"Blue\\\"\"\n\t\t},\n\t\t\"union_b\": {\n\t\t\t\"table_a\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\t\"select\": [],\n\t\t\t\t\t\"filter\": \"color == \\\"Red\\\"\"\n\t\t\t},\t\t\t\n\t\t\t\"table_b\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\t\"select\": [],\n\t\t\t\t\t\"filter\": \"color == \\\"Yellow\\\"\"\n\t\t\t}\t\t\t\n\t\t}\n\t}"
+			},
+			"created": 1517345331958,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325004,
+			"method": "POST",
+			"modified": 1517345331958,
+			"name": "union multiple",
+			"parameters": [],
+			"parentId": "fld_7c2a5a87683a472996b7b49718f74cf8",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/union",
+			"_type": "request"
+		},
+		{
+			"_id": "req_b5715b226bdb40d6bf9f371b938e04b8",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"join_a\": {\n\t\t\t\"table_a\": {\n\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\"join_key\": [\"id_owner\"],\n\t\t\t\t\"select\": [\"car_make\",\"car_model\",\"registration\",\"color\"],\n\t\t\t\t\"filter\": \"color == \\\"Red\\\"\"\n\t\t\t},\n\t\t\t\"table_b\": {\n\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\t\"join_key\": [{\"id\": \"id_people\"}],\n\t\t\t\t\"select\": [\"birth_date\",\"gender\",\"first_name\"]\n\t\t\t}\n\t\t},\t\t\n\t\t\"union_b\": {\n\t\t\t\"join_a\": {\n\t\t\t\t\"table_a\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\t\"join_key\": [\"id_owner\"],\n\t\t\t\t\t\"select\": [\"car_make\",\"car_model\",\"registration\",\"color\"],\n\t\t\t\t\t\"filter\": \"color == \\\"Orange\\\"\"\t\t\t\t\n\t\t\t\t},\n\t\t\t\t\"table_b\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\t\t\"join_key\": [{\"id\": \"id_people\"}],\n\t\t\t\t\t\"select\": [\"birth_date\",\"gender\",\"first_name\"]\n\t\t\t\t}\n\t\t\t},\t\t\n\t\t\t\"join_b\": {\n\t\t\t\t\"table_a\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\t\"join_key\": [\"id_owner\"],\n\t\t\t\t\t\"select\": [\"car_make\",\"car_model\",\"registration\",\"color\"],\n\t\t\t\t\t\"filter\": \"color == \\\"Purple\\\"\"\t\t\t\t\n\t\t\t\t},\n\t\t\t\t\"table_b\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\t\t\"join_key\": [{\"id\": \"id_people\"}],\n\t\t\t\t\t\"select\": [\"birth_date\",\"gender\",\"first_name\"]\n\t\t\t\t}\n\t\t\t}\t\t\n\t\t}\n\t}"
+			},
+			"created": 1517348110277,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967324954,
+			"method": "POST",
+			"modified": 1517350425454,
+			"name": "union table-join",
+			"parameters": [],
+			"parentId": "fld_7c2a5a87683a472996b7b49718f74cf8",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/union",
+			"_type": "request"
+		},
+		{
+			"_id": "req_e295922e4f1542879d7eb4b14cd05104",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\"select\": [],\n\t\t\t\"join_key\": [{\"id\": \"id_people\"}]\n\t\t},\n\t\t\"union_b\": {\n\t\t\t\"table_a\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\t\"select\": [],\n\t\t\t\t\t\"filter\": \"color == \\\"Red\\\"\"\n\t\t\t},\t\t\t\n\t\t\t\"table_b\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\t\"select\": [],\n\t\t\t\t\t\"filter\": \"color == \\\"Yellow\\\"\"\n\t\t\t},\n\t\t\t\"join_key\": [\"id_owner\"]\n\t\t}\n\t}"
+			},
+			"created": 1517352486194,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967324904,
+			"method": "POST",
+			"modified": 1517352606081,
+			"name": "join table-union",
+			"parameters": [],
+			"parentId": "fld_7c2a5a87683a472996b7b49718f74cf8",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_441ddff98d424296bf542898f15fd949",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"field_1\",\n\t\t\t\"db_type\": \"text\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"field_2\",\n\t\t\t\"db_type\": \"integer\", \n\t\t\t\"primary_key\": \"true\"\n\t\t}\n\t]\n}"
+			},
+			"created": 1517434441984,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_209ed5abea15430da027d8209da3a3ea",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1517434441984,
+			"method": "POST",
+			"modified": 1517739208696,
+			"name": "types simple",
+			"parameters": [],
+			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/create-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_bb377050166f41839a2599fa26dc6f2f",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples_bis\",\n\t\"tablename\": \"older_than_40_summarized\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"age\",\n\t\t\t\"db_type\": \"integer\",\n\t\t\t\"primary_key\": \"true\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"total\",\n\t\t\t\"db_type\": \"Integer\" \n\t\t}\n\t]\n}"
+			},
+			"created": 1517502823572,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_209ed5abea15430da027d8209da3a3ea",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1517387248057.25,
+			"method": "POST",
+			"modified": 1517768136980,
+			"name": "older_than_40_summarized",
+			"parameters": [],
+			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/create-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_b37ad95190294cf5947ef6fbbd4a18c9",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test_1\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"field_1\",\n\t\t\t\"db_type\": \"ascii\",\n\t\t\t\"primary_key\": \"true\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"field_2\",\n\t\t\t\"db_type\": \"bigInt\" \n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_3\",\n\t\t\t\"db_type\": \"blob\" \n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_4\",\n\t\t\t\"db_type\": \"bytes\" \n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_5\",\n\t\t\t\"db_type\": \"boolean\" \n\t\t}\n\t]\n}"
+			},
+			"created": 1517736696693,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_209ed5abea15430da027d8209da3a3ea",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1517387248107.25,
+			"method": "POST",
+			"modified": 1517739197415,
+			"name": "types simple set 1",
+			"parameters": [],
+			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/create-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_cf68347ff644443aa8929d709d78b644",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test_2\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"field_1\",\n\t\t\t\"db_type\": \"integer\",\n\t\t\t\"primary_key\": \"true\"\n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_2\",\n\t\t\t\"db_type\": \"counter\"\n\t\t}\n\t]\n}"
+			},
+			"created": 1517742336676,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_209ed5abea15430da027d8209da3a3ea",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1517387248082.25,
+			"method": "POST",
+			"modified": 1517743993973,
+			"name": "types simple set 2",
+			"parameters": [],
+			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/create-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_88ac4d2160034a94bcf272f691a25838",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test_3\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"field_1\",\n\t\t\t\"db_type\": \"date\",\n\t\t\t\"primary_key\": \"true\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"field_2\",\n\t\t\t\"db_type\": \"datetime\" \n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_3\",\n\t\t\t\"db_type\": \"decimal\" \n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_4\",\n\t\t\t\"db_type\": \"double\" \n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_5\",\n\t\t\t\"db_type\": \"float\" \n\t\t}\n\t]\n}"
+			},
+			"created": 1517743317452,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_209ed5abea15430da027d8209da3a3ea",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1517387248069.75,
+			"method": "POST",
+			"modified": 1517744101821,
+			"name": "types simple set 3",
+			"parameters": [],
+			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/create-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_3533d611b04449bf81b9ed939dd00e27",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test_4\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"field_1\",\n\t\t\t\"db_type\": \"list\",\n\t\t\t\"value_type\": \"text\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"field_2\",\n\t\t\t\"db_type\": \"map\",\n\t\t\t\"key_type\": \"timestamp\",\n\t\t\t\"value_type\": \"text\"\n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_3\",\n\t\t\t\"db_type\": \"set\",\n\t\t\t\"value_type\": \"text\"\n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_4\",\n\t\t\t\"db_type\": \"smallint\",\n\t\t\t\"primary_key\": \"true\"\t\t\t\n\t\t}\n\t]\n}"
+			},
+			"created": 1517745780691,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_209ed5abea15430da027d8209da3a3ea",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1517387248063.5,
+			"method": "POST",
+			"modified": 1517757266079,
+			"name": "types simple set 4",
+			"parameters": [],
+			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/create-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_417e8f41b0ae454ab9318b219a9ad7e8",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test_5\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"field_1\",\n\t\t\t\"db_type\": \"text\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"field_2\",\n\t\t\t\"db_type\": \"time\"\n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_3\",\n\t\t\t\"db_type\": \"timeuuid\",\n\t\t\t\"primary_key\": \"true\"\n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_4\",\n\t\t\t\"db_type\": \"tinyint\"\n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_5\",\n\t\t\t\"db_type\": \"uuid\",\n\t\t\t\"primary_key\": \"true\"\n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_6\",\n\t\t\t\"db_type\": \"varint\"\n\t\t}\t\t\n\t]\n}"
+			},
+			"created": 1517765902061,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_209ed5abea15430da027d8209da3a3ea",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1517387248060.375,
+			"method": "POST",
+			"modified": 1517766423129,
+			"name": "types simple set 5",
+			"parameters": [],
+			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/create-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_19fe39bd1c864e6fb0b25ac7de437d80",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"age\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"age > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"age\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t},\t\n\t\"sortby\": [\n\t\t{\n\t\t\t\"count(id)\": \"desc\"\t\t}\n\t]\n}"
+			},
+			"created": 1516022455409,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1516138850088.875,
+			"method": "POST",
+			"modified": 1517681680720,
+			"name": "group by example 1",
+			"parameters": [],
+			"parentId": "fld_1f27e5a9056d4808a9067fc0cff37026",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_a26a27d5839a4462b3f4c3702627540d",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"filter\": \"months_between(current_date(),birth_date)/12 between 36 and 54\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"drinker\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"num_people_36_54\"}]\n\t\t}\n\t},\t\n\t\"sortby\": [\n\t\t{\"num_people_36_54\": \"desc\"}\n\t]\t\n}"
+			},
+			"created": 1516302473286,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1516138850038.875,
+			"method": "POST",
+			"modified": 1517774676749,
+			"name": "group by example 2",
+			"parameters": [],
+			"parentId": "fld_1f27e5a9056d4808a9067fc0cff37026",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_cb580de802084977beac92cb9274c092",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"age\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"age > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"age\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"total\"}]\n\t\t}\n\t},\n\t\"sortby\": [{\"total\": \"desc\"}],\n\t\"save\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"older_than_40_summarized\"\n\t}\n}\t"
+			},
+			"created": 1516651434670,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1516138849988.875,
+			"method": "POST",
+			"modified": 1517768840471,
+			"name": "group by and save",
+			"parameters": [],
+			"parentId": "fld_1f27e5a9056d4808a9067fc0cff37026",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "fld_0a40314c3f094319a5e2abb050ebe1b0",
+			"created": 1517340043511,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1515967325604,
+			"modified": 1517340049764,
+			"name": "group by",
+			"parentId": "fld_f34377261b624640947b73c3aceea967",
+			"_type": "request_group"
+		},
+		{
+			"_id": "req_6ade0162754448a5a5fe81fa6ccd76f3",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"table_a\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"mock_data\",\n\t\t\"join_key\": [\"id\"],\n\t\t\"select\": [\"first_name\",\"last_name\",\"email\",\"gender\",\"drinker\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mock_drugs\",\n\t\t\"join_key\": [\"id_patient\"],\n\t\t\"select\": [\"drug_name\"]\n\t},\n\t\"sortby\": [\n\t\t{\"drug_name\": \"asc\"},\n\t\t{\"first_name\": \"asc\"}\n\t]\n}"
+			},
+			"created": 1516457479062,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325554,
+			"method": "POST",
+			"modified": 1517499788356,
+			"name": "inner join people-drugs",
+			"parameters": [],
+			"parentId": "fld_f34377261b624640947b73c3aceea967",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_ed03ac19704e4f5490aee4aac2ba8890",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"join_a\": {\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\"join_key\": [\"id_people\"],\n\t\t\t\"select\": [{\"id\": \"id_people\"},{\"first_name\": \"name\"},\"last_name\",\"email\",\"gender\",\"drinker\"]\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"join_key\": [\"id_owner\"],\n\t\t\t\"select\": [\"car_id\"]\n\t\t},\n\t\t\"join_key\": [\"id_people\",\"car_id\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"cars_owned_by_drinkers\",\n\t\t\"join_key\": [\"id\",\"car_id\"],\n\t\t\"select\": [\"car_make\",\"car_model\"]\n\t}\n}\n"
+			},
+			"created": 1516477047253,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325466.5,
+			"method": "POST",
+			"modified": 1517340030385,
+			"name": "inner join multiple double key",
+			"parameters": [],
+			"parentId": "fld_f34377261b624640947b73c3aceea967",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_7a64a5d282734849b77522efd24b1c7b",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"join_key\": [\"car_id\"],\n\t\t\t\"select\": []\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"cars_owned_by_drinkers\",\n\t\t\t\"join_key\": [\"car_id\"],\n\t\t\t\"select\": [\"car_make\",\"car_model\"]\n\t\t}\n\t}"
+			},
+			"created": 1516488095811,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325472.75,
+			"method": "POST",
+			"modified": 1517345026712,
+			"name": "inner join people-cars",
+			"parameters": [],
+			"parentId": "fld_f34377261b624640947b73c3aceea967",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_14e1757a5f614f86a761cdbda5ba05b7",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"join_a\": {\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\"join_key\": [{\"id\": \"id_person\"}],\n\t\t\t\"calculated\": {\n\t\t\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t\t\t},\n\t\t\t\"select\": [\"first_name\",\"last_name\",\"email\",\"gender\",\"drinker\",\"smoker_bool\",\"language\",\"edad\"]\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples_bis\",\n\t\t\t\"tablename\": \"mock_drugs\",\n\t\t\t\"join_key\": [\"id_patient\"],\n\t\t\t\"select\": [\"drug_name\",\"id_company\"]\n\t\t},\n\t\t\"join_key\": [\"id_company\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mock_companies\",\n\t\t\"join_key\": [\"id_company\"],\n\t\t\"select\": [\"annual_budget\",\"city\",\"company_name\",\"country\",{\"id\": \"id_company\"}]\n\t},\n\t\"sortby\": [\n\t\t{\"country\": \"desc\"},\n\t\t{\"annual_budget\": \"asc\"}\n\t]\n}"
+			},
+			"created": 1516533250177,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325416.5,
+			"method": "POST",
+			"modified": 1517340244508,
+			"name": "inner join multiple 3",
+			"parameters": [],
+			"parentId": "fld_f34377261b624640947b73c3aceea967",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_d0fbc536477241a78ec2db8e5f566f39",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"table_a\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mock_drugs\",\n\t\t\"join_key\": [\"id_company\"],\n\t\t\"select\": [\"drug_name\",\"id_company\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mock_companies\",\n\t\t\"join_key\": [{\"id\": \"id_company\"}],\n\t\t\"select\": [{\"id\": \"id_company\"},\"company_name\"]\n\t},\n\t\"join-type\": \"inner\"\n}"
+			},
+			"created": 1516543677418,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325479,
+			"method": "POST",
+			"modified": 1517340022638,
+			"name": "inner join drugs-companies",
+			"parameters": [],
+			"parentId": "fld_f34377261b624640947b73c3aceea967",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_19b318b6d2e64d87ad8e32b9650bdd3a",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"join_a\": {\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\"join_key\": [\"id_people\"],\n\t\t\t\"select\": [{\"id\": \"id_people\"},{\"first_name\": \"name\"},\"last_name\",\"email\",\"gender\",\"drinker\"]\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"join_key\": [\"id_owner\"],\n\t\t\t\"select\": [\"car_id\"]\n\t\t},\n\t\t\"join_key\": [\"id_people\",\"car_id\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"cars_owned_by_drinkers\",\n\t\t\"join_key\": [\"id\",{\"car_id\": \"car_id_2\"}],\n\t\t\"select\": [\"car_make\",\"car_model\"]\n\t},\n\t\"select\": [\"id_people\",\"name\",\"car_id\",\"car_make\"]\t\n}\n"
+			},
+			"created": 1517176566247,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325366.5,
+			"method": "POST",
+			"modified": 1517340292837,
+			"name": "select on multiple join",
+			"parameters": [],
+			"parentId": "fld_f34377261b624640947b73c3aceea967",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_680c15f769f445109b27d30150874f81",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"table_a\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mock_drugs\",\n\t\t\"join_key\": [\"id_company\"],\n\t\t\"select\": [\"drug_name\",\"id_company\"],\n\t\t\"filter\": \"drug_name like \\\"%am%\\\"\"\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mock_companies\",\n\t\t\"join_key\": [{\"id\": \"id_company\"}],\n\t\t\"select\": [{\"id\": \"id_company\"},\"company_name\"]\n\t},\n\t\"join_type\": \"right\"\n}"
+			},
+			"created": 1517247947497,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1517340054330.5,
+			"method": "POST",
+			"modified": 1517502863028,
+			"name": "right join filtered drugs-companies",
+			"parameters": [],
+			"parentId": "fld_746198b6c1f0457a92f11af7f55c496f",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_a1a747cd4fda458ca5af2680daeadaa9",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"table_a\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"mock_data\",\n\t\t\"join_key\": [\"id\"],\n\t\t\"select\": [\"first_name\",\"last_name\",\"email\",\"gender\",\"drinker\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"mock_cars\",\n\t\t\"join_key\": [\"id_owner\"],\n\t\t\"select\": [\"car_make\",\"car_model\",\"car_model_year\"]\n\t},\n\t\"groupby\": { \n\t\t\"grouped\": [\"drinker\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t}\t\n}\n\n//"
+			},
+			"created": 1516473716955,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325579,
+			"method": "POST",
+			"modified": 1517340122317,
+			"name": "inner join people-cars grouped",
+			"parameters": [],
+			"parentId": "fld_0a40314c3f094319a5e2abb050ebe1b0",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_58761fa26f7f422a8638b630505136cf",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"join_a\": {\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\"join_key\": [{\"id\": \"id_person\"}],\n\t\t\t\"calculated\": {\n\t\t\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t\t\t},\n\t\t\t\"select\": [\"first_name\",\"last_name\",\"email\",\"gender\",\"drinker\",\"smoker_bool\",\"language\",\"edad\"]\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples_bis\",\n\t\t\t\"tablename\": \"mock_drugs\",\n\t\t\t\"join_key\": [\"id_patient\"],\n\t\t\t\"select\": [\"drug_name\",\"id_company\"]\n\t\t},\n\t\t\"join_key\": [\"id_company\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mock_companies\",\n\t\t\"join_key\": [\"id_company\"],\n\t\t\"select\": [\"annual_budget\",\"city\",\"company_name\",\"country\",{\"id\": \"id_company\"}]\n\t},\n\t\"filter\": \"annual_budget > 10000000000\",\t\n\t\"groupby\": { \n\t\t\"grouped\": [\"country\"],\n\t\t\"agg\": {\n\t\t\t\"sum\": [\"annual_budget\"]\n\t\t}\n\t},\n\t\"sortby\": [\n\t\t{\"sum(annual_budget)\": \"desc\"}\n\t]\t\n}"
+			},
+			"created": 1516567662655,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325529,
+			"method": "POST",
+			"modified": 1517340271114,
+			"name": "inner join multiple 3 groupby",
+			"parameters": [],
+			"parentId": "fld_0a40314c3f094319a5e2abb050ebe1b0",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		}
+	]
+}
