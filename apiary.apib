@@ -50,169 +50,169 @@ Creates Cassandra Table.
 Accepted parameters:
 
 
-    - *keyspace*
+- keyspace
 
-        Cassandra keyspace where the table will lays. Created if not exists. 
+    Cassandra keyspace where the table will lay. Created if not exists.
 
-    - *tablename*
+- tablename
 
-        Cassandra table name to be created. 
+    Cassandra table name to be created. 
 
-    - *columns*
+- columns
 
-        JSON list of objects defining table's columns to be created. Each columns has these own properties:
+    JSON list of objects defining table's columns to be created. Each columns has these own properties:
 
 
-        - *db_field* = None
+- db_field
 
-            The fieldname this field will map to in the database
+    The fieldname this field will map to in the database
 
-        - *db_type*: 
+- db_type 
 
-            Column type correspondig to Cassandra column types:
-            
-            - Ascii
+    Column type correspondig to Cassandra column types:
+    
+    - Ascii
 
-                Stores a US-ASCII character string
+        Stores a US-ASCII character string
 
-            - BigInt
+    - BigInt
 
-                Stores a 64-bit signed long value
+        Stores a 64-bit signed long value
 
-            - Blob
+    - Blob
 
-                Stores a raw binary value
+        Stores a raw binary value
 
-            - Bytes
+    - Bytes
 
-                alias of Blob
+        alias of Blob
 
-            - Boolean
+    - Boolean
 
-                Stores a boolean True or False value
+        Stores a boolean True or False value
 
-            - Counter
+    - Counter
 
-                Stores a counter that can be inremented and decremented
+        Stores a counter that can be inremented and decremented
 
-            - Date
+    - Date
 
-                Note: this type is overloaded, and will likely be changed or removed to accommodate distinct date type in a future version
+        Note: this type is overloaded, and will likely be changed or removed to accommodate distinct date type in a future version
 
-                Stores a date value, with no time-of-day
+        Stores a date value, with no time-of-day
 
-            - DateTime
+    - DateTime
 
-                Stores a datetime value
+        Stores a datetime value
 
-            - Decimal
+    - Decimal
 
-                Stores a variable precision decimal value
+        Stores a variable precision decimal value
 
-            - Float
+    - Float
 
-                double_precision
+        double_precision
 
-                Stores a floating point value
+        Stores a floating point value
 
-            - Integer
+    - Integer
 
-                Stores a 32-bit signed integer value
+        Stores a 32-bit signed integer value
 
-            - List
+    - List
 
-                Stores a list of ordered values
+        Stores a list of ordered values
 
-                [Datastax documentation about use of lists](http://www.datastax.com/documentation/cql/3.1/cql/cql_using/use_list_t.html)
-               
-                > Parameters: value_type – a column class indicating the types of the value
+        [Datastax documentation about use of lists](http://www.datastax.com/documentation/cql/3.1/cql/cql_using/use_list_t.html)
+       
+        > Parameters: value_type – a column class indicating the types of the value
 
-            - Map
+    - Map
 
-                Stores a key -> value map (dictionary)
+        Stores a key -> value map (dictionary)
 
-                [Datastax documentation about use of map column type](http://www.datastax.com/documentation/cql/3.1/cql/cql_using/use_map_t.html)
+        [Datastax documentation about use of map column type](http://www.datastax.com/documentation/cql/3.1/cql/cql_using/use_map_t.html)
 
-                > Parameters: 
+        > Parameters: 
 
-                >    key_type – a column class indicating the types of the key
-                >    value_type – a column class indicating the types of the value
+        >    key_type – a column class indicating the types of the key
+        >    value_type – a column class indicating the types of the value
 
-            - Set
+    - Set
 
-                Stores a set of unordered, unique values
+        Stores a set of unordered, unique values
 
-                [Datastax documentation about use of set column type](http://www.datastax.com/documentation/cql/3.1/cql/cql_using/use_set_t.html)
-               
-                > Parameters: 
+        [Datastax documentation about use of set column type](http://www.datastax.com/documentation/cql/3.1/cql/cql_using/use_set_t.html)
+       
+        > Parameters: 
 
-                >    value_type – a column class indicating the types of the value
-                >    strict – sets whether non set values will be coerced to set type on validation, or raise a validation error, defaults to True
+        >    value_type – a column class indicating the types of the value
+        >    strict – sets whether non set values will be coerced to set type on validation, or raise a validation error, defaults to True
 
-            - Text
+    - Text
 
-                Stores a UTF-8 encoded string
+        Stores a UTF-8 encoded string
 
-                > Parameters: 
+        > Parameters: 
 
-                >    min_length (int) – Sets the minimum length of this string, for validation purposes. Defaults to 1 if this is a required column. Otherwise, None.
-                >    max_lemgth (int) – Sets the maximum length of this string, for validation purposes.
+        >    min_length (int) – Sets the minimum length of this string, for validation purposes. Defaults to 1 if this is a required column. Otherwise, None.
+        >    max_lemgth (int) – Sets the maximum length of this string, for validation purposes.
 
-            - TimeUUID
+    - TimeUUID
 
-                UUID containing timestamp
+        UUID containing timestamp
 
-            - UUID
+    - UUID
 
-                Stores a type 1 or 4 UUID
+        Stores a type 1 or 4 UUID
 
-            - VarInt
+    - VarInt
 
-                Stores an arbitrary-precision integer
+        Stores an arbitrary-precision integer
 
 
-        - *value_type*:
+- *value_type*:
 
-            Some types (i.e.: map, list, set) are complex types which needs to define value type within the collection
+    Some types (i.e.: map, list, set) are complex types which needs to define value type within the collection
 
-        - *primary_key*  = False
+- *primary_key*  = False
 
-            bool flag, indicates this column is a primary key. The first primary key defined on a model is the partition key (unless partition keys are set), all others are cluster keys
+    bool flag, indicates this column is a primary key. The first primary key defined on a model is the partition key (unless partition keys are set), all others are cluster keys
 
-        - partition_key = False
+- partition_key = False
 
-            indicates that this column should be the partition key, defining more than one partition key column creates a compound partition key
+    indicates that this column should be the partition key, defining more than one partition key column creates a compound partition key
 
-        - index = False
+- index = False
 
-            bool flag, indicates an index should be created for this column
+    bool flag, indicates an index should be created for this column
 
 
-        - default = None
+- default = None
 
-            the default value, can be a value or a callable (no args)
+    the default value, can be a value or a callable (no args)
 
-        - required = False
+- required = False
 
-            boolean, is the field required? Model validation will raise and exception if required is set to True and there is a None value assigned
+    boolean, is the field required? Model validation will raise and exception if required is set to True and there is a None value assigned
 
-        - clustering_order = None
+- clustering_order = None
 
-            only applicable on clustering keys (primary keys that are not partition keys) determines the order that the clustering keys are sorted on disk
+    only applicable on clustering keys (primary keys that are not partition keys) determines the order that the clustering keys are sorted on disk
 
-        - discriminator_column = False
+- discriminator_column = False
 
-            boolean, if set to True, this column will be used for discriminating records of inherited models.
+    boolean, if set to True, this column will be used for discriminating records of inherited models.
 
-            Should only be set on a column of an abstract model being used for inheritance.
+    Should only be set on a column of an abstract model being used for inheritance.
 
-            There may only be one discriminator column per model. See __discriminator_value__ for how to specify the value of this column on specialized models.
+    There may only be one discriminator column per model. See __discriminator_value__ for how to specify the value of this column on specialized models.
 
-        - static = False
+- static = False
 
-            boolean, if set to True, this is a static column, with a single value per partition
+    boolean, if set to True, this is a static column, with a single value per partition
 
-        Reference [Datastax](https://docs.datastax.com/en/drivers/python/2.5/api/cassandra/cqlengine/columns.html)
+Reference [Datastax](https://docs.datastax.com/en/drivers/python/2.5/api/cassandra/cqlengine/columns.html)
 
 + Request Simple Test (application/json)
 
