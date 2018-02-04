@@ -158,11 +158,25 @@ Accepted parameters:
 
 Retrieve data from Cassandra table. It takes a few parameters which identify 
 the data source `keyspace` and `tablename`. Other optional parameters are aimed to apply DML functionality: `groupby`, `select`, `calculated`, etc.
+    
+    - Filter
+    
+        ```javacript
+            "filter": <filter_expression>,
+        ```
 
-Group by
+    - Group by
 
-Gets data from Cassandra table which is applied a group by statement. 
+        Gets data from Cassandra table which is applied a `groupby` statement. 
 
+        ```javascript
+        "groupby": { 
+            "grouped": [<field_name_1>],
+            "agg": {
+                "count": [<field_name_2>]
+            }
+        }
+        ```
 
 > Test Details
 > People from mock_data table who is older than 40 years old and grouped by age with count aggregation.
