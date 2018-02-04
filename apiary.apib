@@ -214,6 +214,29 @@ Accepted parameters:
 
 Reference [Datastax](https://docs.datastax.com/en/drivers/python/2.5/api/cassandra/cqlengine/columns.html)
 
+Shell snippet
+
+```sh
+curl --request POST \
+  --url http://localhost:5000/create-table \
+  --header 'content-type: application/json' \
+  --data '{
+    "keyspace": "examples_bis",
+    "tablename": "older_than_40_summarized",
+    "columns": [
+        {
+            "db_field": "age",
+            "db_type": "integer",
+            "primary_key": "true"
+        }, 
+        {
+            "db_field": "total",
+            "db_type": "Integer" 
+        }
+    ]
+}'
+```
+
 + Request Simple Test (application/json)
 
         {
@@ -668,48 +691,31 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 > People from mock_data table who is older than 40 years old and grouped by age with count aggregation.
 > Age is calculated from `birth_date` field, indicated by `calculated` clause.
 
-Javascript snippet
+Shell snippet
 
-```javascript
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "http://localhost:5000/get-table",
-  "method": "POST",
-  "headers": {
-    "content-type": "application/json"
-  },
-  "processData": false,
-  "data": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"age\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"age > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"age\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"total\"}]\n\t\t}\n\t},\n\t\"sortby\": [{\"total\": \"desc\"}],\n\t\"save\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"older_than_40_summarized\"\n\t}\n}\t"
-}
-
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-```
-
-Python snippet
-
-```python
-import requests
-
-url = "http://localhost:5000/get-table"
-
-payload = "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"age\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"age > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"age\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"total\"}]\n\t\t}\n\t},\n\t\"sortby\": [{\"total\": \"desc\"}],\n\t\"save\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"older_than_40_summarized\"\n\t}\n}\t"
-headers = {'content-type': 'application/json'}
-
-response = requests.request("POST", url, data=payload, headers=headers)
-
-print(response.text)
-```
-
-Java snippet
-
-```java
-HttpResponse<String> response = Unirest.post("http://localhost:5000/get-table")
-  .header("content-type", "application/json")
-  .body("{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"age\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"age > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"age\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"total\"}]\n\t\t}\n\t},\n\t\"sortby\": [{\"total\": \"desc\"}],\n\t\"save\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"older_than_40_summarized\"\n\t}\n}\t")
-  .asString();
+```sh
+curl --request POST \
+  --url http://localhost:5000/get-table \
+  --header 'content-type: application/json' \
+  --data '{
+    "keyspace": "examples",
+    "tablename":"mock_data",
+    "calculated": {
+        "age": "round(months_between(current_date(),birth_date)/12,0)"
+    },
+    "filter": "age > 40",
+    "groupby": { 
+        "grouped": ["age"],
+        "agg": {
+            "count": [{"id": "total"}]
+        }
+    },
+    "sortby": [{"total": "desc"}],
+    "save": {
+        "keyspace": "examples_bis",
+        "tablename": "older_than_40_summarized"
+    }
+}'
 ```
 
 + Request (application/json)
