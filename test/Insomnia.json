@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2018-02-04T17:47:25.966Z",
+	"__export_date": "2018-02-05T21:10:31.434Z",
 	"__export_source": "insomnia.desktop.app:v5.12.4",
 	"resources": [
 		{
@@ -547,7 +547,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples_bis\",\n\t\"tablename\": \"older_than_40_summarized\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"edata\",\n\t\t\t\"db_type\": \"integer\",\n\t\t\t\"primary_key\": \"true\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"total\",\n\t\t\t\"db_type\": \"Integer\" \n\t\t}\n\t]\n}"
+				"text": "{\n\t\"keyspace\": \"examples_bis\",\n\t\"tablename\": \"older_than_40_summarized\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"age\",\n\t\t\t\"db_type\": \"integer\",\n\t\t\t\"primary_key\": \"true\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"total\",\n\t\t\t\"db_type\": \"Integer\" \n\t\t}\n\t]\n}"
 			},
 			"created": 1517502823572,
 			"description": "",
@@ -560,7 +560,7 @@
 			],
 			"metaSortKey": -1517387248057.25,
 			"method": "POST",
-			"modified": 1517740786299,
+			"modified": 1517768136980,
 			"name": "older_than_40_summarized",
 			"parameters": [],
 			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
@@ -605,7 +605,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test_2\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"field_1\",\n\t\t\t\"db_type\": \"integer\",\n\t\t\t\"primary_key\": \"true\"\n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_2\",\n\t\t\t\"db_type\": \"counter\"\n\t\t}\n\t]\n}"
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"test_2\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"field_1\",\n\t\t\t\"db_type\": \"uuid\",\n\t\t\t\"primary_key\": \"true\"\n\t\t},\n\t\t{\n\t\t\t\"db_field\": \"field_2\",\n\t\t\t\"db_type\": \"counter\"\n\t\t}\n\t]\n}"
 			},
 			"created": 1517742336676,
 			"description": "",
@@ -618,7 +618,7 @@
 			],
 			"metaSortKey": -1517387248082.25,
 			"method": "POST",
-			"modified": 1517743993973,
+			"modified": 1517858269446,
 			"name": "types simple set 2",
 			"parameters": [],
 			"parentId": "fld_345ed83e65a44cab9d1a0d8a4f6f6935",
@@ -750,7 +750,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"filter\": \"months_between(current_date(),birth_date)/12 between 36 and 54\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"drinker\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t},\t\n\t\"sortby\": [\n\t\t{\"count(id)\": \"desc\"}\n\t]\t\n}"
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"filter\": \"months_between(current_date(),birth_date)/12 between 36 and 54\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"drinker\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"num_people_36_54\"}]\n\t\t}\n\t},\t\n\t\"sortby\": [\n\t\t{\"num_people_36_54\": \"desc\"}\n\t]\t\n}"
 			},
 			"created": 1516302473286,
 			"description": "",
@@ -763,7 +763,7 @@
 			],
 			"metaSortKey": -1516138850038.875,
 			"method": "POST",
-			"modified": 1517339910988,
+			"modified": 1517774676749,
 			"name": "group by example 2",
 			"parameters": [],
 			"parentId": "fld_1f27e5a9056d4808a9067fc0cff37026",
@@ -779,7 +779,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"edad > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"edad\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"total\"}]\n\t\t}\n\t},\n\t\"sortby\": [{\"total\": \"desc\"}],\n\t\"save\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"older_than_40_summarized\"\n\t}\n}\t"
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"age\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"age > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"age\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"total\"}]\n\t\t}\n\t},\n\t\"sortby\": [{\"total\": \"desc\"}],\n\t\"save\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"older_than_40_summarized\"\n\t}\n}\t"
 			},
 			"created": 1516651434670,
 			"description": "",
@@ -792,7 +792,7 @@
 			],
 			"metaSortKey": -1516138849988.875,
 			"method": "POST",
-			"modified": 1517740701947,
+			"modified": 1517768840471,
 			"name": "group by and save",
 			"parameters": [],
 			"parentId": "fld_1f27e5a9056d4808a9067fc0cff37026",
