@@ -218,48 +218,48 @@ Shell snippets
 
     - Simple types
 
-    ```sh
-        curl --request POST \
-          --url http://localhost:5000/create-table \
-          --header 'content-type: application/json' \
-          --data '{
-            "keyspace": "examples_bis",
-            "tablename": "older_than_40_summarized",
-            "columns": [
-                {
-                    "db_field": "age",
-                    "db_type": "integer",
-                    "primary_key": "true"
-                }, 
-                {
-                    "db_field": "total",
-                    "db_type": "Integer" 
-                }
-            ]
-        }'
-    ```
+        ```sh
+            curl --request POST \
+              --url http://localhost:5000/create-table \
+              --header 'content-type: application/json' \
+              --data '{
+                "keyspace": "examples_bis",
+                "tablename": "older_than_40_summarized",
+                "columns": [
+                    {
+                        "db_field": "age",
+                        "db_type": "integer",
+                        "primary_key": "true"
+                    }, 
+                    {
+                        "db_field": "total",
+                        "db_type": "Integer" 
+                    }
+                ]
+            }'
+        ```
 
     - Table with counter field
 
-    ```sh
-        curl --request POST \
-          --url http://localhost:5000/create-table \
-          --header 'content-type: application/json' \
-          --data '{
-            "keyspace": "examples",
-            "tablename": "test_2",
-            "columns": [
-                {
-                    "db_field": "field_1",
-                    "db_type": "uuid",
-                    "primary_key": "true"
-                },
-                {
-                    "db_field": "field_2",
-                    "db_type": "counter"
-                }
-            ]
-        }'    
+        ```sh
+            curl --request POST \
+              --url http://localhost:5000/create-table \
+              --header 'content-type: application/json' \
+              --data '{
+                "keyspace": "examples",
+                "tablename": "test_2",
+                "columns": [
+                    {
+                        "db_field": "field_1",
+                        "db_type": "uuid",
+                        "primary_key": "true"
+                    },
+                    {
+                        "db_field": "field_2",
+                        "db_type": "counter"
+                    }
+                ]
+            }'    
         ```
 
 + Request Simple Test (application/json)
