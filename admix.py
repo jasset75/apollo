@@ -32,13 +32,14 @@ connection.set_session(session)
 class TypeException(Exception):
     None
 
+
 @atexit.register
 def quiver_bye():
     print('\nShutting down...')
     session.shutdown()
 
 
-def _assert_type_exception(value,msg,args=[]):
+def _assert_type_exception(value, msg, args=[]):
     if not value:
         raise TypeException(msg.format(*args))
 
@@ -80,8 +81,8 @@ def _str_to_column(type_str, key_type=None, value_type=None, column_def={}):
         _assert_type_exception(value_type, "list type requires value_type")
         return List(value_type=value_type, **column_def)
     elif type_str == 'map':
-        _assert_type_exception(key_type,"list type requires key_type")
-        _assert_type_exception(value_type,"list type requires value_type")
+        _assert_type_exception(key_type, "list type requires key_type")
+        _assert_type_exception(value_type, "list type requires value_type")
         return Map(key_type=key_type, value_type=value_type, **column_def)
     elif type_str == 'set':
         _assert_type_exception(value_type, "set type requires value_type")
@@ -104,7 +105,7 @@ def _str_to_column(type_str, key_type=None, value_type=None, column_def={}):
         raise Exception('Type {} is not defined.'.format(type_str))
 
 
-def _build_fields(keyspace,tablename,columns_def):
+def _build_fields(keyspace, tablename, columns_def):
 
     # create copy to no modify original
     columns = [{**col} for col in columns_def]
@@ -118,15 +119,15 @@ def _build_fields(keyspace,tablename,columns_def):
         # db_type doesn't be passet to Column __init__
         str_type = column.pop('db_type', 'Text')
         col_name = column['db_field']
-        str_key_type = column.pop('key_type',None)
-        str_value_type = column.pop('value_type',None)
-        
+        str_key_type = column.pop('key_type', None)
+        str_value_type = column.pop('value_type', None)
+
         # column type inference
         if str_key_type and str_value_type:
             key_type = _str_to_column(str_key_type)
             value_type = _str_to_column(str_value_type)
             fields[col_name] = _str_to_column(
-                str_type, key_type=key_type, 
+                str_type, key_type=key_type,
                 value_type=value_type, column_def=column
             )
         elif str_value_type:
@@ -150,7 +151,7 @@ def create_table(keyspace, tablename, columns, partition_key=None,
         durable_writes=durable_writes,
         connections=connections)
 
-    fields = _build_fields(keyspace,tablename,columns)
+    fields = _build_fields(keyspace, tablename, columns)
     metaClass = type('MetaClass', (Model, object), fields)
 
     sync_table(metaClass)

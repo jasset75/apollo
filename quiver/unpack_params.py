@@ -41,7 +41,8 @@ def save(save_json):
     metadata['keyspace'] = save_json.get('keyspace', None)
     metadata['tablename'] = save_json.get('tablename', None)
     metadata['partition_key'] = save_json.get('partition_key', None)
-    metadata['create_if_not_exists'] = save_json.get('create_if_not_exists', None)
+    metadata['create_if_not_exists'] = \
+        save_json.get('create_if_not_exists', None)
 
     return metadata
 

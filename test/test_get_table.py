@@ -1,10 +1,21 @@
 import requests
+import json
 
 url = "http://localhost:5000/get-table"
 
-payload = "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"filter\": \"email like \\\"%am%\\\"\",\n\t\"sortby\": [\n\t\t{\"gender\": \"asc\"},\n\t\t{\"first_name\": \"asc\"}\n\t]\n}"
+payload = {
+    "keyspace": "examples",
+    "tablename": "mock_data",
+    "filter": 'email like "%am%"',
+    "sortby": [
+        {"gender": "asc"},
+        {"first_name": "asc"}
+    ]
+}
+
 headers = {'content-type': 'application/json'}
 
-response = requests.request("POST", url, data=payload, headers=headers)
+response = requests.request("POST", url, data=json.dumps(payload),
+                            headers=headers)
 
 print(response.text)
