@@ -214,28 +214,53 @@ Accepted parameters:
 
 Reference [Datastax](https://docs.datastax.com/en/drivers/python/2.5/api/cassandra/cqlengine/columns.html)
 
-Shell snippet
+Shell snippets
 
-```sh
-curl --request POST \
-  --url http://localhost:5000/create-table \
-  --header 'content-type: application/json' \
-  --data '{
-    "keyspace": "examples_bis",
-    "tablename": "older_than_40_summarized",
-    "columns": [
-        {
-            "db_field": "age",
-            "db_type": "integer",
-            "primary_key": "true"
-        }, 
-        {
-            "db_field": "total",
-            "db_type": "Integer" 
-        }
-    ]
-}'
-```
+    - Simple types
+
+    ```sh
+        curl --request POST \
+          --url http://localhost:5000/create-table \
+          --header 'content-type: application/json' \
+          --data '{
+            "keyspace": "examples_bis",
+            "tablename": "older_than_40_summarized",
+            "columns": [
+                {
+                    "db_field": "age",
+                    "db_type": "integer",
+                    "primary_key": "true"
+                }, 
+                {
+                    "db_field": "total",
+                    "db_type": "Integer" 
+                }
+            ]
+        }'
+    ```
+
+    - Table with counter field
+
+    ```sh
+        curl --request POST \
+          --url http://localhost:5000/create-table \
+          --header 'content-type: application/json' \
+          --data '{
+            "keyspace": "examples",
+            "tablename": "test_2",
+            "columns": [
+                {
+                    "db_field": "field_1",
+                    "db_type": "uuid",
+                    "primary_key": "true"
+                },
+                {
+                    "db_field": "field_2",
+                    "db_type": "counter"
+                }
+            ]
+        }'    
+        ```
 
 + Request Simple Test (application/json)
 
@@ -359,7 +384,7 @@ curl --request POST \
             "columns": [
                 {
                     "db_field": "field_1",
-                    "db_type": "integer",
+                    "db_type": "uuid",
                     "primary_key": "true"
                 },
                 {
@@ -378,22 +403,22 @@ curl --request POST \
     + Body
 
             {
-                "tablename": "test_2",
                 "status": 201,
-                "success": true,
-                "keyspace": "examples",
-                "data": null,
                 "columns": [
                     {
-                        "db_type": "integer",
-                        "db_field": "field_1",
-                        "primary_key": "true"
+                        "primary_key": "true",
+                        "db_type": "uuid",
+                        "db_field": "field_1"
                     },
                     {
                         "db_type": "counter",
                         "db_field": "field_2"
                     }
-                ]
+                ],
+                "tablename": "test_2",
+                "data": null,
+                "keyspace": "examples",
+                "success": true
             }
 
 + Request Simple Test - Set 3 (application/json)
