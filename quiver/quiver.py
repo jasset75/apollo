@@ -232,6 +232,24 @@ def _group_by(ds_table, groupby, join_key=None):
     return ds_table
 
 
+def _join_key_building(ds_table_a, join_key_a, ds_table_b, join_key_b):
+    """
+        generates ds_table_a.key_a == ds_table_b.key_b
+        with all keys in a single or multiple key join
+    """
+    # initialize join keys
+    join_clause = []
+    # compares left term's value with right term's value
+    zip_join = zip(
+        map(_get_term_value, join_key_a),
+        map(_get_term_value, join_key_b)
+    )
+    for key in zip_join:
+        join_clause.append(ds_table_a[key[0]] == ds_table_b[key[1]])
+    
+    return join_clause    
+
+
 def _get_table(keyspace, tablename, select=None, calculated=None,
                s_filter=None, groupby=None, sortby=None, join_key=None,
                save=None):
@@ -317,23 +335,18 @@ def _join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
             join keys must be congruent in length: join_key a {}, join_key b {}
         """.format(mdata_a, mdata_b).strip())
 
-        # prepare join keys
-        zip_join = zip(
-            map(_get_term_value, mdata_a['join_key']),
-            map(_get_term_value, mdata_b['join_key'])
-        )
-        join_clause = []
-        for key in zip_join:
-            join_clause.append(ds_table_a[key[0]] == ds_table_b[key[1]])
+    # prepare join keys compararison
+    join_clause = _join_key_building(ds_table_a, mdata_a['join_key'],
+                      ds_table_b, mdata_b['join_key'])
 
-        # nuts and bolts
-        ds_join = (
-            ds_table_a.join(
-                ds_table_b,
-                join_clause,
-                join_type
-            )
+    # nuts and bolts
+    ds_join = (
+        ds_table_a.join(
+            ds_table_b,
+            join_clause,
+            join_type
         )
+    )
 
     # any calculated fields
     if calculated:
@@ -381,15 +394,8 @@ def _union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
             join keys must be congruent in length: join_key a {}, join_key b {}
         """.format(mdata_a, mdata_b).strip())
 
-    # prepare join keys
-    zip_join = zip(
-        map(_get_term_value, mdata_a['join_key']),
-        map(_get_term_value, mdata_b['join_key'])
-    )
-    join_clause = []
-
-    for key in zip_join:
-        join_clause.append(ds_table_a[key[0]] == ds_table_b[key[1]])
+    _join_key_building(ds_table_a, mdata_a['join_key'],
+                      ds_table_b, mdata_b['join_key'])
 
     # nuts and bolts
     if union_type == 'union_all':
