@@ -394,6 +394,7 @@ def _union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
             join keys must be congruent in length: join_key a {}, join_key b {}
         """.format(mdata_a, mdata_b).strip())
 
+    # prepare join keys compararison
     _join_key_building(ds_table_a, mdata_a['join_key'],
                       ds_table_b, mdata_b['join_key'])
 
