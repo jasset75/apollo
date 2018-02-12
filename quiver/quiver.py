@@ -338,7 +338,6 @@ def _join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
     # prepare join keys compararison
     join_clause = _join_key_building(ds_table_a, mdata_a['join_key'],
                       ds_table_b, mdata_b['join_key'])
-
     # nuts and bolts
     ds_join = (
         ds_table_a.join(
