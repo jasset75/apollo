@@ -17,7 +17,7 @@ It is oriented to describe and test REST APIs. Supports Swagger and API Blueprin
 
 ### Insomnia
 
-Insomnia is of kind of applications that is highly recommended to develop a REST API. It has as prominent features:
+Insomnia is that kind of applications that is highly recommended to develop a REST API. It has as prominent features:
 
 - Usable GUI
 - Different Environment management
