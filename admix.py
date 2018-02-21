@@ -1,4 +1,5 @@
 import os
+import json
 from misc.config import settings as conf
 from cassandra.cluster import Cluster
 from cassandra.policies import TokenAwarePolicy, RoundRobinPolicy
@@ -34,7 +35,7 @@ class TypeException(Exception):
 
 
 @atexit.register
-def quiver_bye():
+def _bye():
     print('\nShutting down...')
     session.shutdown()
 
@@ -139,6 +140,65 @@ def _build_fields(keyspace, tablename, columns_def):
             fields[col_name] = _str_to_column(str_type, column_def=column)
 
     return fields
+
+
+def _get_name_part(column_definition):
+    if column_definition:
+        return str(column_definition).split(' ')[0]
+
+def get_keyspaces():
+    return [
+        x for x in map(str,cluster.metadata.keyspaces)
+    ]
+
+
+def get_tablenames(keyspace):
+    return [
+        x for x in map(str,cluster.metadata.keyspaces[keyspace].tables)
+    ]
+
+
+def get_columns(keyspace,tablename):
+    return [
+        x for x in map(str,cluster.metadata.keyspaces[keyspace].tables[tablename].columns)
+    ]
+
+
+def get_partition_key(keyspace,tablename):
+    return [
+        x for x in map(_get_name_part,cluster.metadata.keyspaces[keyspace].tables[tablename].partition_key)
+    ]
+
+
+def get_clustering_key(keyspace,tablename):
+    return [
+        x for x in map(_get_name_part,cluster.metadata.keyspaces[keyspace].tables[tablename].clustering_key)
+    ]
+
+
+def get_all_keys(keyspace,tablename):
+    return (
+        get_partition_key(keyspace,tablename) +
+        get_clustering_key(keyspace,tablename)
+    )
+
+
+def describe_table(keyspace,tablename):
+    return cluster.metadata.keyspaces[keyspace].tables[tablename].export_as_string()
+
+
+def create_keyspace(keyspace, strategy='SimpleStrategy', replication_factor=1):
+    # setting up configuration
+    _options = {
+        'class': strategy,
+        'replication_factor': str(replication_factor)
+    }
+    # build creation string
+    _execute_str = 'CREATE KEYSPACE IF NOT EXISTS {0} WITH replication = {1}'\
+               .format(keyspace,json.dumps(_options).replace('"',"'"))
+    # creating keyspace
+    session.execute(_execute_str)
+    session.set_keyspace(keyspace)
 
 
 def create_table(keyspace, tablename, columns, partition_key=None,
