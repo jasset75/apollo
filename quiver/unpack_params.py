@@ -10,6 +10,7 @@ def table(table_json):
     metadata['sortby'] = table_json.get('sortby', None)
     metadata['join_key'] = table_json.get('join_key', [])
     metadata['save'] = table_json.get('save', None)
+    metadata['stacked'] = table_json.get('stacked', None)
 
     return metadata
 

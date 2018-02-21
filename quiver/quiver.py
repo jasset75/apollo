@@ -315,6 +315,15 @@ def _resolve_operand(table, join, union):
     return ds_table, mdata
 
 
+def _trim_str(in_str):
+    if isinstance(in_str,str):
+        terms = in_str.split('#')
+        if len(terms) == 1:
+            return in_str
+        else:
+            return terms[1]
+    return in_str
+
 def _join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
           union_b=None, select=None, calculated=None, s_filter=None,
           join_groupby=None, sortby=None, join_key=None, save=None,
@@ -347,6 +356,18 @@ def _join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
         )
     )
 
+    # import pdb;pdb.set_trace()
+    # drop join duplicated columns
+    """
+    join_cols = ds_join.columns
+    a_keys = map(_get_term_value, mdata_a['join_key'])
+
+    for key in a_keys:
+        join_cols.remove(key)
+
+    ds_join = ds_join.select(join_cols)
+    """
+
     # any calculated fields
     if calculated:
         for key, val in calculated.items():
@@ -370,6 +391,8 @@ def _join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
 
     # final datase
     return ds_join
+
+
 
 
 def _union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
