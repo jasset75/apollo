@@ -1,15 +1,24 @@
 import os
+
 # auxiliar library to unpack operation parameters
 from . import unpack_params as unpack
+
 # project configuration wrapper: yaml formatted file
 from misc.config import settings as conf
+
+# cassandra managing helper functions
+import admix
 
 # pyspark modules
 from pyspark import SparkConf
 from pyspark.sql import SQLContext, SparkSession
+from pyspark.sql import Row
 
 # pyspark functions
 import pyspark.sql.functions as func
+
+# uuid generation support
+from uuid import NAMESPACE_URL, uuid3
 
 # environment variable with character encoding
 os.putenv('PYTHONIOENCODING', conf.app.encoding)
@@ -71,6 +80,59 @@ spark.sparkContext.setLogLevel('OFF')
 sqlContext = SQLContext(spark.sparkContext)
 
 
+def _map_stack(h_row, partition_key, all_keys):
+    # TO-DO: pair, column customizable names
+
+    columns = {}
+    # uuid seed
+    partition_key_value = {}
+    # common elements
+    for idx, key in enumerate(all_keys):
+        if key in partition_key:
+            partition_key_value[key] = h_row[idx]
+        columns[key] = _trim_str(h_row[idx])
+    # stack elements
+    return [
+        Row(
+            **columns,
+            pair=str(uuid3(NAMESPACE_URL, str(partition_key_value))),
+            column=_trim_str(val)
+        ) for indx, val in enumerate(h_row[len(all_keys)+1:])
+    ]
+
+
+def _go_stacked(dataset, partition_key, all_keys):
+    # value name
+    value = 'column'
+    # pair name
+    pair = 'pair'
+
+    # stack main part
+    rdd = dataset.rdd.flatMap(
+        lambda row: _map_stack(row, partition_key, all_keys)
+    )
+
+    # TO-DO: num independant
+    # (key, pair, column1, column2) strategy
+    df_stacked = spark.createDataFrame(rdd)
+    df_left = df_stacked.filter("num = 1")
+    df_right = df_stacked.filter("num = 2")
+
+    # builing the new column shape
+    all_keys.remove('num')
+    new_columns_1 = all_keys+[pair, {value: '{}{}'.format(value, 1)}]
+    new_columns_2 = [pair, {value: '{}{}'.format(value, 2)}]
+
+    # join preparation
+    df_left = (df_left
+               .select([col for col in map(_field_or_alias, new_columns_1)]))
+    df_right = (df_right
+                .select([col for col in map(_field_or_alias, new_columns_2)]))
+
+    # final joined dataset
+    return df_left.join(df_right, pair)
+
+
 def _formatted(dataset, format='dict'):
 
     # convert to pandas
@@ -85,6 +147,7 @@ def _formatted(dataset, format='dict'):
 
 
 def _save(ds_table, save):
+
     if save:
         msave = unpack.save(save)
 
@@ -246,13 +309,13 @@ def _join_key_building(ds_table_a, join_key_a, ds_table_b, join_key_b):
     )
     for key in zip_join:
         join_clause.append(ds_table_a[key[0]] == ds_table_b[key[1]])
-    
-    return join_clause    
+
+    return join_clause
 
 
 def _get_table(keyspace, tablename, select=None, calculated=None,
                s_filter=None, groupby=None, sortby=None, join_key=None,
-               save=None):
+               save=None, stacked=False):
     """
         Gets data table from Cassandra.
 
@@ -261,6 +324,9 @@ def _get_table(keyspace, tablename, select=None, calculated=None,
             join
             groupby
             sortby
+            calculated
+            save
+            stacked
     """
     # dataset creation from Cassandra
     ds_table = (
@@ -270,6 +336,11 @@ def _get_table(keyspace, tablename, select=None, calculated=None,
         .options(keyspace=keyspace, table=tablename)
         .load()
     )
+
+    if stacked:
+        all_keys = admix.get_all_keys(keyspace, tablename)
+        partition_key = admix.get_partition_key(keyspace, tablename)
+        ds_table = _go_stacked(ds_table, partition_key, all_keys)
 
     # any calculated fields
     if calculated:
@@ -316,13 +387,15 @@ def _resolve_operand(table, join, union):
 
 
 def _trim_str(in_str):
-    if isinstance(in_str,str):
-        terms = in_str.split('#')
-        if len(terms) == 1:
-            return in_str
-        else:
-            return terms[1]
+    if conf.app.trim_str:
+        if isinstance(in_str, str):
+            terms = in_str.split('#')
+            if len(terms) == 1:
+                return in_str
+            else:
+                return terms[1]
     return in_str
+
 
 def _join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
           union_b=None, select=None, calculated=None, s_filter=None,
@@ -345,8 +418,9 @@ def _join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
         """.format(mdata_a, mdata_b).strip())
 
     # prepare join keys compararison
-    join_clause = _join_key_building(ds_table_a, mdata_a['join_key'],
-                      ds_table_b, mdata_b['join_key'])
+    join_clause = _join_key_building(
+        ds_table_a, mdata_a['join_key'], ds_table_b, mdata_b['join_key']
+    )
     # nuts and bolts
     ds_join = (
         ds_table_a.join(
@@ -393,8 +467,6 @@ def _join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
     return ds_join
 
 
-
-
 def _union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
            union_b=None, select=None, calculated=None, s_filter=None,
            union_groupby=None, sortby=None, join_key=None, save=None,
@@ -417,8 +489,9 @@ def _union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
         """.format(mdata_a, mdata_b).strip())
 
     # prepare join keys compararison
-    _join_key_building(ds_table_a, mdata_a['join_key'],
-                      ds_table_b, mdata_b['join_key'])
+    _join_key_building(
+        ds_table_a, mdata_a['join_key'], ds_table_b, mdata_b['join_key']
+    )
 
     # nuts and bolts
     if union_type == 'union_all':
@@ -463,7 +536,7 @@ def _union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
 
 def get_table(keyspace, tablename, select=None, calculated=None, s_filter=None,
               groupby=None, sortby=None, join_key=[], format='dict',
-              save=None):
+              save=None, stacked=False):
     """
         get_table entry point
             this function computes data from a table
@@ -473,7 +546,7 @@ def get_table(keyspace, tablename, select=None, calculated=None, s_filter=None,
     ds_table = _get_table(keyspace, tablename, select=select,
                           calculated=calculated, s_filter=s_filter,
                           groupby=groupby, sortby=sortby, join_key=join_key,
-                          save=save)
+                          save=save, stacked=stacked)
 
     return _formatted(ds_table, format)
 

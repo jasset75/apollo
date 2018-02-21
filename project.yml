@@ -1,6 +1,7 @@
 app:
   encoding: UTF-8
   debug: true
+  trim_str: true
 spark:
   executor:
     cores: 6
