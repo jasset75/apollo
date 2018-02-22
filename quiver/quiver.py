@@ -315,7 +315,7 @@ def _join_key_building(ds_table_a, join_key_a, ds_table_b, join_key_b):
 
 def _get_table(keyspace, tablename, select=None, calculated=None,
                s_filter=None, groupby=None, sortby=None, join_key=None,
-               save=None, stacked=False):
+               save=None, stacked=None):
     """
         Gets data table from Cassandra.
 
@@ -338,9 +338,15 @@ def _get_table(keyspace, tablename, select=None, calculated=None,
     )
 
     if stacked:
-        all_keys = admix.get_all_keys(keyspace, tablename)
-        partition_key = admix.get_partition_key(keyspace, tablename)
-        ds_table = _go_stacked(ds_table, partition_key, all_keys)
+        mdata = unpack.stacked(stacked)
+        if mdata.get('auto',None):
+            stack_key = admix.get_partition_key(keyspace, tablename)
+            all_keys = admix.get_all_keys(keyspace, tablename)
+        else:
+            stack_pair = mdata['stack_pair'] 
+            stack_key = mdata['stack_key']
+            all_keys = stack_key + [stack_pair]
+        ds_table = _go_stacked(ds_table, stack_key, all_keys)
 
     # any calculated fields
     if calculated:

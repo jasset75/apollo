@@ -47,6 +47,20 @@ def save(save_json):
 
     return metadata
 
+def stacked(stacked_json):
+    
+    metadata = {}
+    metadata['stack_key'] = stacked_json.get('stacked_key', None)
+    metadata['strategy'] = stacked_json.get('strategy', None)    
+    metadata['auto'] = stacked_json.get('auto', None)
+    metadata['stack_pair'] = stacked_json.get('stack_pair', None)
+    metadata['stack_value'] = stacked_json.get('stack_value', None)
+    metadata['filter_field'] = stacked_json.get('filter_field', None)
+    metadata['filter_left_value'] = stacked_json.get('filter_left_value', None)
+    metadata['filter_right_value'] = stacked_json.get('filter_right_value', None)
+
+    return metadata
+
 
 def union(union_json):
 
