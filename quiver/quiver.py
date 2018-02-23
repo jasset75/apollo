@@ -307,7 +307,7 @@ def _map_stack(h_row, stack_p_key, all_keys):
     ]
 
 
-def _go_stacked(dataset, stack_p_key, all_keys, stack_pair, stack_column, 
+def _go_stacked(dataset, strategy, stack_p_key, all_keys, stack_pair, stack_column, 
                 filter_field, filter_left_value, filter_right_value):
     """
         given all keys (partition_key plus clustering_key normally) 
@@ -325,45 +325,43 @@ def _go_stacked(dataset, stack_p_key, all_keys, stack_pair, stack_column,
     # pair name
     _pair = 'quiver_pair_'
 
-    pre_rdd = dataset.rdd 
-
     # stack main part
-    rdd = pre_rdd.flatMap(
+    rdd = dataset.rdd.flatMap(
         lambda row: _map_stack(row, stack_p_key, all_keys)
     )
 
-    # renaming pseudo columns to final column name
-    ds_pre_stacked = spark.createDataFrame(rdd)
-
     df_stacked = _rename_column(
         _rename_column(
-            ds_pre_stacked, _pair, stack_pair
+            spark.createDataFrame(rdd), _pair, stack_pair
         ), _column, stack_column
     )
-    # spliting results between stack_column1 and stack_column2
-    df_left = df_stacked.filter(
-        df_stacked[filter_field] == func.lit(filter_left_value)
-    )
-    df_right = df_stacked.filter(
-        df_stacked[filter_field] == func.lit(filter_right_value)
-    )
-    # builing the new column shape
-    all_keys.remove(filter_field)
-    new_columns_1 = all_keys+[
-        stack_pair, {stack_column: '{}{}'.format(stack_column, 1)}
-    ]
-    new_columns_2 = [
-        stack_pair, {stack_column: '{}{}'.format(stack_column, 2)}
-    ]
-    # join preparation
-    df_left = df_left.select(
-        [col for col in map(_field_or_alias, new_columns_1)]
-    )
-    df_right = df_right.select(
-        [col for col in map(_field_or_alias, new_columns_2)]
-    )
-    # final joined dataset
-    return df_left.join(df_right, stack_pair)
+    if strategy == 'single-value':
+        return df_stacked
+    elif strategy == 'double-value':
+        # spliting results between stack_column1 and stack_column2
+        df_left = df_stacked.filter(
+            df_stacked[filter_field] == func.lit(filter_left_value)
+        )
+        df_right = df_stacked.filter(
+            df_stacked[filter_field] == func.lit(filter_right_value)
+        )
+        # builing the new column shape
+        all_keys.remove(filter_field)
+        new_columns_1 = all_keys+[
+            stack_pair, {stack_column: '{}{}'.format(stack_column, 1)}
+        ]
+        new_columns_2 = [
+            stack_pair, {stack_column: '{}{}'.format(stack_column, 2)}
+        ]
+        # join preparation
+        df_left = df_left.select(
+            [col for col in map(_field_or_alias, new_columns_1)]
+        )
+        df_right = df_right.select(
+            [col for col in map(_field_or_alias, new_columns_2)]
+        )
+        # final joined dataset
+        return df_left.join(df_right, stack_pair)
 
 
 def _stack(dataset, keyspace=None, tablename=None, strategy= 'double-value',
@@ -373,8 +371,8 @@ def _stack(dataset, keyspace=None, tablename=None, strategy= 'double-value',
         gets parameters for stacked operation and launch 
         internal stacking helper function. 
     """
-    if strategy != 'double-value':
-        raise Exception('stack::only is implemented double-value strategy')
+    if strategy not in ['single-value','double-value']:
+        raise Exception('stack::{} strategy not implemmented'.format(strategy))
     if auto:
         if not keyspace or not tablename:
             raise Exception(
@@ -389,7 +387,7 @@ def _stack(dataset, keyspace=None, tablename=None, strategy= 'double-value',
             )
         all_keys = _list_from_list_or_value(stack_p_key) +_list_from_list_or_value(stack_c_key)
 
-    return _go_stacked(dataset, stack_p_key, all_keys, stack_pair, stack_column, 
+    return _go_stacked(dataset, strategy, stack_p_key, all_keys, stack_pair, stack_column, 
                     filter_field, filter_left_value, filter_right_value)
 
 
