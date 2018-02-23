@@ -80,27 +80,6 @@ spark.sparkContext.setLogLevel('OFF')
 sqlContext = SQLContext(spark.sparkContext)
 
 
-def _map_stack(h_row, stack_key, all_keys):
-    # TO-DO: pair, column customizable names
-
-    columns = {}
-    # uuid seed
-    stack_key_value = {}
-    # common elements
-    for idx, key in enumerate(all_keys):
-        if key in stack_key:
-            stack_key_value[key] = h_row[idx]
-        columns[key] = _trim_str(h_row[idx])
-    # stack elements
-    return [
-        Row(
-            **columns,
-            quiver_pair_=str(uuid3(NAMESPACE_URL, str(stack_key_value))),
-            quiver_column_ = _trim_str(val)
-        ) for indx, val in enumerate(h_row[len(all_keys)+1:])
-    ]
-
-
 def _rename_column(dataset, name, alias):
     """
         given a dataset, renames column named "name"
@@ -298,6 +277,27 @@ def _join_key_building(ds_table_a, join_key_a, ds_table_b, join_key_b):
     return join_clause
 
 
+def _map_stack(h_row, stack_key, all_keys):
+    # TO-DO: pair, column customizable names
+
+    columns = {}
+    # uuid seed
+    stack_key_value = {}
+    # common elements
+    for idx, key in enumerate(all_keys):
+        if key in stack_key:
+            stack_key_value[key] = h_row[idx]
+        columns[key] = _trim_str(h_row[idx])
+    # stack elements
+    return [
+        Row(
+            **columns,
+            quiver_pair_=str(uuid3(NAMESPACE_URL, '{}_{}'.format(str(stack_key_value),indx))),
+            quiver_column_ = _trim_str(val)
+        ) for indx, val in enumerate(h_row[len(all_keys):])
+    ]
+
+
 def _go_stacked(dataset, stack_key, all_keys, stack_pair, stack_column, 
                 filter_field, filter_left_value, filter_right_value):
     """
@@ -316,25 +316,27 @@ def _go_stacked(dataset, stack_key, all_keys, stack_pair, stack_column,
     # pair name
     _pair = 'quiver_pair_'
 
+    pre_rdd = dataset.rdd 
+
     # stack main part
-    rdd = dataset.rdd.flatMap(
+    rdd = pre_rdd.flatMap(
         lambda row: _map_stack(row, stack_key, all_keys)
     )
 
-    # TO-DO: num independant
-    # (key, pair, column1, column2) strategy
+    # renaming pseudo columns to final column name
+    ds_pre_stacked = spark.createDataFrame(rdd)
+
     df_stacked = _rename_column(
         _rename_column(
-            spark.createDataFrame(rdd), _pair, stack_pair
+            ds_pre_stacked, _pair, stack_pair
         ), _column, stack_column
     )
-    #df_left = df_stacked.filter("num = 1")
-    #df_right = df_stacked.filter("num = 2")
+    # spliting results between stack_column1 and stack_column2
     df_left = df_stacked.filter(
         df_stacked[filter_field] == func.lit(filter_left_value)
     )
     df_right = df_stacked.filter(
-        df_stacked[filter_field] == func.lit(filter_left_value)
+        df_stacked[filter_field] == func.lit(filter_right_value)
     )
     # builing the new column shape
     all_keys.remove(filter_field)
@@ -377,7 +379,7 @@ def _stack(dataset, keyspace=None, tablename=None, strategy= 'double-value',
                 'stacked::stack_key and stack_pair are mandatory with auto=false'
             )
         all_keys = stack_key + [stack_pair]
-    
+
     return _go_stacked(dataset, stack_key, all_keys, stack_pair, stack_column, 
                     filter_field, filter_left_value, filter_right_value)
 
