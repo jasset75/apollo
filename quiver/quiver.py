@@ -80,57 +80,42 @@ spark.sparkContext.setLogLevel('OFF')
 sqlContext = SQLContext(spark.sparkContext)
 
 
-def _map_stack(h_row, partition_key, all_keys):
+def _map_stack(h_row, stack_key, all_keys):
     # TO-DO: pair, column customizable names
 
     columns = {}
     # uuid seed
-    partition_key_value = {}
+    stack_key_value = {}
     # common elements
     for idx, key in enumerate(all_keys):
-        if key in partition_key:
-            partition_key_value[key] = h_row[idx]
+        if key in stack_key:
+            stack_key_value[key] = h_row[idx]
         columns[key] = _trim_str(h_row[idx])
     # stack elements
     return [
         Row(
             **columns,
-            pair=str(uuid3(NAMESPACE_URL, str(partition_key_value))),
-            column=_trim_str(val)
+            quiver_pair_=str(uuid3(NAMESPACE_URL, str(stack_key_value))),
+            quiver_column_ = _trim_str(val)
         ) for indx, val in enumerate(h_row[len(all_keys)+1:])
     ]
 
 
-def _go_stacked(dataset, partition_key, all_keys):
-    # value name
-    value = 'column'
-    # pair name
-    pair = 'pair'
-
-    # stack main part
-    rdd = dataset.rdd.flatMap(
-        lambda row: _map_stack(row, partition_key, all_keys)
-    )
-
-    # TO-DO: num independant
-    # (key, pair, column1, column2) strategy
-    df_stacked = spark.createDataFrame(rdd)
-    df_left = df_stacked.filter("num = 1")
-    df_right = df_stacked.filter("num = 2")
-
-    # builing the new column shape
-    all_keys.remove('num')
-    new_columns_1 = all_keys+[pair, {value: '{}{}'.format(value, 1)}]
-    new_columns_2 = [pair, {value: '{}{}'.format(value, 2)}]
-
-    # join preparation
-    df_left = (df_left
-               .select([col for col in map(_field_or_alias, new_columns_1)]))
-    df_right = (df_right
-                .select([col for col in map(_field_or_alias, new_columns_2)]))
-
-    # final joined dataset
-    return df_left.join(df_right, pair)
+def _rename_column(dataset, name, alias):
+    """
+        given a dataset, renames column named "name"
+        with "alias" name
+    """
+    columns = dataset.columns
+    name_idx = -1
+    for idx, item in enumerate(columns):
+        if item == name:
+            name_idx = idx
+            break
+    if name_idx > 0:
+        columns[name_idx] = {name: alias}
+    # returns dataset with new columns
+    return dataset.select([x for x in map(_field_or_alias,columns)])
 
 
 def _formatted(dataset, format='dict'):
@@ -313,6 +298,90 @@ def _join_key_building(ds_table_a, join_key_a, ds_table_b, join_key_b):
     return join_clause
 
 
+def _go_stacked(dataset, stack_key, all_keys, stack_pair, stack_column, 
+                filter_field, filter_left_value, filter_right_value):
+    """
+        given all keys (partition_key plus clustering_key normally) 
+        and stack_key (partition key normally) changes the shape of
+        the dataset from n-value columns to n/2 rows.
+        it adds pair key to uniqueness.
+        one antecedent stack_column is related with other consecuent stack_column
+        by filter_field, antecendents are labeled by filter_left_value
+        and consecuents are labeled by filter_right_value.
+        this is (stack_key, stack_pair, stack_column1, stack_column2) strategy
+        called double-value-stack strategy
+    """
+    # value name
+    _column = 'quiver_column_'
+    # pair name
+    _pair = 'quiver_pair_'
+
+    # stack main part
+    rdd = dataset.rdd.flatMap(
+        lambda row: _map_stack(row, stack_key, all_keys)
+    )
+
+    # TO-DO: num independant
+    # (key, pair, column1, column2) strategy
+    df_stacked = _rename_column(
+        _rename_column(
+            spark.createDataFrame(rdd), _pair, stack_pair
+        ), _column, stack_column
+    )
+    #df_left = df_stacked.filter("num = 1")
+    #df_right = df_stacked.filter("num = 2")
+    df_left = df_stacked.filter(
+        df_stacked[filter_field] == func.lit(filter_left_value)
+    )
+    df_right = df_stacked.filter(
+        df_stacked[filter_field] == func.lit(filter_left_value)
+    )
+    # builing the new column shape
+    all_keys.remove(filter_field)
+    new_columns_1 = all_keys+[
+        stack_pair, {stack_column: '{}{}'.format(stack_column, 1)}
+    ]
+    new_columns_2 = [
+        stack_pair, {stack_column: '{}{}'.format(stack_column, 2)}
+    ]
+    # join preparation
+    df_left = df_left.select(
+        [col for col in map(_field_or_alias, new_columns_1)]
+    )
+    df_right = df_right.select(
+        [col for col in map(_field_or_alias, new_columns_2)]
+    )
+    # final joined dataset
+    return df_left.join(df_right, stack_pair)
+
+
+def _stack(dataset, keyspace=None, tablename=None, strategy= 'double-value',
+           auto=False, stack_key='key', stack_pair='pair', stack_column='column',
+           filter_field=None, filter_left_value=None, filter_right_value=None):
+    """
+        gets parameters for stacked operation and launch 
+        internal stacking helper function. 
+    """
+    if strategy != 'double-value':
+        raise Exception('stack::only is implemented double-value strategy')
+    if auto:
+        if not keyspace or not tablename:
+            raise Exception(
+                'stacked::keyspace and tablename are mandatory with auto=true'
+            )
+        stack_key = admix.get_partition_key(keyspace, tablename)
+        all_keys = admix.get_all_keys(keyspace, tablename)
+    else:
+        if not stack_pair or not stack_key:
+            raise Exception(
+                'stacked::stack_key and stack_pair are mandatory with auto=false'
+            )
+        all_keys = stack_key + [stack_pair]
+    
+    return _go_stacked(dataset, stack_key, all_keys, stack_pair, stack_column, 
+                    filter_field, filter_left_value, filter_right_value)
+
+
 def _get_table(keyspace, tablename, select=None, calculated=None,
                s_filter=None, groupby=None, sortby=None, join_key=None,
                save=None, stacked=None):
@@ -337,16 +406,12 @@ def _get_table(keyspace, tablename, select=None, calculated=None,
         .load()
     )
 
+    # stacked format configuration
     if stacked:
         mdata = unpack.stacked(stacked)
-        if mdata.get('auto',None):
-            stack_key = admix.get_partition_key(keyspace, tablename)
-            all_keys = admix.get_all_keys(keyspace, tablename)
-        else:
-            stack_pair = mdata['stack_pair'] 
-            stack_key = mdata['stack_key']
-            all_keys = stack_key + [stack_pair]
-        ds_table = _go_stacked(ds_table, stack_key, all_keys)
+        mdata['keyspace'] = keyspace
+        mdata['tablename'] = tablename
+        ds_table = _stack(ds_table, **mdata)
 
     # any calculated fields
     if calculated:
@@ -436,7 +501,6 @@ def _join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
         )
     )
 
-    # import pdb;pdb.set_trace()
     # drop join duplicated columns
     """
     join_cols = ds_join.columns
