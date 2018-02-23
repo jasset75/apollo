@@ -80,6 +80,15 @@ spark.sparkContext.setLogLevel('OFF')
 sqlContext = SQLContext(spark.sparkContext)
 
 
+def _list_from_list_or_value(value):
+    if isinstance(value,list):
+        return value
+    elif isinstance(value,str):
+        return [value]
+    else:
+        raise Exception('type of value not recognized')
+
+
 def _rename_column(dataset, name, alias):
     """
         given a dataset, renames column named "name"
@@ -277,38 +286,38 @@ def _join_key_building(ds_table_a, join_key_a, ds_table_b, join_key_b):
     return join_clause
 
 
-def _map_stack(h_row, stack_key, all_keys):
+def _map_stack(h_row, stack_p_key, all_keys):
     # TO-DO: pair, column customizable names
 
     columns = {}
     # uuid seed
-    stack_key_value = {}
+    stack_p_key_value = {}
     # common elements
     for idx, key in enumerate(all_keys):
-        if key in stack_key:
-            stack_key_value[key] = h_row[idx]
+        if key in stack_p_key:
+            stack_p_key_value[key] = h_row[idx]
         columns[key] = _trim_str(h_row[idx])
     # stack elements
     return [
         Row(
             **columns,
-            quiver_pair_=str(uuid3(NAMESPACE_URL, '{}_{}'.format(str(stack_key_value),indx))),
+            quiver_pair_=str(uuid3(NAMESPACE_URL, '{}_{}'.format(str(stack_p_key_value),indx))),
             quiver_column_ = _trim_str(val)
         ) for indx, val in enumerate(h_row[len(all_keys):])
     ]
 
 
-def _go_stacked(dataset, stack_key, all_keys, stack_pair, stack_column, 
+def _go_stacked(dataset, stack_p_key, all_keys, stack_pair, stack_column, 
                 filter_field, filter_left_value, filter_right_value):
     """
         given all keys (partition_key plus clustering_key normally) 
-        and stack_key (partition key normally) changes the shape of
+        and stack_p_key (partition key normally) changes the shape of
         the dataset from n-value columns to n/2 rows.
         it adds pair key to uniqueness.
         one antecedent stack_column is related with other consecuent stack_column
         by filter_field, antecendents are labeled by filter_left_value
         and consecuents are labeled by filter_right_value.
-        this is (stack_key, stack_pair, stack_column1, stack_column2) strategy
+        this is (stack_p_key, stack_pair, stack_column1, stack_column2) strategy
         called double-value-stack strategy
     """
     # value name
@@ -320,7 +329,7 @@ def _go_stacked(dataset, stack_key, all_keys, stack_pair, stack_column,
 
     # stack main part
     rdd = pre_rdd.flatMap(
-        lambda row: _map_stack(row, stack_key, all_keys)
+        lambda row: _map_stack(row, stack_p_key, all_keys)
     )
 
     # renaming pseudo columns to final column name
@@ -358,7 +367,7 @@ def _go_stacked(dataset, stack_key, all_keys, stack_pair, stack_column,
 
 
 def _stack(dataset, keyspace=None, tablename=None, strategy= 'double-value',
-           auto=False, stack_key='key', stack_pair='pair', stack_column='column',
+           auto=False, stack_p_key='key', stack_c_key='num', stack_pair='pair', stack_column='column',
            filter_field=None, filter_left_value=None, filter_right_value=None):
     """
         gets parameters for stacked operation and launch 
@@ -371,16 +380,16 @@ def _stack(dataset, keyspace=None, tablename=None, strategy= 'double-value',
             raise Exception(
                 'stacked::keyspace and tablename are mandatory with auto=true'
             )
-        stack_key = admix.get_partition_key(keyspace, tablename)
+        stack_p_key = admix.get_partition_key(keyspace, tablename)
         all_keys = admix.get_all_keys(keyspace, tablename)
     else:
-        if not stack_pair or not stack_key:
+        if not stack_pair or not stack_p_key:
             raise Exception(
-                'stacked::stack_key and stack_pair are mandatory with auto=false'
+                'stacked::stack_p_key and stack_pair are mandatory with auto=false'
             )
-        all_keys = stack_key + [stack_pair]
+        all_keys = _list_from_list_or_value(stack_p_key) +_list_from_list_or_value(stack_c_key)
 
-    return _go_stacked(dataset, stack_key, all_keys, stack_pair, stack_column, 
+    return _go_stacked(dataset, stack_p_key, all_keys, stack_pair, stack_column, 
                     filter_field, filter_left_value, filter_right_value)
 
 

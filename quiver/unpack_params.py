@@ -50,7 +50,8 @@ def save(save_json):
 def stacked(stacked_json):
     
     metadata = {}
-    metadata['stack_key'] = stacked_json.get('stack_key', None)
+    metadata['stack_p_key'] = stacked_json.get('stack_p_key', None)
+    metadata['stack_c_key'] = stacked_json.get('stack_c_key', None)
     metadata['strategy'] = stacked_json.get('strategy', 'double-value')    
     metadata['auto'] = stacked_json.get('auto', False)
     metadata['stack_pair'] = stacked_json.get('stack_pair', 'pair')
