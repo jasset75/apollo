@@ -146,44 +146,45 @@ def _get_name_part(column_definition):
     if column_definition:
         return str(column_definition).split(' ')[0]
 
+
 def get_keyspaces():
     return [
-        x for x in map(str,cluster.metadata.keyspaces)
+        x for x in map(str, cluster.metadata.keyspaces)
     ]
 
 
 def get_tablenames(keyspace):
     return [
-        x for x in map(str,cluster.metadata.keyspaces[keyspace].tables)
+        x for x in map(str, cluster.metadata.keyspaces[keyspace].tables)
     ]
 
 
-def get_columns(keyspace,tablename):
+def get_columns(keyspace, tablename):
     return [
-        x for x in map(str,cluster.metadata.keyspaces[keyspace].tables[tablename].columns)
+        x for x in map(str, cluster.metadata.keyspaces[keyspace].tables[tablename].columns)
     ]
 
 
-def get_partition_key(keyspace,tablename):
+def get_partition_key(keyspace, tablename):
     return [
-        x for x in map(_get_name_part,cluster.metadata.keyspaces[keyspace].tables[tablename].partition_key)
+        x for x in map(_get_name_part, cluster.metadata.keyspaces[keyspace].tables[tablename].partition_key)
     ]
 
 
-def get_clustering_key(keyspace,tablename):
+def get_clustering_key(keyspace, tablename):
     return [
-        x for x in map(_get_name_part,cluster.metadata.keyspaces[keyspace].tables[tablename].clustering_key)
+        x for x in map(_get_name_part, cluster.metadata.keyspaces[keyspace].tables[tablename].clustering_key)
     ]
 
 
-def get_all_keys(keyspace,tablename):
+def get_all_keys(keyspace, tablename):
     return (
-        get_partition_key(keyspace,tablename) +
-        get_clustering_key(keyspace,tablename)
+        get_partition_key(keyspace, tablename) +
+        get_clustering_key(keyspace, tablename)
     )
 
 
-def describe_table(keyspace,tablename):
+def describe_table(keyspace, tablename):
     return cluster.metadata.keyspaces[keyspace].tables[tablename].export_as_string()
 
 
@@ -195,7 +196,7 @@ def create_keyspace(keyspace, strategy='SimpleStrategy', replication_factor=1):
     }
     # build creation string
     _execute_str = 'CREATE KEYSPACE IF NOT EXISTS {0} WITH replication = {1}'\
-               .format(keyspace,json.dumps(_options).replace('"',"'"))
+                   .format(keyspace, json.dumps(_options).replace('"', "'"))
     # creating keyspace
     session.execute(_execute_str)
     session.set_keyspace(keyspace)

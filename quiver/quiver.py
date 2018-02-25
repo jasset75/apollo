@@ -84,9 +84,9 @@ def _list_from_list_or_value(value):
     """
         Returns a list, regardless of the value is str or list
     """
-    if isinstance(value,list):
+    if isinstance(value, list):
         return value
-    elif isinstance(value,str):
+    elif isinstance(value, str):
         return [value]
     else:
         raise Exception('type of value not recognized')
@@ -106,7 +106,7 @@ def _rename_column(dataset, name, alias):
     if name_idx > 0:
         columns[name_idx] = {name: alias}
     # returns dataset with new columns
-    return dataset.select([x for x in map(_field_or_alias,columns)])
+    return dataset.select([x for x in map(_field_or_alias, columns)])
 
 
 def _formatted(dataset, format='dict'):
@@ -294,7 +294,7 @@ def _join_key_building(ds_table_a, join_key_a, ds_table_b, join_key_b):
     )
     for key in zip_join:
         if key[0] == key[1]:
-            join_clause.append(key[0])            
+            join_clause.append(key[0])
         else:
             join_clause.append(ds_table_a[key[0]] == ds_table_b[key[1]])
 
@@ -303,8 +303,8 @@ def _join_key_building(ds_table_a, join_key_a, ds_table_b, join_key_b):
 
 def _map_stack(h_row, stack_p_key, all_keys):
     """
-        Converts one row columns new rows, keeping keys in all rows, 
-        and makes new pair unique identifier in order to join related columns 
+        Converts one row columns new rows, keeping keys in all rows,
+        and makes new pair unique identifier in order to join related columns
     """
     columns = {}
     # uuid seed
@@ -318,21 +318,24 @@ def _map_stack(h_row, stack_p_key, all_keys):
     return [
         Row(
             **columns,
-            quiver_pair_=str(uuid3(NAMESPACE_URL, '{}_{}'.format(str(stack_p_key_value),indx))),
-            quiver_column_ = _trim_str(val)
-        ) for indx, val in enumerate(h_row[len(all_keys):])
+            quiver_pair_=str(uuid3(NAMESPACE_URL, '{}_{}'.format(str(stack_p_key_value), indx))),
+            # quiver_pair is a hash value for elements (columns) of the same key and column position
+            # from the original dataset, so it must be part of the key to join elements associated
+            # to the previous dataset's key plus column index
+            quiver_column_=_trim_str(val)
+        ) for indx, val in enumerate(h_row[len(all_keys):])  # iterates over data columns
     ]
 
 
-def _go_stacked(dataset, strategy, stack_p_key, all_keys, stack_pair, stack_column, 
+def _go_stacked(dataset, strategy, stack_p_key, all_keys, stack_pair, stack_column,
                 filter_field, filter_left_value, filter_right_value):
     """
-        Given all keys (partition_key plus clustering_key normally) 
+        Given all keys (partition_key plus clustering_key normally)
         and stack_p_key (partition key normally) changes the shape of
         the dataset from n-value columns to n/2 rows.
         it adds pair key to uniqueness.
-        With double-value strategy, one antecedent stack_column is related with 
-        other consecuent stack_column by filter_field. Antecendents are labeled 
+        With double-value strategy, one antecedent stack_column is related with
+        other consecuent stack_column by filter_field. Antecendents are labeled
         by filter_left_value and consecuents are labeled by filter_right_value:
         (stack_p_key, stack_pair, stack_column1, stack_column2)
     """
@@ -382,16 +385,18 @@ def _go_stacked(dataset, strategy, stack_p_key, all_keys, stack_pair, stack_colu
         return df_left.join(df_right, stack_pair)
 
 
-def _stack(dataset, keyspace=None, tablename=None, strategy= 'double-value',
-           auto=False, stack_p_key='key', stack_c_key='num', stack_pair='pair', stack_column='column',
-           filter_field=None, filter_left_value=None, filter_right_value=None):
+def _stack(dataset, keyspace=None, tablename=None, strategy='double-value',
+           auto=False, stack_p_key='key', stack_c_key='num', stack_pair='pair',
+           stack_column='column', filter_field=None, filter_left_value=None,
+           filter_right_value=None):
     """
-        Gets parameters for stacked operation and launch 
-        internal stacking helper function. 
+        Gets parameters for stacked operation and launch
+        internal stacking helper function.
     """
-    if strategy not in ['single-value','double-value']:
+    if strategy not in ['single-value', 'double-value']:
         raise Exception('stack::{} strategy not implemmented'.format(strategy))
-    # auto infers stack keys form partition a clustering cassandra groups of keys
+    # auto infers stack keys form partition a clustering cassandra groups
+    # of keys
     if auto:
         if not keyspace or not tablename:
             raise Exception(
@@ -404,10 +409,10 @@ def _stack(dataset, keyspace=None, tablename=None, strategy= 'double-value',
             raise Exception(
                 'stacked::stack_p_key and stack_pair are mandatory with auto=false'
             )
-        all_keys = _list_from_list_or_value(stack_p_key) +_list_from_list_or_value(stack_c_key)
+        all_keys = _list_from_list_or_value(stack_p_key) + _list_from_list_or_value(stack_c_key)
 
-    return _go_stacked(dataset, strategy, stack_p_key, all_keys, stack_pair, stack_column, 
-                    filter_field, filter_left_value, filter_right_value)
+    return _go_stacked(dataset, strategy, stack_p_key, all_keys, stack_pair, stack_column,
+                       filter_field, filter_left_value, filter_right_value)
 
 
 def _get_table(keyspace, tablename, select=None, calculated=None,

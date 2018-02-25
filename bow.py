@@ -154,7 +154,7 @@ def union():
             request_json = request.get_json()
             # data fill in
             metadata = unpack.union(request_json)
-            metadata['format'] = 'dict'            
+            metadata['format'] = 'dict'
             # spark call
             metadata['data'] = quiver.union(**metadata)
             # return data
@@ -207,4 +207,3 @@ def create_table():
 
 if __name__ == "__main__":
     app.run(debug=conf.app.debug)
-
