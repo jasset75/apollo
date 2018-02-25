@@ -1,6 +1,6 @@
 import os
 
-# auxiliar library to unpack operation parameters
+# auxiliary library to unpack operation parameters
 from . import unpack_params as unpack
 
 # project configuration wrapper: yaml formatted file
@@ -81,6 +81,9 @@ sqlContext = SQLContext(spark.sparkContext)
 
 
 def _list_from_list_or_value(value):
+    """
+        Returns a list, regardless of the value is str or list
+    """
     if isinstance(value,list):
         return value
     elif isinstance(value,str):
@@ -91,7 +94,7 @@ def _list_from_list_or_value(value):
 
 def _rename_column(dataset, name, alias):
     """
-        given a dataset, renames column named "name"
+        Given a dataset, renames column named "name"
         with "alias" name
     """
     columns = dataset.columns
@@ -107,8 +110,13 @@ def _rename_column(dataset, name, alias):
 
 
 def _formatted(dataset, format='dict'):
-
-    # convert to pandas
+    """
+        Internal helper that returns dataset into dict structure
+        or json format ready to response.
+        Internal recursion requires dict format, but response to client
+        requires json serialization.
+    """
+    # convertion to pandas
     pdf = dataset.toPandas()
     # returning results
     if format == 'dict':
@@ -120,7 +128,9 @@ def _formatted(dataset, format='dict'):
 
 
 def _save(ds_table, save):
-
+    """
+        Cassandra write-back
+    """
     if save:
         msave = unpack.save(save)
 
@@ -135,7 +145,7 @@ def _save(ds_table, save):
 
 def _sort_by(ds_table, sortby):
     """
-        sort by clause:
+        Sort by clause:
             parses a sort by clause and applies it over dataset
     """
     if sortby:
@@ -152,7 +162,7 @@ def _sort_by(ds_table, sortby):
 
 def _field_or_alias(term):
     """
-        auxiliar function:
+        Auxiliary function:
             returns value from value or {key: value}
     """
     if isinstance(term, dict):
@@ -164,7 +174,7 @@ def _field_or_alias(term):
 
 def _get_term_key(term):
     """
-        auxiliar function:
+        Auxiliary function:
             gets str or key from list of value or {key: value}
     """
     if isinstance(term, dict):
@@ -176,7 +186,7 @@ def _get_term_key(term):
 
 def _get_term_value(term):
     """
-        auxiliar function:
+        Auxiliary function:
             gets str or value from list of value or {key: value}
     """
     if isinstance(term, dict):
@@ -188,7 +198,7 @@ def _get_term_value(term):
 
 def _exists_key(ukey, klist):
     """
-        auxiliar function:
+        Auxiliary function:
             checks if a key exists in a list of str or {k: v}
     """
     for key in klist:
@@ -200,7 +210,7 @@ def _exists_key(ukey, klist):
 
 def _include(list_1, list_2):
     """
-        auxiliar function:
+        Auxiliary function:
             include all list_1 terms: str or {k: v}
             into list_2 if not exists
     """
@@ -216,11 +226,11 @@ def _include(list_1, list_2):
 
 def _select(ds_table, select, join_key):
     """
-        select clause always execute before join_key statement
-        with another table
-        in other words: select values are possible keys for join
-
-        if not select but join_key, all fields are select and include join_key
+        Select clause always execute before join_key statement
+        with another table; in other words: select values are
+        possible keys for join.
+        If not select but join_key, all fields are select and
+        include join_key.
     """
     if join_key and not select:
         select = ds_table.columns
@@ -236,7 +246,7 @@ def _select(ds_table, select, join_key):
 
 def _group_by(ds_table, groupby, join_key=None):
     """
-        group by clause:
+        Group by clause:
             parses a group by clause and applies it over dataset
     """
     if groupby:
@@ -270,7 +280,7 @@ def _group_by(ds_table, groupby, join_key=None):
 
 def _join_key_building(ds_table_a, join_key_a, ds_table_b, join_key_b):
     """
-        generates ds_table_a.key_a == ds_table_b.key_b
+        Generates ds_table_a.key_a == ds_table_b.key_b
         with all keys in a single or multiple key join
     """
     # initialize join keys
@@ -281,14 +291,19 @@ def _join_key_building(ds_table_a, join_key_a, ds_table_b, join_key_b):
         map(_get_term_value, join_key_b)
     )
     for key in zip_join:
-        join_clause.append(ds_table_a[key[0]] == ds_table_b[key[1]])
+        if key[0] == key[1]:
+            join_clause.append(key[0])            
+        else:
+            join_clause.append(ds_table_a[key[0]] == ds_table_b[key[1]])
 
     return join_clause
 
 
 def _map_stack(h_row, stack_p_key, all_keys):
-    # TO-DO: pair, column customizable names
-
+    """
+        Converts one row columns new rows, keeping keys in all rows, 
+        and makes new pair unique identifier in order to join related columns 
+    """
     columns = {}
     # uuid seed
     stack_p_key_value = {}
@@ -310,15 +325,14 @@ def _map_stack(h_row, stack_p_key, all_keys):
 def _go_stacked(dataset, strategy, stack_p_key, all_keys, stack_pair, stack_column, 
                 filter_field, filter_left_value, filter_right_value):
     """
-        given all keys (partition_key plus clustering_key normally) 
+        Given all keys (partition_key plus clustering_key normally) 
         and stack_p_key (partition key normally) changes the shape of
         the dataset from n-value columns to n/2 rows.
         it adds pair key to uniqueness.
-        one antecedent stack_column is related with other consecuent stack_column
-        by filter_field, antecendents are labeled by filter_left_value
-        and consecuents are labeled by filter_right_value.
-        this is (stack_p_key, stack_pair, stack_column1, stack_column2) strategy
-        called double-value-stack strategy
+        With double-value strategy, one antecedent stack_column is related with 
+        other consecuent stack_column by filter_field. Antecendents are labeled 
+        by filter_left_value and consecuents are labeled by filter_right_value:
+        (stack_p_key, stack_pair, stack_column1, stack_column2)
     """
     # value name
     _column = 'quiver_column_'
@@ -330,11 +344,13 @@ def _go_stacked(dataset, strategy, stack_p_key, all_keys, stack_pair, stack_colu
         lambda row: _map_stack(row, stack_p_key, all_keys)
     )
 
+    # renames internal names to definitive names
     df_stacked = _rename_column(
         _rename_column(
             spark.createDataFrame(rdd), _pair, stack_pair
         ), _column, stack_column
     )
+    # different strategies implementation
     if strategy == 'single-value':
         return df_stacked
     elif strategy == 'double-value':
@@ -345,7 +361,7 @@ def _go_stacked(dataset, strategy, stack_p_key, all_keys, stack_pair, stack_colu
         df_right = df_stacked.filter(
             df_stacked[filter_field] == func.lit(filter_right_value)
         )
-        # builing the new column shape
+        # building the new column shape
         all_keys.remove(filter_field)
         new_columns_1 = all_keys+[
             stack_pair, {stack_column: '{}{}'.format(stack_column, 1)}
@@ -368,11 +384,12 @@ def _stack(dataset, keyspace=None, tablename=None, strategy= 'double-value',
            auto=False, stack_p_key='key', stack_c_key='num', stack_pair='pair', stack_column='column',
            filter_field=None, filter_left_value=None, filter_right_value=None):
     """
-        gets parameters for stacked operation and launch 
+        Gets parameters for stacked operation and launch 
         internal stacking helper function. 
     """
     if strategy not in ['single-value','double-value']:
         raise Exception('stack::{} strategy not implemmented'.format(strategy))
+    # auto infers stack keys form partition a clustering cassandra groups of keys
     if auto:
         if not keyspace or not tablename:
             raise Exception(
@@ -448,7 +465,10 @@ def _get_table(keyspace, tablename, select=None, calculated=None,
 
 
 def _resolve_operand(table, join, union):
-
+    """
+        Unpacks operands and calls to specific helper.
+        This function is quite useful in tree recursion
+    """
     # left operand
     if table:
         mdata = unpack.table(table)
@@ -460,13 +480,18 @@ def _resolve_operand(table, join, union):
         mdata = unpack.union(union)
         ds_table = _union(**mdata)
     else:
-        raise Exception('At least join or table would be defined as '
+        raise Exception('At least *join* or *table* must be defined as '
                         + '*a* operand to join operator.')
 
     return ds_table, mdata
 
 
 def _trim_str(in_str):
+    """
+        Customizable behavior to filter prefix
+        (i.e.: Web Sematic RDF prefix), specially in development environment
+        in order to fit data structures within console width, hardcopy, etc.
+    """
     if conf.app.trim_str:
         if isinstance(in_str, str):
             terms = in_str.split('#')
@@ -482,7 +507,7 @@ def _join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
           join_groupby=None, sortby=None, join_key=None, save=None,
           join_type='inner'):
     """
-        makes a join between two tables, join and table, table and join,
+        Makes a join between two tables, join and table, table and join,
         or two joins this is a recursive function which explores json structure
     """
     # left operand resolution
@@ -501,6 +526,7 @@ def _join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
     join_clause = _join_key_building(
         ds_table_a, mdata_a['join_key'], ds_table_b, mdata_b['join_key']
     )
+
     # nuts and bolts
     ds_join = (
         ds_table_a.join(
@@ -509,17 +535,6 @@ def _join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
             join_type
         )
     )
-
-    # drop join duplicated columns
-    """
-    join_cols = ds_join.columns
-    a_keys = map(_get_term_value, mdata_a['join_key'])
-
-    for key in a_keys:
-        join_cols.remove(key)
-
-    ds_join = ds_join.select(join_cols)
-    """
 
     # any calculated fields
     if calculated:
