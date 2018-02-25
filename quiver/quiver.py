@@ -282,6 +282,8 @@ def _join_key_building(ds_table_a, join_key_a, ds_table_b, join_key_b):
     """
         Generates ds_table_a.key_a == ds_table_b.key_b
         with all keys in a single or multiple key join
+        When left and right field names are equals, it just removes them,
+        thus avoiding duplicate column names.
     """
     # initialize join keys
     join_clause = []
@@ -581,11 +583,6 @@ def _union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
         raise Exception("""
             join keys must be congruent in length: join_key a {}, join_key b {}
         """.format(mdata_a, mdata_b).strip())
-
-    # prepare join keys compararison
-    _join_key_building(
-        ds_table_a, mdata_a['join_key'], ds_table_b, mdata_b['join_key']
-    )
 
     # nuts and bolts
     if union_type == 'union_all':
