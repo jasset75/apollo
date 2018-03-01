@@ -9,7 +9,12 @@ from quiver import unpack_params as unpack
 import admix
 
 VERSION = 0.1
+from flask_cors import CORS
 app = Flask(__name__)
+
+# enabling Cross-Origin Resource Sharing
+CORS(app)
+
 
 OK_STATUS = 200
 OK_CREATE_STATUS = 201
