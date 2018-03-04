@@ -408,7 +408,10 @@ def _stack(dataset, keyspace=None, tablename=None, strategy='double-value',
             raise Exception(
                 'stacked::stack_p_key and stack_pair are mandatory with auto=false'
             )
-        all_keys = _list_from_list_or_value(stack_p_key) + _list_from_list_or_value(stack_c_key)
+        elif not stack_c_key:
+            all_keys = _list_from_list_or_value(stack_p_key)
+        else:
+            all_keys = _list_from_list_or_value(stack_p_key) + _list_from_list_or_value(stack_c_key)
 
     return _go_stacked(dataset, strategy, stack_p_key, all_keys, stack_pair, stack_column,
                        filter_field, filter_left_value, filter_right_value)
