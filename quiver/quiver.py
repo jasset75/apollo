@@ -109,20 +109,19 @@ def _rename_column(dataset, name, alias):
     return dataset.select([x for x in map(_field_or_alias, columns)])
 
 
-def _formatted(dataset, format='dict'):
+def _formatted(dataset, format='dict', orient_results='column'):
     """
         Internal helper that returns dataset into dict structure
-        or json format ready to response.
-        Internal recursion requires dict format, but response to client
-        requires json serialization.
     """
     # convertion to pandas
     pdf = dataset.toPandas()
     # returning results
     if format == 'dict':
-        return pdf.to_dict()
-    elif format == 'json':
-        return pdf.to_json()
+        # orient results column format, internal dict format equivalence
+        _orient_results = orient_results
+        if orient_results == 'column':
+            _orient_results = 'dict'
+        return pdf.to_dict(_orient_results)
     else:
         raise Exception('Internal Error: Unknow format {0}.'.format(format))
 
@@ -479,15 +478,19 @@ def _resolve_operand(table, join, union):
         Unpacks operands and calls to specific helper.
         This function is quite useful in tree recursion
     """
-    # left operand
+    # orient_results removed before internal call, only
+    # external function understand this param
     if table:
         mdata = unpack.table(table)
+        mdata.pop('orient_results')
         ds_table = _get_table(**mdata)
     elif join:
         mdata = unpack.join(join)
+        mdata.pop('orient_results')
         ds_table = _join(**mdata)
     elif union:
         mdata = unpack.union(union)
+        mdata.pop('orient_results')
         ds_table = _union(**mdata)
     else:
         raise Exception('At least *join* or *table* must be defined as '
@@ -515,7 +518,7 @@ def _trim_str(in_str):
 def _join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
           union_b=None, select=None, calculated=None, s_filter=None,
           join_groupby=None, sortby=None, join_key=None, save=None,
-          join_type='inner'):
+          join_type='inner', orient_results='column'):
     """
         Makes a join between two tables, join and table, table and join,
         or two joins this is a recursive function which explores json structure
@@ -635,10 +638,16 @@ def _union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
 
 def get_table(keyspace, tablename, select=None, calculated=None, s_filter=None,
               groupby=None, sortby=None, join_key=[], format='dict',
-              save=None, stacked=False):
+              save=None, stacked=False, orient_results='column'):
     """
         get_table entry point
             this function computes data from a table
+        orient_results:
+            split : dict like {index -> [index], columns -> [columns], data -> [values]}
+            records : list like [{column -> value}, ... , {column -> value}]
+            index : dict like {index -> {column -> value}}
+            columns : dict like {column -> {index -> value}}
+            values : just the values array            
     """
 
     # retrieving dataset from Cassandra
@@ -647,13 +656,13 @@ def get_table(keyspace, tablename, select=None, calculated=None, s_filter=None,
                           groupby=groupby, sortby=sortby, join_key=join_key,
                           save=save, stacked=stacked)
 
-    return _formatted(ds_table, format)
+    return _formatted(ds_table, format, orient_results)
 
 
 def join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
          union_b=None, calculated=None, select=None, s_filter=None,
          join_groupby=None, sortby=None, join_key=[], save=None,
-         join_type='inner', format='dict'):
+         join_type='inner', format='dict', orient_results='column'):
     """
         join function entry point
 
@@ -667,6 +676,20 @@ def join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
             "cross"
         format:
             dict or str (json serialized)
+        orient_results:
+            "split" : dict like {
+                index -> [index], 
+                columns -> [columns], 
+                data -> [values]
+            }
+            "records" : list like [
+                {column -> value},
+                ... ,
+                {column -> value}
+            ]
+            "index" : dict like {index -> {column -> value}}
+            "columns" : dict like {column -> {index -> value}}
+            "values" : just the values array
     """
 
     ds_join = _join(table_a=table_a, table_b=table_b, join_a=join_a,
@@ -675,13 +698,13 @@ def join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
                     join_groupby=join_groupby, sortby=sortby,
                     join_key=join_key, save=save, join_type=join_type)
 
-    return _formatted(ds_join, format)
+    return _formatted(ds_join, format, orient_results)
 
 
 def union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
           union_b=None, select=None, calculated=None, s_filter=None,
           union_groupby=None, sortby=None, join_key=[], save=None,
-          union_type='union_all', format='dict'):
+          union_type='union_all', format='dict', orient_results='column'):
     """
         union function entry point
 
@@ -699,4 +722,4 @@ def union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
                       union_groupby=union_groupby, sortby=sortby,
                       join_key=join_key, save=save, union_type=union_type)
 
-    return _formatted(ds_union, format)
+    return _formatted(ds_union, format, orient_results)
