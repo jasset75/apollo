@@ -11,6 +11,7 @@ def table(table_json):
     metadata['join_key'] = table_json.get('join_key', [])
     metadata['save'] = table_json.get('save', None)
     metadata['stacked'] = table_json.get('stacked', None)
+    metadata['orient_results'] = table_json.get('orient_results', 'column')
 
     return metadata
 
@@ -32,6 +33,29 @@ def join(join_json):
     metadata['join_type'] = join_json.get('join_type', 'inner')
     metadata['join_key'] = join_json.get('join_key', [])
     metadata['save'] = join_json.get('save', None)
+    metadata['orient_results'] = join_json.get('orient_results', 'column')
+
+    return metadata
+
+
+def union(union_json):
+
+    metadata = {}
+    metadata['table_a'] = union_json.get('table_a', None)
+    metadata['table_b'] = union_json.get('table_b', None)
+    metadata['join_a'] = union_json.get('join_a', None)
+    metadata['join_b'] = union_json.get('join_b', None)
+    metadata['union_a'] = union_json.get('union_a', None)
+    metadata['union_b'] = union_json.get('union_b', None)
+    metadata['calculated'] = union_json.get('calculated', None)
+    metadata['select'] = union_json.get('select', None)
+    metadata['s_filter'] = union_json.get('filter', None)
+    metadata['union_groupby'] = union_json.get('groupby', None)
+    metadata['sortby'] = union_json.get('sortby', None)
+    metadata['union_type'] = union_json.get('union_type', 'union_all')
+    metadata['join_key'] = union_json.get('join_key', [])
+    metadata['save'] = union_json.get('save', None)
+    metadata['orient_results'] = union_json.get('orient_results', 'column')
 
     return metadata
 
@@ -60,26 +84,5 @@ def stacked(stacked_json):
     metadata['filter_field'] = stacked_json.get('filter_field', None)
     metadata['filter_left_value'] = stacked_json.get('filter_left_value', None)
     metadata['filter_right_value'] = stacked_json.get('filter_right_value', None)
-
-    return metadata
-
-
-def union(union_json):
-
-    metadata = {}
-    metadata['table_a'] = union_json.get('table_a', None)
-    metadata['table_b'] = union_json.get('table_b', None)
-    metadata['join_a'] = union_json.get('join_a', None)
-    metadata['join_b'] = union_json.get('join_b', None)
-    metadata['union_a'] = union_json.get('union_a', None)
-    metadata['union_b'] = union_json.get('union_b', None)
-    metadata['calculated'] = union_json.get('calculated', None)
-    metadata['select'] = union_json.get('select', None)
-    metadata['s_filter'] = union_json.get('filter', None)
-    metadata['union_groupby'] = union_json.get('groupby', None)
-    metadata['sortby'] = union_json.get('sortby', None)
-    metadata['union_type'] = union_json.get('union_type', 'union_all')
-    metadata['join_key'] = union_json.get('join_key', [])
-    metadata['save'] = union_json.get('save', None)
 
     return metadata
