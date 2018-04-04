@@ -8,7 +8,7 @@ from quiver import quiver
 from quiver import unpack_params as unpack
 import admix
 
-VERSION = 0.1
+VERSION = 1.0
 from flask_cors import CORS
 app = Flask(__name__)
 
@@ -61,7 +61,7 @@ def about():
     about = dict(
         api_name='Apollo',
         version=VERSION,
-        author_name='Juan A. Aguilar',
+        author_name='Juan A. Aguilar-Jiménez',
         author_email='juanantonioaguilar@gmail.com',
         project_repository='https://github.com/jasset75/apollo.github',
         documentation='http://jasset75.github.io/apollo',
