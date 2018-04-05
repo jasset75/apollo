@@ -3046,6 +3046,7 @@ curl --request POST \
                 "tablename": "mock_data"
             }
 
+
 ## Joins two members [/join]
 
 ### Join [POST]
@@ -3057,15 +3058,15 @@ Retrieve data from two Cassandra data sets. It accepts two kind of parameters: s
 
 Possible combinations:
 
-- table_a & table_b
-- table_a & join_b
-- table_a & union_b
-- join_a & table_b
-- join_a & join_b
-- join_a & union_b
-- union_a & table_b
-- union_a & join_b
-- union_a & union_b
+- table_a |X| table_b
+- table_a |X| join_b
+- table_a |X| union_b
+- join_a |X| table_b
+- join_a |X| join_b
+- join_a |X| union_b
+- union_a |X| table_b
+- union_a |X| join_b
+- union_a |X| union_b
 
 Thus, recursivelly we could define whatever table merging. Similar to SQL but only binary operations, same functionality.
 
@@ -3354,7 +3355,7 @@ curl --request POST \
                 "union_a": null,
                 "union_b": null
             }
-            
+
 + Request - Join (application/json)
 
         {
