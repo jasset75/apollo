@@ -3047,11 +3047,11 @@ curl --request POST \
             }
 
 
-## Joins two members [/join]
+## Join [/join]
 
 ### Join [POST]
 
-Retrieve data from two Cassandra data sets. It accepts two kind of parameters: simple table description that is an operand; or an operation, two choices also: recursive join description or a recursive union description, which both are composed of two parameters: 
+Retrieve data from two Cassandra data sets and join them by key fields. It accepts two kind of parameters: simple table description that is an operand; or an operation, two choices also: recursive join description or a recursive union description, which both are composed of two parameters: 
 
 - left operand: table description, join description or union description
 - right operand: table description, join description or union description
@@ -3179,7 +3179,7 @@ curl --request POST \
     "sortby": [
         {"sum(annual_budget)": "desc"}
     ]   
-}'
+}
 ```
 
 + Request (application/json)
@@ -3228,6 +3228,7 @@ curl --request POST \
             Location: /get-table
 
     + Body
+
             {
                 "calculated": null,
                 "data": {
@@ -70595,7 +70596,7 @@ curl --request POST \
                 "union_b": null
             }
 
-## Union of two members [/union]
+## Union [/union]
 
 ### Union [POST]
 
