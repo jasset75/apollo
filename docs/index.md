@@ -5,7 +5,6 @@ This project implements a REST API to select data from Apache Cassandra taking a
 I've written these [notes](https://jasset75.github.io/Spark-Cassandra-Notes/Environment.html) with which to follow a recipe to build a development environment. Besides, there are some examples and scripts which loads the data sources used in those and these examples.
 
 > API Blueprint format.
-> NOTE: The data for examples and test are based on [Spark-Cassandra Notes repository](https://jasset75.github.io/Spark-Cassandra-Notes/).
 
 # Apollo REST API
 
@@ -1127,6 +1126,7 @@ curl --request POST \
 
 >Updated Source at:
 >[Apiary Documentation](https://apollo20.docs.apiary.io)
+> NOTE: The data for examples and test are based on [Spark-Cassandra Notes repository](https://jasset75.github.io/Spark-Cassandra-Notes/).
 
 ## Useful tools
 
