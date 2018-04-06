@@ -228,95 +228,97 @@ Reference [Datastax](https://docs.datastax.com/en/drivers/python/2.5/api/cassand
 
 Shell snippets
 
-    - Simple types
+- Simple types
 
-        ```sh
-            curl --request POST \
-              --url http://localhost:5000/create-table \
-              --header 'content-type: application/json' \
-              --data '{
-                "keyspace": "examples_bis",
-                "tablename": "older_than_40_summarized",
-                "columns": [
-                    {
-                        "db_field": "age",
-                        "db_type": "integer",
-                        "primary_key": "true"
-                    }, 
-                    {
-                        "db_field": "total",
-                        "db_type": "Integer" 
-                    }
-                ]
-            }'
-        ```
-
-        > Response
-        ```javascript
-            // Response 201 OK
+```sh
+    curl --request POST \
+      --url http://localhost:5000/create-table \
+      --header 'content-type: application/json' \
+      --data '{
+        "keyspace": "examples_bis",
+        "tablename": "older_than_40_summarized",
+        "columns": [
             {
-                "success": true,
-                "data": null,
-                "columns": [
-                    {
-                        "db_field": "age",
-                        "db_type": "integer",
-                        "primary_key": "true"
-                    },
-                    {
-                        "db_field": "total",
-                        "db_type": "Integer"
-                    }
-                ],
-                "status": 201,
-                "tablename": "older_than_40_summarized",
-                "keyspace": "examples_bis"
-            }
-        ```
-
-    - Table with counter field
-
-        ```sh
-            curl --request POST \
-              --url http://localhost:5000/create-table \
-              --header 'content-type: application/json' \
-              --data '{
-                "keyspace": "examples",
-                "tablename": "test_2",
-                "columns": [
-                    {
-                        "db_field": "field_1",
-                        "db_type": "uuid",
-                        "primary_key": "true"
-                    },
-                    {
-                        "db_field": "field_2",
-                        "db_type": "counter"
-                    }
-                ]
-            }'    
-        ```
-
-        > Response
+                "db_field": "age",
+                "db_type": "integer",
+                "primary_key": "true"
+            }, 
             {
-                // Response 201 OK
-                "tablename": "test",
-                "status": 201,
-                "success": true,
-                "keyspace": "examples",
-                "data": null,
-                "columns": [
-                    {
-                        "db_type": "text",
-                        "db_field": "field_1"
-                    },
-                    {
-                        "db_type": "integer",
-                        "db_field": "field_2",
-                        "primary_key": "true"
-                    }
-                ]
+                "db_field": "total",
+                "db_type": "Integer" 
             }
+        ]
+    }'
+```
+
+> Response
+```javascript
+    // Response 201 OK
+    {
+        "success": true,
+        "data": null,
+        "columns": [
+            {
+                "db_field": "age",
+                "db_type": "integer",
+                "primary_key": "true"
+            },
+            {
+                "db_field": "total",
+                "db_type": "Integer"
+            }
+        ],
+        "status": 201,
+        "tablename": "older_than_40_summarized",
+        "keyspace": "examples_bis"
+    }
+```
+
+- Table with counter field
+
+```sh
+    curl --request POST \
+      --url http://localhost:5000/create-table \
+      --header 'content-type: application/json' \
+      --data '{
+        "keyspace": "examples",
+        "tablename": "test_2",
+        "columns": [
+            {
+                "db_field": "field_1",
+                "db_type": "uuid",
+                "primary_key": "true"
+            },
+            {
+                "db_field": "field_2",
+                "db_type": "counter"
+            }
+        ]
+    }'    
+```
+
+> Response
+```javascript
+{
+    // Response 201 OK
+    "tablename": "test",
+    "status": 201,
+    "success": true,
+    "keyspace": "examples",
+    "data": null,
+    "columns": [
+    {
+        "db_type": "text",
+        "db_field": "field_1"
+    },
+    {
+        "db_type": "integer",
+        "db_field": "field_2",
+        "primary_key": "true"
+    }
+]
+}
+```
 
 ## Get Table [/get-table]
 
@@ -389,7 +391,7 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 > People from mock_data table who is older than 40 years old and grouped by age with count aggregation.
 > Age is calculated from `birth_date` field, indicated by `calculated` clause.
 
-Shell snippet
+- Shell snippet
 
 ```sh
     curl --request POST \
@@ -592,7 +594,7 @@ Other optional parameters are aimed to apply DML functionality: `groupby`, `sele
 > Ordered list of countries with more than 10K billion Euros of drug annual budget. It summarizes Drug Companies annual budget grouped by country.
 
 
-Shell snippet
+- Shell snippet
 
 ```sh
 curl --request POST \
@@ -850,7 +852,7 @@ Possible combinations:
         }
     ```
 
-Shell snippet
+- Shell snippet
 
 ```sh
 curl --request POST \
