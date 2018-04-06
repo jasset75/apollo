@@ -2,7 +2,7 @@
 
 This project implements a REST API to select data from Apache Cassandra taking advantage of the power of Apache Spark. Spark cluster computes commands requested by HTTP client through Apollo API endpoints.
 
-I've written this [notes](https://jasset75.github.io/Spark-Cassandra-Notes/Environment.html) with which to follow a recipe to build a development environment. Besides, there are some examples and scripts which loads the data sources used in those and these examples.
+I've written these [notes](https://jasset75.github.io/Spark-Cassandra-Notes/Environment.html) with which to follow a recipe to build a development environment. Besides, there are some examples and scripts which loads the data sources used in those and these examples.
 
 > API Blueprint format.
 > NOTE: The data for examples and test are based on [Spark-Cassandra Notes repository](https://jasset75.github.io/Spark-Cassandra-Notes/).
@@ -193,24 +193,23 @@ Accepted parameters:
 
 - partition_key = False
 
-    indicates that this column should be the partition key, defining more than one partition key column creates a compound partition key
+    indicates that this column should be the partition key, defining more than one partition key column creates a compound partition key.
 
 - index = False
 
-    bool flag, indicates an index should be created for this column
-
+    bool flag, indicates an index should be created for this column.
 
 - default = None
 
-    the default value, can be a value or a callable (no args)
+    the default value, can be a value or a callable (no args).
 
 - required = False
 
-    boolean, is the field required? Model validation will raise and exception if required is set to True and there is a None value assigned
+    boolean, is the field required? Model validation will raise and exception if required is set to True and there is a None value assigned.
 
 - clustering_order = None
 
-    only applicable on clustering keys (primary keys that are not partition keys) determines the order that the clustering keys are sorted on disk
+    only applicable on clustering keys (primary keys that are not partition keys) determines the order that the clustering keys are sorted on disk.
 
 - discriminator_column = False
 
@@ -222,9 +221,9 @@ Accepted parameters:
 
 - static = False
 
-    boolean, if set to True, this is a static column, with a single value per partition
+    boolean, if set to True, this is a static column, with a single value per partition.
 
-Reference [Datastax](https://docs.datastax.com/en/drivers/python/2.5/api/cassandra/cqlengine/columns.html)
+Reference [Datastax](https://docs.datastax.com/en/drivers/python/2.5/api/cassandra/cqlengine/columns.html).
 
 Shell snippets
 
@@ -508,10 +507,10 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 
 Retrieve data from two Cassandra data sets and join them by key fields. It accepts two kind of parameters: simple table description that is an operand; or an operation, two choices also: recursive join description or a recursive union description, which both are composed of two parameters: 
 
-- left operand: table description, join description or union description
-- right operand: table description, join description or union description
+- left operand: table description, join description or union description.
+- right operand: table description, join description or union description.
 
-|Possible combinations |||
+||Possible combinations ||
 |:--|:--:|:---|
 | table_a |&#10781;|table_b |
 | table_a |&#10781;|join_b  |
@@ -525,7 +524,7 @@ Retrieve data from two Cassandra data sets and join them by key fields. It accep
 
 Thus, recursivelly we could define whatever table merging. Similar to SQL but only binary operations, same functionality.
 
-This descriptions has a few parameters which identify the data source: `keyspace` and `tablename`. Beside this, two descriptions involved in a join operation needs join_key parameter that declare which fields are the key to join each other.
+These descriptions has a few parameters which identify the data source: `keyspace` and `tablename`. Besides that, two descriptions involved in a join operation needs join_key parameter that declare which fields are the key to join each other.
 
 Other optional parameters are aimed to apply DML functionality: `groupby`, `select`, `calculated`, etc.:
 
@@ -781,17 +780,17 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 - right operand: table description, join description or union description
 
 
-|   Possible combinations   |
-|:--|
-| table_a  &#8746;  table_b |
-| table_a  &#8746;  join_b  |
-| table_a  &#8746;  union_b |
-| join_a   &#8746;  table_b |
-| join_a   &#8746;  join_b  |
-| join_a   &#8746;  union_b |
-| union_a  &#8746;  table_b |
-| union_a  &#8746;  join_b  |
-| union_a  &#8746;  union_b |
+|   | |Possible combinations   |
+|:--|:--:|:--|
+| table_a  |&#8746;|  table_b |
+| table_a  |&#8746;|  join_b  |
+| table_a  |&#8746;|  union_b |
+| join_a   |&#8746;|  table_b |
+| join_a   |&#8746;|  join_b  |
+| join_a   |&#8746;|  union_b |
+| union_a  |&#8746;|  table_b |
+| union_a  |&#8746;|  join_b  |
+| union_a  |&#8746;|  union_b |
 
 - Select
 
@@ -1139,11 +1138,11 @@ It is oriented to describe and test REST APIs. Supports Swagger and API Blueprin
 
 Insomnia is that kind of applications that is highly recommended to develop a REST API. It has as prominent features:
 
-- Usable GUI
-- Different Environment management
+- Usable GUI.
+- Different Environment management.
 - The whole range of HTTP verbs: GET, PUT, POST, DELETE, etc.
-- Exportable environment file with JSON format for sharing
-- Response beautifier
+- Exportable environment file with JSON format for sharing.
+- Response beautifier.
 ...
 
 ```sh
