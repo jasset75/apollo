@@ -7,7 +7,7 @@ I've wrote this [notes](https://jasset75.github.io/Spark-Cassandra-Notes/Environ
 > API Blueprint format.
 > NOTE: The data for examples and test are based on [Spark-Cassandra Notes repository](https://jasset75.github.io/Spark-Cassandra-Notes/).
 
-# Apollo
+# Apollo REST API
 
 Spark-Cassandra Rest API
 
