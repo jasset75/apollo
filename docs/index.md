@@ -511,7 +511,7 @@ Retrieve data from two Cassandra data sets and join them by key fields. It accep
 - left operand: table description, join description or union description
 - right operand: table description, join description or union description
 
-|Possible combinations <td colspan=3>|
+|Possible combinations |||
 |:--|:--:|:---|
 | table_a |&#10781;|table_b |
 | table_a |&#10781;|join_b  |
