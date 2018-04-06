@@ -2,7 +2,7 @@
 
 This project implements a REST API to select data from Apache Cassandra taking advantage of the power of Apache Spark. Spark cluster computes commands requested by HTTP client through Apollo API endpoints.
 
-I've wrote this [notes](https://jasset75.github.io/Spark-Cassandra-Notes/Environment.html) with which to follow a recipe and mount a development environment. Besides, there are some examples and scripts which loads the data sources used in those and these examples.
+I've written this [notes](https://jasset75.github.io/Spark-Cassandra-Notes/Environment.html) with which to follow a recipe to build a development environment. Besides, there are some examples and scripts which loads the data sources used in those and these examples.
 
 > API Blueprint format.
 > NOTE: The data for examples and test are based on [Spark-Cassandra Notes repository](https://jasset75.github.io/Spark-Cassandra-Notes/).
