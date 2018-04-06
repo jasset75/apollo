@@ -511,8 +511,8 @@ Retrieve data from two Cassandra data sets and join them by key fields. It accep
 - left operand: table description, join description or union description
 - right operand: table description, join description or union description
 
-Possible combinations:
-
+|       Possible combinations     |      
+|:-------------------------------:|
 | table_a  &#124;X&#124;  table_b |
 |:-------------------------------:|
 | table_a  &#124;X&#124;  join_b  |
@@ -530,6 +530,7 @@ Possible combinations:
 | union_a  &#124;X&#124;  join_b  |
 |:-------------------------------:|
 | union_a  &#124;X&#124;  union_b |
+|:-------------------------------:|
 
 Thus, recursivelly we could define whatever table merging. Similar to SQL but only binary operations, same functionality.
 
@@ -788,17 +789,27 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 - left operand: table description, join description or union description
 - right operand: table description, join description or union description
 
-Possible combinations:
 
-- table_a U table_b
-- table_a U join_b
-- table_a U union_b
-- join_a U table_b
-- join_a U join_b
-- join_a U union_b
-- union_a U table_b
-- union_a U join_b
-- union_a U union_b
+|   Possible combinations   |      
+|:-------------------------:|
+| table_a  &#8746;  table_b |
+|:-------------------------:|
+| table_a  &#8746;  join_b  |
+|:-------------------------:|
+| table_a  &#8746;  union_b |
+|:-------------------------:|
+| join_a   &#8746;  table_b |
+|:-------------------------:|
+| join_a   &#8746;  join_b  |
+|:-------------------------:|
+| join_a   &#8746;  union_b |
+|:-------------------------:|
+| union_a  &#8746;  table_b |
+|:-------------------------:|
+| union_a  &#8746;  join_b  |
+|:-------------------------:|
+| union_a  &#8746;  union_b |
+|:-------------------------:|
 
 - Select
 
