@@ -512,7 +512,7 @@ Retrieve data from two Cassandra data sets and join them by key fields. It accep
 - right operand: table description, join description or union description
 
 |    Possible combinations   |
-|----------------------------|
+|:---|
 | table_a  &#10781;  table_b |
 | table_a  &#10781;  join_b  |
 | table_a  &#10781;  union_b |
@@ -782,7 +782,7 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 
 
 |   Possible combinations   |
-|---------------------------|
+|:--|
 | table_a  &#8746;  table_b |
 | table_a  &#8746;  join_b  |
 | table_a  &#8746;  union_b |
