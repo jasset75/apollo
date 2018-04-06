@@ -513,15 +513,23 @@ Retrieve data from two Cassandra data sets and join them by key fields. It accep
 
 Possible combinations:
 
-- table_a |X| table_b
-- table_a |X| join_b
-- table_a |X| union_b
-- join_a |X| table_b
-- join_a |X| join_b
-- join_a |X| union_b
-- union_a |X| table_b
-- union_a |X| join_b
-- union_a |X| union_b
+| table_a  &#124;X&#124;  table_b |
+|:-------------------------------:|
+| table_a  &#124;X&#124;  join_b  |
+|:-------------------------------:|
+| table_a  &#124;X&#124;  union_b |
+|:-------------------------------:|
+| join_a   &#124;X&#124;  table_b |
+|:-------------------------------:|
+| join_a   &#124;X&#124;  join_b  |
+|:-------------------------------:|
+| join_a   &#124;X&#124;  union_b |
+|:-------------------------------:|
+| union_a  &#124;X&#124;  table_b |
+|:-------------------------------:|
+| union_a  &#124;X&#124;  join_b  |
+|:-------------------------------:|
+| union_a  &#124;X&#124;  union_b |
 
 Thus, recursivelly we could define whatever table merging. Similar to SQL but only binary operations, same functionality.
 
