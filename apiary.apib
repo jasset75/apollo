@@ -224,26 +224,26 @@ Shell snippets
 
     - Simple types
 
-        ```sh
-            curl --request POST \
-              --url http://localhost:5000/create-table \
-              --header 'content-type: application/json' \
-              --data '{
-                "keyspace": "examples_bis",
-                "tablename": "older_than_40_summarized",
-                "columns": [
-                    {
-                        "db_field": "age",
-                        "db_type": "integer",
-                        "primary_key": "true"
-                    }, 
-                    {
-                        "db_field": "total",
-                        "db_type": "Integer" 
-                    }
-                ]
-            }'
-        ```
+    ```sh
+        curl --request POST \
+          --url http://localhost:5000/create-table \
+          --header 'content-type: application/json' \
+          --data '{
+            "keyspace": "examples_bis",
+            "tablename": "older_than_40_summarized",
+            "columns": [
+                {
+                    "db_field": "age",
+                    "db_type": "integer",
+                    "primary_key": "true"
+                }, 
+                {
+                    "db_field": "total",
+                    "db_type": "Integer" 
+                }
+            ]
+        }'
+    ```
 
     - Table with counter field
 
@@ -695,7 +695,8 @@ Shell snippets
 ### Get Table [POST]
 
 Retrieve data from Cassandra table. It takes a few parameters which identify 
-the data source `keyspace` and `tablename`. Other optional parameters are aimed to apply DML functionality: `groupby`, `select`, `calculated`, etc.
+the data source `keyspace` and `tablename`. Other optional
+parameters are aimed to apply DML functionality: `groupby`, `select`, `calculated`, etc.
 
 - Select
 
@@ -703,16 +704,16 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 
 
     ```javascript
-        "select": [<field_a>, <field_b>, {<field_c>: <field_c_renamed>}, ... ],
+    "select": [<field_a>, <field_b>, {<field_c>: <field_c_renamed>}, ... ],
     ```
 - Calculated
 
     Optional parameter that allow Spark SQL expressions which calculate new fields from others.
 
     ```javascript
-        "calculated": {
-            "<calculated_field": "<Spark SQL expression"
-        },
+    "calculated": {
+        <calculated_field>: <Spark SQL expression>
+    },
     ```
 
 - Filter
@@ -720,7 +721,7 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
     Filter expression
 
     ```javascript
-        "filter": <filter_expression>,
+    "filter": <filter_expression>,
     ```
 
 - Group by
@@ -728,22 +729,22 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
     Gets data from Cassandra table which is applied a `groupby` statement. 
 
     ```javascript
-        "groupby": { 
-            "grouped": [<field_a>],
-            "agg": {
-                "count": [<field_b>]
-            }
+    "groupby": { 
+        "grouped": [<field_a>],
+        "agg": {
+            "count": [<field_b>]
         }
+    }
     ```
 
 - Sort by
     
     ```javascript
-        "sortby": [
-            {<field_a>: "desc"},
-            {<field_b>: "asc"},  //default
-            ...
-        ]
+    "sortby": [
+        {<field_a>: "desc"},
+        {<field_b>: "asc"},  //default
+        ...
+    ]
     ```
 
 - Save
@@ -751,17 +752,80 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
     It writes back results into Cassandra existing table. The result set must be compatible with Cassandra table structure but as flexible as Cassandra is.
 
     ```javascript
-        "save": {
-            "keyspace": <destination keyspace>,
-            "tablename": <destination table>
-        }
+    "save": {
+        "keyspace": <destination keyspace>,
+        "tablename": <destination table>
+    }
     ```
+
+- Stacked
+
+    This is a so specific statement. It's intended for column oriented data source; in other words,
+    we need to join two rows with undefined number of values associated to, and it is required
+    select all values.
+
+
+    Example of data source:
+
+    |key|column1|column2|column3|
+    |---|---|---|---|
+    |firstName|Picasso|Rodin|Velazquez|
+    |firstName|Pablo|Auguste|Diego|
+    
+
+    Example of configuration:
+    
+    ```javascript
+    "stacked": {
+        "auto": false,
+        "strategy": "double-value",
+        "stack_p_key": ["key"],
+        "stack_c_key": ["num"],
+        "stack_pair": "rowid",
+        "stack_column": "value",
+        "filter_field": "num",
+        "filter_left_value": 1,
+        "filter_right_value": 2
+    }
+    ```
+    
+    Fields explained:
+        
+    - `auto`, when `false` `stack_p_key` is mandatory. `stack_c_key` is needed
+    only for `"strategy": "single-value"`.
+
+    - `strategy`, two strategies are possible:
+    
+        - `single-value`
+        
+        | key | rowid | num | value |
+        |---|---|---|---|
+        | firstName |544ca336-2d9c-36bb-8433-17371498d2fe | 1 | Picasso |
+        | firstName |544ca336-2d9c-36bb-8433-17371498d2fe | 2 | Pablo |
+        | firstName |f1c25492-21b1-314a-8218-75da2d4e8fbd | 1 | Rodin |
+        | firstName |f1c25492-21b1-314a-8218-75da2d4e8fbd | 2 | Auguste |
+        | firstName |f1c25492-21b1-314a-8218-1608134e5815 | 1 | Velazquez |
+        | firstName |f1c25492-21b1-314a-8218-1608134e5815 | 2 | Diego |
+        
+        - `double-value`
+        
+        |key|rowid|value1|value2|
+        |---|---|---|---|
+        |firstName|544ca336-2d9c-36bb-8433-17371498d2fe|Picasso|Pablo|
+        |firstName|f1c25492-21b1-314a-8218-75da2d4e8fbd|Rodin|Auguste|
+        |firstName|f1c25492-21b1-314a-8218-1608134e5815|Velazquez|Diego|
+
+    - `stack_p_key` represents partition key.
+    - `stack_c_key` is the clustering key
+    - `stack_pair` that is a generated field, infers unique pairs from undetermined number of values
+    in a row. It will be part of clustering key in the final table.
+    `
 
 > Test Details
 > People from mock_data table who is older than 40 years old and grouped by age with count aggregation.
 > Age is calculated from `birth_date` field, indicated by `calculated` clause.
 
-Shell snippet
+- Shell snippet
 
 ```sh
 curl --request POST \
@@ -70601,20 +70665,83 @@ curl --request POST \
 
 ### Union [POST]
 
-Makes a union between two members, both could be a table, join or union, evaluated in a recursive way.
-    
+It makes a union between two members, both could be a table, join or union, evaluated in a recursive way. It takes a few parameters which identify 
+the data source `keyspace` and `tablename`. Other optional parameters are aimed to apply DML functionality: `groupby`, `select`, `calculated`, etc.
+
+- left operand: table description, join description or union description
+- right operand: table description, join description or union description
+
+Possible combinations:
+
+- table_a U table_b
+- table_a U join_b
+- table_a U union_b
+- join_a U table_b
+- join_a U join_b
+- join_a U union_b
+- union_a U table_b
+- union_a U join_b
+- union_a U union_b
+
+- Select
+
+    Projection operation of relational algebra. It allows rename operation as well.
+
+
+    ```javascript
+        "select": [<field_a>, <field_b>, {<field_c>: <field_c_renamed>}, ... ],
+    ```
+- Calculated
+
+    Optional parameter that allow Spark SQL expressions which calculate new fields from others.
+
+    ```javascript
+        "calculated": {
+            "<calculated_field": "<Spark SQL expression"
+        },
+    ```
+
 - Filter
 
-    Filter expression after union
+    Filter expression
 
-    ```javacript
+    ```javascript
         "filter": <filter_expression>,
     ```
 
 - Group by
 
-    Apply a `groupby` statement over two members united.
+    Apply a `groupby` statement over two members grouped. 
 
+    ```javascript
+        "groupby": { 
+            "grouped": [<field_a>],
+            "agg": {
+                "count": [<field_b>]
+            }
+        }
+    ```
+
+- Sort by
+    
+    ```javascript
+        "sortby": [
+            {<field_a>: "desc"},
+            {<field_b>: "asc"},  //default
+            ...
+        ]
+    ```
+
+- Save
+
+    It writes back results into Cassandra existing table. The result set must be compatible with Cassandra table structure but as flexible as Cassandra is.
+
+    ```javascript
+        "save": {
+            "keyspace": <destination keyspace>,
+            "tablename": <destination table>
+        }
+    ```
 
 Shell snippet
 
