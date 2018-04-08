@@ -1238,3 +1238,29 @@ Dredd supports several description languages such as API Bluprint and Swagger. I
 ```sh
 dredd apiary.apib http://localhost:5000
 ```
+
+Results:
+```sh
+info: Beginning Dredd testing...
+pass: GET (200) /about duration: 136ms
+pass: GET (200) /version duration: 17ms
+pass: POST (201) /create-table duration: 54ms
+pass: POST (201) /create-table duration: 32ms
+pass: POST (201) /create-table duration: 29ms
+pass: POST (201) /create-table duration: 24ms
+pass: POST (201) /create-table duration: 17ms
+pass: POST (201) /create-table duration: 29ms
+pass: POST (201) /create-table duration: 24ms
+pass: POST (200) /get-table duration: 3690ms
+pass: POST (200) /get-table duration: 3109ms
+pass: POST (200) /get-table duration: 1852ms
+pass: POST (200) /get-table duration: 2197ms
+pass: POST (200) /get-table duration: 4484ms
+pass: POST (200) /join duration: 3016ms
+pass: POST (200) /join duration: 1435ms
+pass: POST (200) /join duration: 17920ms
+pass: POST (200) /union duration: 1007ms
+pass: POST (200) /union duration: 1155ms
+complete: 19 passing, 0 failing, 0 errors, 0 skipped, 19 total
+complete: Tests took 40247ms
+```
