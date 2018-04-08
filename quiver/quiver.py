@@ -109,7 +109,7 @@ def _rename_column(dataset, name, alias):
     return dataset.select([x for x in map(_field_or_alias, columns)])
 
 
-def _formatted(dataset, format='dict', orient_results='column'):
+def _formatted(dataset, format='dict', orient_results='columns'):
     """
         Internal helper that returns dataset into dict structure
     """
@@ -119,9 +119,9 @@ def _formatted(dataset, format='dict', orient_results='column'):
     if format == 'dict':
         # orient results column format, internal dict format equivalence
         _orient_results = orient_results
-        if orient_results == 'column':
+        if orient_results == 'columns':
             _orient_results = 'dict'
-        return pdf.to_dict(_orient_results)
+        return pdf.to_dict(orient=_orient_results)
     else:
         raise Exception('Internal Error: Unknow format {0}.'.format(format))
 
@@ -394,6 +394,18 @@ def _stack(dataset, keyspace=None, tablename=None, strategy='double-value',
     """
     if strategy not in ['single-value', 'double-value']:
         raise Exception('stack::{} strategy not implemmented'.format(strategy))
+
+    if strategy not in ['single-value', 'double-value']:
+        raise Exception('stack::{} strategy not implemmented'.format(strategy))
+
+    if strategy == 'double-value':
+        if not filter_field:
+            raise Exception('stack::filter_field is mandatory.')
+        if not filter_left_value:
+            raise Exception('stack::filter_left_value is mandatory.')
+        if not filter_right_value:
+            raise Exception('stack::filter_right_value is mandatory.')
+
     # auto infers stack keys form partition a clustering cassandra groups
     # of keys
     if auto:
@@ -518,7 +530,7 @@ def _trim_str(in_str):
 def _join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
           union_b=None, select=None, calculated=None, s_filter=None,
           join_groupby=None, sortby=None, join_key=None, save=None,
-          join_type='inner', orient_results='column'):
+          join_type='inner', orient_results='columns'):
     """
         Makes a join between two tables, join and table, table and join,
         or two joins this is a recursive function which explores json structure
@@ -638,7 +650,7 @@ def _union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
 
 def get_table(keyspace, tablename, select=None, calculated=None, s_filter=None,
               groupby=None, sortby=None, join_key=[], format='dict',
-              save=None, stacked=False, orient_results='column'):
+              save=None, stacked=False, orient_results='columns'):
     """
         get_table entry point
             this function computes data from a table
@@ -662,7 +674,7 @@ def get_table(keyspace, tablename, select=None, calculated=None, s_filter=None,
 def join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
          union_b=None, calculated=None, select=None, s_filter=None,
          join_groupby=None, sortby=None, join_key=[], save=None,
-         join_type='inner', format='dict', orient_results='column'):
+         join_type='inner', format='dict', orient_results='columns'):
     """
         join function entry point
 
@@ -704,7 +716,7 @@ def join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
 def union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
           union_b=None, select=None, calculated=None, s_filter=None,
           union_groupby=None, sortby=None, join_key=[], save=None,
-          union_type='union_all', format='dict', orient_results='column'):
+          union_type='union_all', format='dict', orient_results='columns'):
     """
         union function entry point
 

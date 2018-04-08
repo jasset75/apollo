@@ -11,7 +11,7 @@ def table(table_json):
     metadata['join_key'] = table_json.get('join_key', [])
     metadata['save'] = table_json.get('save', None)
     metadata['stacked'] = table_json.get('stacked', None)
-    metadata['orient_results'] = table_json.get('orient_results', 'column')
+    metadata['orient_results'] = table_json.get('orient_results', 'columns')
 
     return metadata
 
@@ -33,7 +33,7 @@ def join(join_json):
     metadata['join_type'] = join_json.get('join_type', 'inner')
     metadata['join_key'] = join_json.get('join_key', [])
     metadata['save'] = join_json.get('save', None)
-    metadata['orient_results'] = join_json.get('orient_results', 'column')
+    metadata['orient_results'] = join_json.get('orient_results', 'columns')
 
     return metadata
 
@@ -55,7 +55,7 @@ def union(union_json):
     metadata['union_type'] = union_json.get('union_type', 'union_all')
     metadata['join_key'] = union_json.get('join_key', [])
     metadata['save'] = union_json.get('save', None)
-    metadata['orient_results'] = union_json.get('orient_results', 'column')
+    metadata['orient_results'] = union_json.get('orient_results', 'columns')
 
     return metadata
 
@@ -80,7 +80,7 @@ def stacked(stacked_json):
     metadata['strategy'] = stacked_json.get('strategy', 'double-value')
     metadata['auto'] = stacked_json.get('auto', False)
     metadata['stack_pair'] = stacked_json.get('stack_pair', 'pair')
-    metadata['stack_column'] = stacked_json.get('stack_column', 'column')
+    metadata['stack_column'] = stacked_json.get('stack_column', 'columns')
     metadata['filter_field'] = stacked_json.get('filter_field', None)
     metadata['filter_left_value'] = stacked_json.get('filter_left_value', None)
     metadata['filter_right_value'] = stacked_json.get('filter_right_value', None)

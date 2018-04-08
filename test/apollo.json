@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2018-03-28T18:11:39.901Z",
+	"__export_date": "2018-04-07T09:24:21.528Z",
 	"__export_source": "insomnia.desktop.app:v5.14.9",
 	"resources": [
 		{
@@ -330,35 +330,6 @@
 			"method": "POST",
 			"modified": 1517339793435,
 			"name": "get_table mock_companies",
-			"parameters": [],
-			"parentId": "fld_606acdb8fa674fdd969423c92620a962",
-			"settingDisableRenderRequestBody": false,
-			"settingEncodeUrl": true,
-			"settingSendCookies": true,
-			"settingStoreCookies": true,
-			"url": "http://localhost:5000/get-table",
-			"_type": "request"
-		},
-		{
-			"_id": "req_8702cdc8a3c041feb1bf5a412fb11792",
-			"authentication": {},
-			"body": {
-				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"dbowl2\",\n\t\"tablename\": \"cf111\",\n\t\"stacked\": {\n    \"auto\": false,\n\t\t\"strategy\": \"double-value\",\n    \"stack_p_key\": [\"key\"],\n    \"stack_c_key\": [\"num\"],\n    \"stack_pair\": \"rowid\",\n    \"stack_column\": \"value\",\n    \"filter_field\": \"num\",\n    \"filter_left_value\": 1,\n    \"filter_right_value\": 2\n\t}\n}"
-			},
-			"created": 1519253431082,
-			"description": "",
-			"headers": [
-				{
-					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
-					"name": "Content-Type",
-					"value": "application/json"
-				}
-			],
-			"metaSortKey": -1522174674414,
-			"method": "POST",
-			"modified": 1522175337772,
-			"name": "double-value stacked",
 			"parameters": [],
 			"parentId": "fld_606acdb8fa674fdd969423c92620a962",
 			"settingDisableRenderRequestBody": false,
@@ -772,7 +743,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"age\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"age > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"age\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t},\t\n\t\"sortby\": [\n\t\t{\n\t\t\t\"count(id)\": \"desc\"\t\t}\n\t]\n}"
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"age\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"age > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"age\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t},\t\n\t\"sortby\": [\n\t\t{\n\t\t\t\"count(id)\": \"desc\"\t\t\n\t\t}\n\t]\n}"
 			},
 			"created": 1516022455409,
 			"description": "",
@@ -785,7 +756,7 @@
 			],
 			"metaSortKey": -1516138850088.875,
 			"method": "POST",
-			"modified": 1517681680720,
+			"modified": 1522945146469,
 			"name": "group by example 1",
 			"parameters": [],
 			"parentId": "fld_1f27e5a9056d4808a9067fc0cff37026",
