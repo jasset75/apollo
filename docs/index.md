@@ -339,7 +339,7 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 
     ```javascript
     "calculated": {
-        "<calculated_field": "<Spark SQL expression"
+        <calculated_field>: <Spark SQL expression>
     },
     ```
 
