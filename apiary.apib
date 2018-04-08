@@ -248,24 +248,24 @@ Shell snippets
     - Table with counter field
 
         ```sh
-            curl --request POST \
-              --url http://localhost:5000/create-table \
-              --header 'content-type: application/json' \
-              --data '{
-                "keyspace": "examples",
-                "tablename": "test_2",
-                "columns": [
-                    {
-                        "db_field": "field_1",
-                        "db_type": "uuid",
-                        "primary_key": "true"
-                    },
-                    {
-                        "db_field": "field_2",
-                        "db_type": "counter"
-                    }
-                ]
-            }'    
+        curl --request POST \
+          --url http://localhost:5000/create-table \
+          --header 'content-type: application/json' \
+          --data '{
+            "keyspace": "examples",
+            "tablename": "test_2",
+            "columns": [
+                {
+                    "db_field": "field_1",
+                    "db_type": "uuid",
+                    "primary_key": "true"
+                },
+                {
+                    "db_field": "field_2",
+                    "db_type": "counter"
+                }
+            ]
+        }'    
         ```
 
 + Request Simple Test (application/json)
@@ -761,10 +761,13 @@ parameters are aimed to apply DML functionality: `groupby`, `select`, `calculate
 - Stacked
 
     This is a so specific statement. It's intended for column oriented data source; in other words,
-    we need to join two rows with undefined number of values associated to, and it is required
-    select all values.
-
-
+    we need to join two rows with undefined number of values 
+    associated to (undefined number of columns), and it is required
+    select all values. Thus, we need transponse data-columns to data-rows before select them. To do so,
+    it is added a new field `rowid` to identify values of the "same row". 
+    Additionally, in a `single-value` strategy we need another component of primary key
+    which identify linked values.
+    
     Example of data source:
 
     |key|column1|column2|column3|
@@ -772,7 +775,6 @@ parameters are aimed to apply DML functionality: `groupby`, `select`, `calculate
     |firstName|Picasso|Rodin|Velazquez|
     |firstName|Pablo|Auguste|Diego|
     
-
     Example of configuration:
     
     ```javascript
@@ -819,7 +821,6 @@ parameters are aimed to apply DML functionality: `groupby`, `select`, `calculate
     - `stack_c_key` is the clustering key
     - `stack_pair` that is a generated field, infers unique pairs from undetermined number of values
     in a row. It will be part of clustering key in the final table.
-    `
 
 > Test Details
 > People from mock_data table who is older than 40 years old and grouped by age with count aggregation.
