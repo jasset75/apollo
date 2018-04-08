@@ -3121,17 +3121,17 @@ Retrieve data from two Cassandra data sets and join them by key fields. It accep
 - left operand: table description, join description or union description
 - right operand: table description, join description or union description
 
-Possible combinations:
-
-- table_a |X| table_b
-- table_a |X| join_b
-- table_a |X| union_b
-- join_a |X| table_b
-- join_a |X| join_b
-- join_a |X| union_b
-- union_a |X| table_b
-- union_a |X| join_b
-- union_a |X| union_b
+||Possible combinations ||
+|:--|:--:|:---|
+| table_a |&#10781;|table_b |
+| table_a |&#10781;|join_b  |
+| table_a |&#10781;|union_b |
+| join_a  |&#10781;|table_b |
+| join_a  |&#10781;|join_b  |
+| join_a  |&#10781;|union_b |
+| union_a |&#10781;|table_b |
+| union_a |&#10781;|join_b  |
+| union_a |&#10781;|union_b |
 
 Thus, recursivelly we could define whatever table merging. Similar to SQL but only binary operations, same functionality.
 
@@ -3146,16 +3146,16 @@ Other optional parameters are aimed to apply DML functionality: `groupby`, `sele
 
 
     ```javascript
-        "select": [<field_a>, <field_b>, {<field_c>: <field_c_renamed>}, ... ],
+    "select": [<field_a>, <field_b>, {<field_c>: <field_c_renamed>}, ... ],
     ```
 - Calculated
 
     Optional parameter that allow Spark SQL expressions which calculate new fields from others.
 
     ```javascript
-        "calculated": {
-            "<calculated_field": "<Spark SQL expression"
-        },
+    "calculated": {
+        "<calculated_field": "<Spark SQL expression"
+    },
     ```
 
 - Filter
@@ -3163,7 +3163,7 @@ Other optional parameters are aimed to apply DML functionality: `groupby`, `sele
     Filter expression
 
     ```javascript
-        "filter": <filter_expression>,
+    "filter": <filter_expression>,
     ```
 
 - Group by
@@ -3171,22 +3171,22 @@ Other optional parameters are aimed to apply DML functionality: `groupby`, `sele
     Gets data from Cassandra table which is applied a `groupby` statement. 
 
     ```javascript
-        "groupby": { 
-            "grouped": [<field_a>],
-            "agg": {
-                "count": [<field_b>]
-            }
+    "groupby": { 
+        "grouped": [<field_a>],
+        "agg": {
+            "count": [<field_b>]
         }
+    }
     ```
 
 - Sort by
     
     ```javascript
-        "sortby": [
-            {<field_a>: "desc"},
-            {<field_b>: "asc"},  //default
-            ...
-        ]
+    "sortby": [
+        {<field_a>: "desc"},
+        {<field_b>: "asc"},  //default
+        ...
+    ]
     ```
 
 - Save
@@ -3194,10 +3194,10 @@ Other optional parameters are aimed to apply DML functionality: `groupby`, `sele
     It writes back results into Cassandra existing table. The result set must be compatible with Cassandra table structure but as flexible as Cassandra is.
 
     ```javascript
-        "save": {
-            "keyspace": <destination keyspace>,
-            "tablename": <destination table>
-        }
+    "save": {
+        "keyspace": <destination keyspace>,
+        "tablename": <destination table>
+    }
     ```
 
 > Test Details
@@ -3245,7 +3245,7 @@ curl --request POST \
     "sortby": [
         {"sum(annual_budget)": "desc"}
     ]   
-}
+}'
 ```
 
 + Request (application/json)
@@ -70672,7 +70672,7 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 - left operand: table description, join description or union description
 - right operand: table description, join description or union description
 
-|   | |Possible combinations   |
+|   |Possible combinations|   |
 |:--|:--:|:--|
 | table_a  |&#8746;|  table_b |
 | table_a  |&#8746;|  join_b  |
@@ -70690,16 +70690,16 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 
 
     ```javascript
-        "select": [<field_a>, <field_b>, {<field_c>: <field_c_renamed>}, ... ],
+    "select": [<field_a>, <field_b>, {<field_c>: <field_c_renamed>}, ... ],
     ```
 - Calculated
 
     Optional parameter that allow Spark SQL expressions which calculate new fields from others.
 
     ```javascript
-        "calculated": {
-            "<calculated_field": "<Spark SQL expression"
-        },
+    "calculated": {
+        "<calculated_field": "<Spark SQL expression"
+    },
     ```
 
 - Filter
@@ -70707,7 +70707,7 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
     Filter expression
 
     ```javascript
-        "filter": <filter_expression>,
+    "filter": <filter_expression>,
     ```
 
 - Group by
@@ -70715,22 +70715,22 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
     Apply a `groupby` statement over two members grouped. 
 
     ```javascript
-        "groupby": { 
-            "grouped": [<field_a>],
-            "agg": {
-                "count": [<field_b>]
-            }
+    "groupby": { 
+        "grouped": [<field_a>],
+        "agg": {
+            "count": [<field_b>]
         }
+    }
     ```
 
 - Sort by
     
     ```javascript
-        "sortby": [
-            {<field_a>: "desc"},
-            {<field_b>: "asc"},  //default
-            ...
-        ]
+    "sortby": [
+        {<field_a>: "desc"},
+        {<field_b>: "asc"},  //default
+        ...
+    ]
     ```
 
 - Save
@@ -70738,10 +70738,10 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
     It writes back results into Cassandra existing table. The result set must be compatible with Cassandra table structure but as flexible as Cassandra is.
 
     ```javascript
-        "save": {
-            "keyspace": <destination keyspace>,
-            "tablename": <destination table>
-        }
+    "save": {
+        "keyspace": <destination keyspace>,
+        "tablename": <destination table>
+    }
     ```
 
 Shell snippet
