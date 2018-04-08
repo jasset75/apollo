@@ -4,7 +4,7 @@ This project implements a REST API to select data from Apache Cassandra taking a
 
 I've written these [notes](https://jasset75.github.io/Spark-Cassandra-Notes/Environment.html) with which to follow a recipe to build a development environment. Besides, there are some examples and scripts which loads the data sources used in those and these examples.
 
-> API Blueprint format.
+> API Blueprint format. [See in Apiario.io](https://apollo20.docs.apiary.io)
 
 # Apollo REST API
 
@@ -229,10 +229,10 @@ Shell snippets
 - Simple types
 
 ```sh
-    curl --request POST \
-      --url http://localhost:5000/create-table \
-      --header 'content-type: application/json' \
-      --data '{
+curl --request POST \
+    --url http://localhost:5000/create-table \
+    --header 'content-type: application/json' \
+    --data '{
         "keyspace": "examples_bis",
         "tablename": "older_than_40_summarized",
         "columns": [
@@ -251,25 +251,25 @@ Shell snippets
 
 > Response
 ```javascript
-    // Response 201 OK
-    {
-        "success": true,
-        "data": null,
-        "columns": [
-            {
-                "db_field": "age",
-                "db_type": "integer",
-                "primary_key": "true"
-            },
-            {
-                "db_field": "total",
-                "db_type": "Integer"
-            }
-        ],
-        "status": 201,
-        "tablename": "older_than_40_summarized",
-        "keyspace": "examples_bis"
-    }
+// Response 201 OK
+{
+    "success": true,
+    "data": null,
+    "columns": [
+        {
+            "db_field": "age",
+            "db_type": "integer",
+            "primary_key": "true"
+        },
+        {
+            "db_field": "total",
+            "db_type": "Integer"
+        }
+    ],
+    "status": 201,
+    "tablename": "older_than_40_summarized",
+    "keyspace": "examples_bis"
+}
 ```
 
 - Table with counter field
@@ -305,16 +305,16 @@ Shell snippets
     "keyspace": "examples",
     "data": null,
     "columns": [
-    {
-        "db_type": "text",
-        "db_field": "field_1"
-    },
-    {
-        "db_type": "integer",
-        "db_field": "field_2",
-        "primary_key": "true"
-    }
-]
+        {
+            "db_type": "text",
+            "db_field": "field_1"
+        },
+        {
+            "db_type": "integer",
+            "db_field": "field_2",
+            "primary_key": "true"
+        }
+    ]
 }
 ```
 
@@ -331,16 +331,16 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 
 
     ```javascript
-        "select": [<field_a>, <field_b>, {<field_c>: <field_c_renamed>}, ... ],
+    "select": [<field_a>, <field_b>, {<field_c>: <field_c_renamed>}, ... ],
     ```
 - Calculated
 
     Optional parameter that allow Spark SQL expressions which calculate new fields from others.
 
     ```javascript
-        "calculated": {
-            "<calculated_field": "<Spark SQL expression"
-        },
+    "calculated": {
+        "<calculated_field": "<Spark SQL expression"
+    },
     ```
 
 - Filter
@@ -348,7 +348,7 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
     Filter expression
 
     ```javascript
-        "filter": <filter_expression>,
+    "filter": <filter_expression>,
     ```
 
 - Group by
@@ -356,22 +356,22 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
     Gets data from Cassandra table which is applied a `groupby` statement. 
 
     ```javascript
-        "groupby": { 
-            "grouped": [<field_a>],
-            "agg": {
-                "count": [<field_b>]
-            }
+    "groupby": { 
+        "grouped": [<field_a>],
+        "agg": {
+            "count": [<field_b>]
         }
+    }
     ```
 
 - Sort by
     
     ```javascript
-        "sortby": [
-            {<field_a>: "desc"},
-            {<field_b>: "asc"},  //default
-            ...
-        ]
+    "sortby": [
+        {<field_a>: "desc"},
+        {<field_b>: "asc"},  //default
+        ...
+    ]
     ```
 
 - Save
@@ -379,11 +379,75 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
     It writes back results into Cassandra existing table. The result set must be compatible with Cassandra table structure but as flexible as Cassandra is.
 
     ```javascript
-        "save": {
-            "keyspace": <destination keyspace>,
-            "tablename": <destination table>
-        }
+    "save": {
+        "keyspace": <destination keyspace>,
+        "tablename": <destination table>
+    }
     ```
+
+- Stacked
+
+    This is a so specific statement. It's intended for column oriented data source; in other words,
+    we need to join two rows with undefined number of values 
+    associated to (undefined number of columns), and it is required
+    select all values. Thus, we need transponse data-columns to data-rows before select them. To do so,
+    it is added a new field `rowid` to identify values of the "same row". 
+    Additionally, in a `single-value` strategy we need another component of primary key
+    which identify linked values.
+    
+    Example of data source:
+
+    |key|column1|column2|column3|
+    |---|---|---|---|
+    |firstName|Picasso|Rodin|Velazquez|
+    |firstName|Pablo|Auguste|Diego|
+    
+    Example of configuration:
+    
+    ```javascript
+    "stacked": {
+        "auto": false,
+        "strategy": "double-value",
+        "stack_p_key": ["key"],
+        "stack_c_key": ["num"],
+        "stack_pair": "rowid",
+        "stack_column": "value",
+        "filter_field": "num",
+        "filter_left_value": 1,
+        "filter_right_value": 2
+    }
+    ```
+    
+    Fields explained:
+        
+    - `auto`, when `false` `stack_p_key` is mandatory. `stack_c_key` is needed
+    only for `"strategy": "single-value"`.
+
+    - `strategy`, two strategies are possible:
+    
+        - `single-value`
+        
+        | key | rowid | num | value |
+        |---|---|---|---|
+        | firstName |544ca336-2d9c-36bb-8433-17371498d2fe | 1 | Picasso |
+        | firstName |544ca336-2d9c-36bb-8433-17371498d2fe | 2 | Pablo |
+        | firstName |f1c25492-21b1-314a-8218-75da2d4e8fbd | 1 | Rodin |
+        | firstName |f1c25492-21b1-314a-8218-75da2d4e8fbd | 2 | Auguste |
+        | firstName |f1c25492-21b1-314a-8218-1608134e5815 | 1 | Velazquez |
+        | firstName |f1c25492-21b1-314a-8218-1608134e5815 | 2 | Diego |
+        
+        - `double-value`
+        
+        |key|rowid|value1|value2|
+        |---|---|---|---|
+        |firstName|544ca336-2d9c-36bb-8433-17371498d2fe|Picasso|Pablo|
+        |firstName|f1c25492-21b1-314a-8218-75da2d4e8fbd|Rodin|Auguste|
+        |firstName|f1c25492-21b1-314a-8218-1608134e5815|Velazquez|Diego|
+
+    - `stack_p_key` represents partition key.
+    - `stack_c_key` is the clustering key
+    - `stack_pair` that is a generated field, infers unique pairs from undetermined number of values
+    in a row. It will be part of clustering key in the final table.
 
 > Test Details
 > People from mock_data table who is older than 40 years old and grouped by age with count aggregation.
@@ -392,10 +456,10 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 - Shell snippet
 
 ```sh
-    curl --request POST \
-      --url http://localhost:5000/get-table \
-      --header 'content-type: application/json' \
-      --data '{
+curl --request POST \
+    --url http://localhost:5000/get-table \
+    --header 'content-type: application/json' \
+    --data '{
         "keyspace": "examples",
         "tablename":"mock_data",
         "calculated": {
@@ -534,16 +598,16 @@ Other optional parameters are aimed to apply DML functionality: `groupby`, `sele
 
 
     ```javascript
-        "select": [<field_a>, <field_b>, {<field_c>: <field_c_renamed>}, ... ],
+    "select": [<field_a>, <field_b>, {<field_c>: <field_c_renamed>}, ... ],
     ```
 - Calculated
 
     Optional parameter that allow Spark SQL expressions which calculate new fields from others.
 
     ```javascript
-        "calculated": {
-            "<calculated_field": "<Spark SQL expression"
-        },
+    "calculated": {
+        <calculated_field>: <Spark SQL expression>
+    },
     ```
 
 - Filter
@@ -551,7 +615,7 @@ Other optional parameters are aimed to apply DML functionality: `groupby`, `sele
     Filter expression
 
     ```javascript
-        "filter": <filter_expression>,
+    "filter": <filter_expression>,
     ```
 
 - Group by
@@ -559,22 +623,22 @@ Other optional parameters are aimed to apply DML functionality: `groupby`, `sele
     Gets data from Cassandra table which is applied a `groupby` statement. 
 
     ```javascript
-        "groupby": { 
-            "grouped": [<field_a>],
-            "agg": {
-                "count": [<field_b>]
-            }
+    "groupby": { 
+        "grouped": [<field_a>],
+        "agg": {
+            "count": [<field_b>]
         }
+    }
     ```
 
 - Sort by
     
     ```javascript
-        "sortby": [
-            {<field_a>: "desc"},
-            {<field_b>: "asc"},  //default
-            ...
-        ]
+    "sortby": [
+        {<field_a>: "desc"},
+        {<field_b>: "asc"},  //default
+        ...
+    ]
     ```
 
 - Save
@@ -582,190 +646,188 @@ Other optional parameters are aimed to apply DML functionality: `groupby`, `sele
     It writes back results into Cassandra existing table. The result set must be compatible with Cassandra table structure but as flexible as Cassandra is.
 
     ```javascript
-        "save": {
-            "keyspace": <destination keyspace>,
-            "tablename": <destination table>
-        }
+    "save": {
+        "keyspace": <destination keyspace>,
+        "tablename": <destination table>
+    }
     ```
 
 > Test Details
 > Ordered list of countries with more than 10K billion Euros of drug annual budget. It summarizes Drug Companies annual budget grouped by country.
 
-
 - Shell snippet
 
 ```sh
 curl --request POST \
-  --url http://localhost:5000/join \
-  --header 'content-type: application/json' \
-  --data '{
-    "join_a": {
-        "table_a": {
-            "keyspace": "examples",
-            "tablename": "mock_data",
-            "join_key": [{"id": "id_person"}],
-            "calculated": {
-                "edad": "round(months_between(current_date(),birth_date)/12,0)"
+    --url http://localhost:5000/join \
+    --header 'content-type: application/json' \
+    --data '{
+        "join_a": {
+            "table_a": {
+                "keyspace": "examples",
+                "tablename": "mock_data",
+                "join_key": [{"id": "id_person"}],
+                "calculated": {
+                    "edad": "round(months_between(current_date(),birth_date)/12,0)"
+                },
+                "select": ["first_name","last_name","email","gender","drinker","smoker_bool","language","edad"]
             },
-            "select": ["first_name","last_name","email","gender","drinker","smoker_bool","language","edad"]
+            "table_b": {
+                "keyspace": "examples_bis",
+                "tablename": "mock_drugs",
+                "join_key": ["id_patient"],
+                "select": ["drug_name","id_company"]
+            },
+            "join_key": ["id_company"]
         },
         "table_b": {
             "keyspace": "examples_bis",
-            "tablename": "mock_drugs",
-            "join_key": ["id_patient"],
-            "select": ["drug_name","id_company"]
+            "tablename": "mock_companies",
+            "join_key": ["id_company"],
+            "select": ["annual_budget","city","company_name","country",{"id": "id_company"}]
         },
-        "join_key": ["id_company"]
-    },
-    "table_b": {
-        "keyspace": "examples_bis",
-        "tablename": "mock_companies",
-        "join_key": ["id_company"],
-        "select": ["annual_budget","city","company_name","country",{"id": "id_company"}]
-    },
-    "filter": "annual_budget > 10000000000",    
-    "groupby": { 
-        "grouped": ["country"],
-        "agg": {
-            "sum": ["annual_budget"]
-        }
-    },
-    "sortby": [
-        {"sum(annual_budget)": "desc"}
-    ]   
-}
+        "filter": "annual_budget > 10000000000",    
+        "groupby": { 
+            "grouped": ["country"],
+            "agg": {
+                "sum": ["annual_budget"]
+            }
+        },
+        "sortby": [
+            {"sum(annual_budget)": "desc"}
+        ]   
+    }'
 ```
 
 ```javascript
-    // Response 200 OK
-
-        {
-            "calculated": null,
-            "data": {
-                "country": {
-                    "0": "China",
-                    "1": "France",
-                    "2": "Poland",
-                    "3": "Portugal",
-                    "4": "Japan",
-                    "5": "Mexico",
-                    "6": "Sweden",
-                    "7": "United States",
-                    "8": "Canada",
-                    "9": "Ukraine",
-                    "10": "Georgia",
-                    "11": "Germany",
-                    "12": "Spain",
-                    "13": "Norway",
-                    "14": "Ireland",
-                    "15": "Netherlands"
-                },
-                "sum(annual_budget)": {
-                    "0": 3901666527232.0,
-                    "1": 924393641984.0,
-                    "2": 706987144192.0,
-                    "3": 606915214336.0,
-                    "4": 511156410368.0,
-                    "5": 507268958208.0,
-                    "6": 398938326016.0,
-                    "7": 339608810496.0,
-                    "8": 283575956480.0,
-                    "9": 238798228480.0,
-                    "10": 218540765184.0,
-                    "11": 166788163584.0,
-                    "12": 147850549248.0,
-                    "13": 123179765760.0,
-                    "14": 111000954880.0,
-                    "15": 100029864960.0
-                }
+// Response 200 OK
+{
+    "calculated": null,
+    "data": {
+        "country": {
+            "0": "China",
+            "1": "France",
+            "2": "Poland",
+            "3": "Portugal",
+            "4": "Japan",
+            "5": "Mexico",
+            "6": "Sweden",
+            "7": "United States",
+            "8": "Canada",
+            "9": "Ukraine",
+            "10": "Georgia",
+            "11": "Germany",
+            "12": "Spain",
+            "13": "Norway",
+            "14": "Ireland",
+            "15": "Netherlands"
+        },
+        "sum(annual_budget)": {
+            "0": 3901666527232.0,
+            "1": 924393641984.0,
+            "2": 706987144192.0,
+            "3": 606915214336.0,
+            "4": 511156410368.0,
+            "5": 507268958208.0,
+            "6": 398938326016.0,
+            "7": 339608810496.0,
+            "8": 283575956480.0,
+            "9": 238798228480.0,
+            "10": 218540765184.0,
+            "11": 166788163584.0,
+            "12": 147850549248.0,
+            "13": 123179765760.0,
+            "14": 111000954880.0,
+            "15": 100029864960.0
+        }
+    },
+    "format": "dict",
+    "join_a": {
+        "join_key": [
+            "id_company"
+        ],
+        "table_a": {
+            "calculated": {
+                "edad": "round(months_between(current_date(),birth_date)/12,0)"
             },
-            "format": "dict",
-            "join_a": {
-                "join_key": [
-                    "id_company"
-                ],
-                "table_a": {
-                    "calculated": {
-                        "edad": "round(months_between(current_date(),birth_date)/12,0)"
-                    },
-                    "join_key": [
-                        {
-                            "id": "id_person"
-                        }
-                    ],
-                    "keyspace": "examples",
-                    "select": [
-                        "first_name",
-                        "last_name",
-                        "email",
-                        "gender",
-                        "drinker",
-                        "smoker_bool",
-                        "language",
-                        "edad",
-                        {
-                            "id": "id_person"
-                        }
-                    ],
-                    "tablename": "mock_data"
-                },
-                "table_b": {
-                    "join_key": [
-                        "id_patient"
-                    ],
-                    "keyspace": "examples_bis",
-                    "select": [
-                        "drug_name",
-                        "id_company",
-                        "id_patient"
-                    ],
-                    "tablename": "mock_drugs"
-                }
-            },
-            "join_b": null,
-            "join_groupby": {
-                "agg": {
-                    "sum": [
-                        "annual_budget"
-                    ]
-                },
-                "grouped": [
-                    "country"
-                ]
-            },
-            "join_key": [],
-            "join_type": "inner",
-            "orient_results": "column",
-            "s_filter": "annual_budget > 10000000000",
-            "save": null,
-            "select": null,
-            "sortby": [
+            "join_key": [
                 {
-                    "sum(annual_budget)": "desc"
+                    "id": "id_person"
                 }
             ],
-            "status": 200,
-            "success": true,
-            "table_a": null,
-            "table_b": {
-                "join_key": [
-                    "id_company"
-                ],
-                "keyspace": "examples_bis",
-                "select": [
-                    "annual_budget",
-                    "city",
-                    "company_name",
-                    "country",
-                    {
-                        "id": "id_company"
-                    }
-                ],
-                "tablename": "mock_companies"
-            },
-            "union_a": null,
-            "union_b": null
+            "keyspace": "examples",
+            "select": [
+                "first_name",
+                "last_name",
+                "email",
+                "gender",
+                "drinker",
+                "smoker_bool",
+                "language",
+                "edad",
+                {
+                    "id": "id_person"
+                }
+            ],
+            "tablename": "mock_data"
+        },
+        "table_b": {
+            "join_key": [
+                "id_patient"
+            ],
+            "keyspace": "examples_bis",
+            "select": [
+                "drug_name",
+                "id_company",
+                "id_patient"
+            ],
+            "tablename": "mock_drugs"
         }
+    },
+    "join_b": null,
+    "join_groupby": {
+        "agg": {
+            "sum": [
+                "annual_budget"
+            ]
+        },
+        "grouped": [
+            "country"
+        ]
+    },
+    "join_key": [],
+    "join_type": "inner",
+    "orient_results": "column",
+    "s_filter": "annual_budget > 10000000000",
+    "save": null,
+    "select": null,
+    "sortby": [
+        {
+            "sum(annual_budget)": "desc"
+        }
+    ],
+    "status": 200,
+    "success": true,
+    "table_a": null,
+    "table_b": {
+        "join_key": [
+            "id_company"
+        ],
+        "keyspace": "examples_bis",
+        "select": [
+            "annual_budget",
+            "city",
+            "company_name",
+            "country",
+            {
+                "id": "id_company"
+            }
+        ],
+        "tablename": "mock_companies"
+    },
+    "union_a": null,
+    "union_b": null
+}
 ```
 
 ## Union [/union]
@@ -777,7 +839,6 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 
 - left operand: table description, join description or union description
 - right operand: table description, join description or union description
-
 
 |   | |Possible combinations   |
 |:--|:--:|:--|
@@ -797,16 +858,16 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 
 
     ```javascript
-        "select": [<field_a>, <field_b>, {<field_c>: <field_c_renamed>}, ... ],
+    "select": [<field_a>, <field_b>, {<field_c>: <field_c_renamed>}, ... ],
     ```
 - Calculated
 
     Optional parameter that allow Spark SQL expressions which calculate new fields from others.
 
     ```javascript
-        "calculated": {
-            "<calculated_field": "<Spark SQL expression"
-        },
+    "calculated": {
+        <calculated_field>: <Spark SQL expression>
+    },
     ```
 
 - Filter
@@ -814,7 +875,7 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
     Filter expression
 
     ```javascript
-        "filter": <filter_expression>,
+    "filter": <filter_expression>,
     ```
 
 - Group by
@@ -822,22 +883,22 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
     Apply a `groupby` statement over two members grouped. 
 
     ```javascript
-        "groupby": { 
-            "grouped": [<field_a>],
-            "agg": {
-                "count": [<field_b>]
-            }
+    "groupby": { 
+        "grouped": [<field_a>],
+        "agg": {
+            "count": [<field_b>]
         }
+    }
     ```
 
 - Sort by
     
     ```javascript
-        "sortby": [
-            {<field_a>: "desc"},
-            {<field_b>: "asc"},  //default
-            ...
-        ]
+    "sortby": [
+        {<field_a>: "desc"},
+        {<field_b>: "asc"},  //default
+        ...
+    ]
     ```
 
 - Save
@@ -845,19 +906,19 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
     It writes back results into Cassandra existing table. The result set must be compatible with Cassandra table structure but as flexible as Cassandra is.
 
     ```javascript
-        "save": {
-            "keyspace": <destination keyspace>,
-            "tablename": <destination table>
-        }
+    "save": {
+        "keyspace": <destination keyspace>,
+        "tablename": <destination table>
+    }
     ```
 
 - Shell snippet
 
 ```sh
 curl --request POST \
-  --url http://localhost:5000/union \
-  --header 'content-type: application/json' \
-  --data '  {
+    --url http://localhost:5000/union \
+    --header 'content-type: application/json' \
+    --data '  {
         "table_a": {
             "keyspace": "examples",
             "tablename": "mock_cars",
@@ -1097,9 +1158,9 @@ curl --request POST \
 
 ```sh
 curl --request POST \
-  --url http://localhost:5000/union \
-  --header 'content-type: application/json' \
-  --data '  {
+    --url http://localhost:5000/union \
+    --header 'content-type: application/json' \
+    --data '  {
         "table_a": {
             "keyspace": "examples",
             "tablename": "mock_cars",
@@ -1126,13 +1187,21 @@ curl --request POST \
 
 >Updated Source at:
 >[Apiary Documentation](https://apollo20.docs.apiary.io)
-> NOTE: The data for examples and test are based on [Spark-Cassandra Notes repository](https://jasset75.github.io/Spark-Cassandra-Notes/).
+>NOTE: The data for examples and test are based on [Spark-Cassandra Notes repository](https://jasset75.github.io/Spark-Cassandra-Notes/).
 
 ## Useful tools
 
 ### Apiari.io
 
 It is oriented to describe and test REST APIs. Supports Swagger and API Blueprint formats, as well as automation. Integrates with Dredd, which is a framework for validating API description document against backend implementation of the API.
+
+Apiary uses mainly two API description languages API Blueprint and Swagger.
+
+I've used API Blueprint and Dredd for automatic test.
+
+### Dredd
+
+Is an language-agnostic test API Framework. It integrates with continuous delivery 
 
 ### Insomnia
 
