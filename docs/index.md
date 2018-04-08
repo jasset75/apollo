@@ -335,7 +335,7 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
     ```
 - Calculated
 
-    Optional parameter that allow Spark SQL expressions which calculate new fields from others.
+    Optional parameter that allows Spark SQL expressions which calculate new fields from others.
 
     ```javascript
     "calculated": {
@@ -601,7 +601,7 @@ Other optional parameters are aimed to apply DML functionality: `groupby`, `sele
     ```
 - Calculated
 
-    Optional parameter that allow Spark SQL expressions which calculate new fields from others.
+    Optional parameter that allows Spark SQL expressions which calculate new fields from others.
 
     ```javascript
     "calculated": {
@@ -861,7 +861,7 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 
 - Calculated
 
-    Optional parameter that allow Spark SQL expressions which calculate new fields from others.
+    Optional parameter that allows Spark SQL expressions which calculate new fields from others.
 
     ```javascript
     "calculated": {
