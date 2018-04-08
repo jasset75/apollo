@@ -796,7 +796,7 @@ curl --request POST \
     },
     "join_key": [],
     "join_type": "inner",
-    "orient_results": "column",
+    "orient_results": "columns",
     "s_filter": "annual_budget > 10000000000",
     "save": null,
     "select": null,
