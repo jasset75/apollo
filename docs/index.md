@@ -839,7 +839,7 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 - left operand: table description, join description or union description
 - right operand: table description, join description or union description
 
-|   | |Possible combinations   |
+|   | Possible combinations|   |
 |:--|:--:|:--|
 | table_a  |&#8746;|  table_b |
 | table_a  |&#8746;|  join_b  |
@@ -1190,18 +1190,6 @@ curl --request POST \
 
 ## Useful tools
 
-### Apiari.io
-
-It is oriented to describe and test REST APIs. Supports Swagger and API Blueprint formats, as well as automation. Integrates with Dredd, which is a framework for validating API description document against backend implementation of the API.
-
-Apiary uses mainly two API description languages API Blueprint and Swagger.
-
-I've used API Blueprint and Dredd for automatic test.
-
-### Dredd
-
-Is an language-agnostic test API Framework. It integrates with continuous delivery 
-
 ### Insomnia
 
 Insomnia is that kind of applications that is highly recommended to develop a REST API. It has as prominent features:
@@ -1225,4 +1213,28 @@ wget --quiet -O - https://insomnia.rest/keys/debian-public.key.asc \
 # Refresh repository sources and install Insomnia
 sudo apt-get update
 sudo apt-get install insomnia
+```
+
+### Apiari.io
+
+It is oriented to describe and test REST APIs. Supports Swagger and API Blueprint formats, as well as automation. Integrates with Dredd.
+
+Apiary uses mainly two API description languages API Blueprint and Swagger.
+
+I've used API Blueprint and Dredd for automatic test.
+
+### Dredd
+
+Is an language-agnostic test API Framework. It integrates with continuous integration environments. This validation software has a command-line tool which runs description document against API implementation. To do so, developers write specific test with format request-response that tool applies automatically each time is invoked from command-line or in a higher level platform.
+
+Dredd requires Node Js and npm.
+
+```sh
+$ npm install -g dredd
+```
+
+Dredd supports several description languages such as API Bluprint and Swagger. In this case we are using API Blueprint. Command example to run test:
+
+```sh
+dredd apiary.apib http://localhost:5000
 ```
