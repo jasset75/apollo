@@ -397,10 +397,10 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
     
     Example of data source:
 
-    |key|column1|column2|column3|
-    |---|---|---|---|
-    |firstName|Picasso|Rodin|Velazquez|
-    |firstName|Pablo|Auguste|Diego|
+    |key|num|column1|column2|column3|
+    |---|---|---|---|---|
+    |firstName|1|Picasso|Rodin|Velazquez|
+    |firstName|2|Pablo|Auguste|Diego|
     
     Example of configuration:
     
@@ -448,6 +448,9 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
     - `stack_c_key` is the clustering key
     - `stack_pair` that is a generated field, infers unique pairs from undetermined number of values
     in a row. It will be part of clustering key in the final table.
+    - `filter_left_value`, only for `double-value` strategy, pair two values 
+    - `filter_right_value`
+
 
 > Test Details
 > People from mock_data table who is older than 40 years old and grouped by age with count aggregation.
