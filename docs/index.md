@@ -425,7 +425,7 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
 
     - `strategy`, two strategies are possible:
     
-        - `single-value`
+        - `single-value`: the data values are transformed from columns to rows, and to identify related values in the same row of the original table, a rowid field with a unique value is added, e.g. UUID.
         
         | key | rowid | num | value |
         |---|---|---|---|
@@ -436,7 +436,7 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
         | firstName |f1c25492-21b1-314a-8218-1608134e5815 | 1 | Velazquez |
         | firstName |f1c25492-21b1-314a-8218-1608134e5815 | 2 | Diego |
         
-        - `double-value`
+        - `double-value`: to associate the two data values that form a pair, each value of the same column is associated with a UUID code to uniquely identify it, and two data sets are taken: the one on the left, filtering the clustering key with the filter_left_value value , the one on the right filtering by the value filter_right_value; a join of the two data sets is made, taking the partition key plus the rowid field as comparison criteria.
         
         |key|rowid|value1|value2|
         |---|---|---|---|
@@ -448,8 +448,8 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
     - `stack_c_key` is the clustering key
     - `stack_pair` that is a generated field, infers unique pairs from undetermined number of values
     in a row. It will be part of clustering key in the final table.
-    - `filter_left_value`, only for `double-value` strategy, pair two values 
-    - `filter_right_value`
+    - `filter_left_value`, only for `double-value` strategy, pair values related by this value, to put together in the same row.
+    - `filter_right_value`, only for `double-value` strategy, pair values related by this value, to put together in the same row.
 
 
 > Test Details
