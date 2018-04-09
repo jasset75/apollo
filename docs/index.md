@@ -1233,7 +1233,7 @@ Dredd requires Node Js and npm.
 $ npm install -g dredd
 ```
 
-Dredd supports several description languages such as API Bluprint and Swagger. In this case we are using API Blueprint. Command example to run test:
+Dredd supports several description languages such as API Blueprint or Swagger. In this case we are using API Blueprint. Command example to run test:
 
 ```sh
 dredd apiary.apib http://localhost:5000
