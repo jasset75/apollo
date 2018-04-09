@@ -592,10 +592,13 @@ Thus, recursivelly we could define whatever table merging. Similar to SQL but on
 
 These descriptions has a few parameters which identify the data source: `keyspace` and `tablename`. Besides that, two descriptions involved in a join operation needs `join_key` parameter that declare which fields are the key to join each other.
 
-`join_type` clause in BNF notation:
+Parameters:
+
+- `join_type`, defines kind of Natural Join; in BNF notation:
 ```
 <join_type> ::= "join_type": "inner" | "full" | "left" | "right" | "cross"
 ```
+Optional parameter, `"inner"` is the default value.
 
 Other optional parameters are aimed to apply DML functionality: `groupby`, `select`, `calculated`, etc.:
 
