@@ -590,7 +590,7 @@ Retrieve data from two Cassandra data sets and join them by key fields. It accep
 
 Thus, recursivelly we could define whatever table merging. Similar to SQL but only binary operations, same functionality.
 
-These descriptions has a few parameters which identify the data source: `keyspace` and `tablename`. Besides that, two descriptions involved in a join operation needs join_key parameter that declare which fields are the key to join each other.
+These descriptions has a few parameters which identify the data source: `keyspace` and `tablename`. Besides that, two descriptions involved in a join operation needs `join_key` parameter that declare which fields are the key to join each other.
 
 Other optional parameters are aimed to apply DML functionality: `groupby`, `select`, `calculated`, etc.:
 
