@@ -26,9 +26,11 @@ These descriptions has a few parameters which identify the data source: `keyspac
 Parameters:
 
 - `join_type`, defines kind of Natural Join; in BNF notation:
+
 ```
 <join_type> ::= "join_type": "inner" | "full" | "left" | "right" | "cross"
 ```
+
 Optional parameter, `"inner"` is the default value.
 
 Other optional parameters are aimed to apply DML functionality: `groupby`, `select`, `calculated`, etc.:
