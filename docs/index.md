@@ -20,12 +20,12 @@ This API implements an interface between an app client and Spark-Cassandra envir
 
 ## API Enpoints
 
-[/about](./apidoc/about.md)
-[/version](./apidoc/version.md)
-[/create-table](./apidoc/create-table.md)
-[/get-table](./apidoc/get-table.md)
-[/join](./apidoc/join.md)
-[/union](./apidoc/union.md)
++ [/about](./apidoc/about.md)
++ [/version](./apidoc/version.md)
++ [/create-table](./apidoc/create-table.md)
++ [/get-table](./apidoc/get-table.md)
++ [/join](./apidoc/join.md)
++ [/union](./apidoc/union.md)
 
 >Updated Source at:
 >[Apiary Documentation](https://apollo20.docs.apiary.io)
