@@ -29,7 +29,7 @@ This API implements an interface between an app client and Spark-Cassandra envir
 
 >Updated Source at:
 >[Apiary Documentation](https://apollo20.docs.apiary.io)
->NOTE: The data for examples and test are based on [Spark-Cassandra Notes repository](https://jasset75.github.io/Spark-Cassandra-Notes/).
+>NOTE: Examples and test are based on data and examples of this [repository](https://jasset75.github.io/Spark-Cassandra-Notes/).
 
 ## Useful tools
 
