@@ -116,7 +116,7 @@ the data source `keyspace` and `tablename`. Other optional parameters are aimed 
         | firstName |f1c25492-21b1-314a-8218-1608134e5815 | 1 | Velazquez |
         | firstName |f1c25492-21b1-314a-8218-1608134e5815 | 2 | Diego |
         
-        - `double-value`: to associate the two data values that form a pair, each value of the same column is associated with a UUID code to uniquely identify it, and two data sets are taken: the one on the left, filtering the clustering key with the filter_left_value value , the one on the right filtering by the value filter_right_value; a join of the two data sets is made, taking the partition key plus the rowid field as comparison criteria.
+        - `double-value`: to associate the two data values that form a pair, each value of the same column is associated with an UUID code to uniquely identify it, and two data sets are taken: the one on the left, filtering the clustering key with the filter_left_value value , the one on the right filtering by the value filter_right_value; a join of the two data sets is made, taking the partition key plus the rowid field as comparison criteria.
         
         |key|rowid|value1|value2|
         |---|---|---|---|
