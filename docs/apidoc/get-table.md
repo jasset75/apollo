@@ -1,274 +1,248 @@
-## Get Table [POST]
+## Get Table [/get-table]
+
+### Get Table [POST]
 
 Retrieve data from Cassandra table. It takes a few parameters which identify 
 the data source `keyspace` and `tablename`. Other optional parameters are aimed to apply DML functionality: `groupby`, `select`, `calculated`, etc.
 
->Source code
-- [javascript](get-table_javascript.md)
-- [python](get-table_python.md)
-- [java](get-table_java.md)
+- Select
 
-+ Request (application/json)
+    Projection operation of relational algebra. It allows rename operation as well.
 
-```js
-        {
-            "keyspace": "examples",
-            "tablename":"mock_data",
-            "filter": "email like \"%am%\"",
-            "sortby": [
-                {"gender": "asc"},
-                {"first_name": "asc"}
-            ]
+
+    ```javascript
+    "select": [<field_a>, <field_b>, {<field_c>: <field_c_renamed>}, ... ],
+    ```
+- Calculated
+
+    Optional parameter that allows Spark SQL expressions which calculate new fields from others.
+
+    ```javascript
+    "calculated": {
+        <calculated_field>: <Spark SQL expression>
+    },
+    ```
+
+- Filter
+
+    Filter expression
+
+    ```javascript
+    "filter": <filter_expression>,
+    ```
+
+- Group by
+
+    Gets data from Cassandra table which is applied a `groupby` statement. 
+
+    ```javascript
+    "groupby": { 
+        "grouped": [<field_a>],
+        "agg": {
+            "count": [<field_b>]
         }
+    }
+    ```
+
+- Sort by
+    
+    ```javascript
+    "sortby": [
+        {<field_a>: "desc"},
+        {<field_b>: "asc"},  //default
+        ...
+    ]
+    ```
+
+- Save
+
+    It writes back results into Cassandra existing table. The result set must be compatible with Cassandra table structure but as flexible as Cassandra is.
+
+    ```javascript
+    "save": {
+        "keyspace": <destination keyspace>,
+        "tablename": <destination table>
+    }
+    ```
+
+- Stacked
+
+    This is a so specific statement. It's intended for column oriented data source; in other words,
+    we need to join two rows with undefined number of values 
+    associated to (undefined number of columns), and it is required
+    select all values. Thus, we need transponse data-columns to data-rows before select them. To do so,
+    it is added a new field `rowid` to identify values of the "same row". 
+    Additionally, in a `single-value` strategy we need another component of primary key
+    which identify linked values.
+    
+    Example of data source:
+
+    |key|num|column1|column2|column3|
+    |---|---|---|---|---|
+    |firstName|1|Picasso|Rodin|Velazquez|
+    |firstName|2|Pablo|Auguste|Diego|
+    
+    Example of configuration:
+    
+    ```javascript
+    "stacked": {
+        "auto": false,
+        "strategy": "double-value",
+        "stack_p_key": ["key"],
+        "stack_c_key": ["num"],
+        "stack_pair": "rowid",
+        "stack_column": "value",
+        "filter_field": "num",
+        "filter_left_value": 1,
+        "filter_right_value": 2
+    }
+    ```
+    
+    Fields explained:
+        
+    - `auto`, when `false` `stack_p_key` is mandatory. `stack_c_key` is needed
+    only for `"strategy": "single-value"`.
+
+    - `strategy`, two strategies are possible:
+    
+        - `single-value`: the data values are transformed from columns to rows, and to identify related values in the same row of the original table, a rowid field with a unique value is added, e.g. UUID.
+        
+        | key | rowid | num | value |
+        |---|---|---|---|
+        | firstName |544ca336-2d9c-36bb-8433-17371498d2fe | 1 | Picasso |
+        | firstName |544ca336-2d9c-36bb-8433-17371498d2fe | 2 | Pablo |
+        | firstName |f1c25492-21b1-314a-8218-75da2d4e8fbd | 1 | Rodin |
+        | firstName |f1c25492-21b1-314a-8218-75da2d4e8fbd | 2 | Auguste |
+        | firstName |f1c25492-21b1-314a-8218-1608134e5815 | 1 | Velazquez |
+        | firstName |f1c25492-21b1-314a-8218-1608134e5815 | 2 | Diego |
+        
+        - `double-value`: to associate the two data values that form a pair, each value of the same column is associated with an UUID code to uniquely identify it, and two data sets are taken: the one on the left, filtering the clustering key with the filter_left_value value , the one on the right filtering by the value filter_right_value; a join of the two data sets is made, taking the partition key plus the rowid field as comparison criteria.
+        
+        |key|rowid|value1|value2|
+        |---|---|---|---|
+        |firstName|544ca336-2d9c-36bb-8433-17371498d2fe|Picasso|Pablo|
+        |firstName|f1c25492-21b1-314a-8218-75da2d4e8fbd|Rodin|Auguste|
+        |firstName|f1c25492-21b1-314a-8218-1608134e5815|Velazquez|Diego|
+
+    - `stack_p_key` represents partition key.
+    - `stack_c_key` is the clustering key
+    - `stack_pair` that is a generated field, infers unique pairs from undetermined number of values
+    in a row. It will be part of clustering key in the final table.
+    - `filter_left_value`, only for `double-value` strategy, pair values related by this value, to put together in the same row.
+    - `filter_right_value`, only for `double-value` strategy, pair values related by this value, to put together in the same row.
+
+
+> Test Details
+> People from mock_data table who is older than 40 years old and grouped by age with count aggregation.
+> Age is calculated from `birth_date` field, indicated by `calculated` clause.
+
+- Shell snippet
+
+```sh
+curl --request POST \
+    --url http://localhost:5000/get-table \
+    --header 'content-type: application/json' \
+    --data '{
+        "keyspace": "examples",
+        "tablename":"mock_data",
+        "calculated": {
+            "age": "round(months_between(current_date(),birth_date)/12,0)"
+        },
+        "filter": "age > 40",
+        "groupby": { 
+            "grouped": ["age"],
+            "agg": {
+                "count": [{"id": "total"}]
+            }
+        },
+        "sortby": [{"total": "desc"}],
+        "save": {
+            "keyspace": "examples_bis",
+            "tablename": "older_than_40_summarized"
+        }
+    }'
 ```
 
-+ Response 200 (application/json)
-
-    + Headers
-
-            Location: /get-table
-
-    + Body
-
-```js
-            {
-                "calculated": null,
-                "data": {
-                    "birth_date": {
-                        "0": "Mon, 24 May 1976 00:00:00 GMT",
-                        "1": "Mon, 26 Aug 1963 00:00:00 GMT",
-                        "2": "Tue, 20 Jun 1989 00:00:00 GMT",
-                        "3": "Fri, 17 Feb 1995 00:00:00 GMT",
-                        "4": "Tue, 25 Mar 1980 00:00:00 GMT",
-                        "5": "Sat, 03 Jul 1976 00:00:00 GMT",
-                        "6": "Sun, 23 May 1993 00:00:00 GMT",
-                        "7": "Wed, 09 Jun 1982 00:00:00 GMT",
-                        "8": "Sun, 13 Sep 1970 00:00:00 GMT",
-                        "9": "Mon, 14 Aug 1978 00:00:00 GMT",
-                        "10": "Mon, 23 Dec 1996 00:00:00 GMT",
-                        "11": "Sat, 26 Oct 1968 00:00:00 GMT",
-                        "12": "Thu, 15 Mar 1984 00:00:00 GMT",
-                        "13": "Thu, 19 Jun 1986 00:00:00 GMT",
-                        "14": "Sat, 24 Nov 1990 00:00:00 GMT",
-                        "15": "Mon, 23 Aug 1982 00:00:00 GMT"
-                    },
-                    "drinker": {
-                        "0": "Yearly",
-                        "1": "Seldom",
-                        "2": "Often",
-                        "3": "Weekly",
-                        "4": "Monthly",
-                        "5": "Never",
-                        "6": "Seldom",
-                        "7": "Weekly",
-                        "8": "Never",
-                        "9": "Often",
-                        "10": "Often",
-                        "11": "Once",
-                        "12": "Weekly",
-                        "13": "Weekly",
-                        "14": "Daily",
-                        "15": "Weekly"
-                    },
-                    "email": {
-                        "0": "apeticang9@examiner.com",
-                        "1": "amcilvaneybi@engadget.com",
-                        "2": "alaundonev@examiner.com",
-                        "3": "atrippickba@amazonaws.com",
-                        "4": "amoscropg6@howstuffworks.com",
-                        "5": "amcquilty1v@purevolume.com",
-                        "6": "aphippardop@acquirethisname.com",
-                        "7": "amatejkac4@redcross.org",
-                        "8": "abeamsonpu@theatlantic.com",
-                        "9": "amcadam8q@dailymail.co.uk",
-                        "10": "amaccauleyb0@about.me",
-                        "11": "ascampionnw@multiply.com",
-                        "12": "bbutchartps@acquirethisname.com",
-                        "13": "bfoulghamfn@icio.us",
-                        "14": "cstamp1x@arstechnica.com",
-                        "15": "cspringhamcf@cnn.com"
-                    },
-                    "first_name": {
-                        "0": "Aeriell",
-                        "1": "Ailee",
-                        "2": "Alfie",
-                        "3": "Alisha",
-                        "4": "Alisun",
-                        "5": "Alix",
-                        "6": "Angelle",
-                        "7": "Anna",
-                        "8": "Aprilette",
-                        "9": "Ardisj",
-                        "10": "Asia",
-                        "11": "Atalanta",
-                        "12": "Benedikta",
-                        "13": "Blondelle",
-                        "14": "Cal",
-                        "15": "Carrissa"
-                    },
-                    "gender": {
-                        "0": "Female",
-                        "1": "Female",
-                        "2": "Female",
-                        "3": "Female",
-                        "4": "Female",
-                        "5": "Female",
-                        "6": "Female",
-                        "7": "Female",
-                        "8": "Female",
-                        "9": "Female",
-                        "10": "Female",
-                        "11": "Female",
-                        "12": "Female",
-                        "13": "Female",
-                        "14": "Female",
-                        "15": "Female"
-                    },
-                    "id": {
-                        "0": 1585,
-                        "1": 1414,
-                        "2": 1535,
-                        "3": 1406,
-                        "4": 1582,
-                        "5": 1067,
-                        "6": 1889,
-                        "7": 1436,
-                        "8": 1930,
-                        "9": 314,
-                        "10": 1396,
-                        "11": 1860,
-                        "12": 928,
-                        "13": 563,
-                        "14": 1069,
-                        "15": 447
-                    },
-                    "image": {
-                        "0": "http://dummyimage.com/174x241.bmp/ff4444/ffffff",
-                        "1": "http://dummyimage.com/185x150.jpg/cc0000/ffffff",
-                        "2": "http://dummyimage.com/191x218.bmp/cc0000/ffffff",
-                        "3": "http://dummyimage.com/239x241.bmp/ff4444/ffffff",
-                        "4": "http://dummyimage.com/229x149.jpg/dddddd/000000",
-                        "5": "http://dummyimage.com/196x103.jpg/dddddd/000000",
-                        "6": "http://dummyimage.com/169x110.png/cc0000/ffffff",
-                        "7": "http://dummyimage.com/189x137.png/dddddd/000000",
-                        "8": "http://dummyimage.com/150x163.png/cc0000/ffffff",
-                        "9": "http://dummyimage.com/176x229.bmp/ff4444/ffffff",
-                        "10": "http://dummyimage.com/216x136.png/cc0000/ffffff",
-                        "11": "http://dummyimage.com/151x211.png/5fa2dd/ffffff",
-                        "12": "http://dummyimage.com/202x118.bmp/5fa2dd/ffffff",
-                        "13": "http://dummyimage.com/128x146.png/dddddd/000000",
-                        "14": "http://dummyimage.com/246x210.png/ff4444/ffffff",
-                        "15": "http://dummyimage.com/139x188.bmp/5fa2dd/ffffff",
-                        ...
-                    },
-                    "ip_address": {
-                        "0": "74.27.65.10",
-                        "1": "150.169.167.205",
-                        "2": "11.97.180.107",
-                        "3": "23.62.181.188",
-                        "4": "201.173.152.217",
-                        "5": "89.31.254.214",
-                        "6": "226.204.241.133",
-                        "7": "96.236.158.209",
-                        "8": "108.120.238.132",
-                        "9": "212.124.145.38",
-                        "10": "171.18.144.210",
-                        "11": "0.86.156.233",
-                        "12": "68.91.49.20",
-                        "13": "26.37.223.153",
-                        "14": "37.168.113.214",
-                        "15": "167.44.129.204"
-                    },
-                    "language": {
-                        "0": "Tsonga",
-                        "1": "Kurdish",
-                        "2": "Telugu",
-                        "3": "English",
-                        "4": "Burmese",
-                        "5": "Bengali",
-                        "6": "Catalan",
-                        "7": "Tamil",
-                        "8": "Maltese",
-                        "9": "Tswana",
-                        "10": "Quechua",
-                        "11": "Azeri",
-                        "12": "Estonian",
-                        "13": "Gagauz",
-                        "14": "Montenegrin",
-                        "15": "Tetum"
-                    },
-                    "last_name": {
-                        "0": "Petican",
-                        "1": "McIlvaney",
-                        "2": "Laundon",
-                        "3": "Trippick",
-                        "4": "Moscrop",
-                        "5": "McQuilty",
-                        "6": "Phippard",
-                        "7": "Matejka",
-                        "8": "Beamson",
-                        "9": "McAdam",
-                        "10": "MacCauley",
-                        "11": "Scampion",
-                        "12": "Butchart",
-                        "13": "Foulgham",
-                        "14": "Stamp",
-                        "15": "Springham"
-                    },
-                    "probability": {
-                        "0": 1.0,
-                        "1": 0.0,
-                        "2": 0.0,
-                        "3": 1.0,
-                        "4": 0.0,
-                        "5": 0.0,
-                        "6": 0.0,
-                        "7": 1.0,
-                        "8": 0.0,
-                        "9": 1.0,
-                        "10": 1.0,
-                        "11": 1.0,
-                        "12": 1.0,
-                        "13": 0.0,
-                        "14": 0.0,
-                        "15": 1.0
-                    },
-                    "smoker_bool": {
-                        "0": false,
-                        "1": true,
-                        "2": false,
-                        "3": false,
-                        "4": true,
-                        "5": false,
-                        "6": false,
-                        "7": true,
-                        "8": false,
-                        "9": true,
-                        "10": true,
-                        "11": false,
-                        "12": true,
-                        "13": true,
-                        "14": false,
-                        "15": false
-                    }
-                },
-                "groupby": null,
-                "join_key": [],
-                "keyspace": "examples",
-                "s_filter": "email like \"%am%\"",
-                "save": null,
-                "select": null,
-                "sortby": [
-                    {
-                        "gender": "asc"
-                    },
-                    {
-                        "first_name": "asc"
-                    }
-                ],
-                "status": 200,
-                "success": true,
-                "tablename": "mock_data"
+```javascript
+// Response 200 OK
+{
+    "calculated": {
+        "age": "round(months_between(current_date(),birth_date)/12,0)"
+    },
+    "data": {
+        "age": {
+            "0": 51.0,
+            "1": 48.0,
+            "2": 61.0,
+            "3": 63.0,
+            "4": 62.0,
+            "5": 55.0,
+            "6": 57.0,
+            "7": 41.0,
+            "8": 49.0,
+            "9": 42.0,
+            "10": 47.0,
+            "11": 44.0,
+            "12": 52.0,
+            "13": 54.0,
+            "14": 56.0,
+            "15": 58.0,
+            "16": 45.0,
+            "17": 46.0,
+            "18": 43.0,
+            "19": 50.0,
+            "20": 59.0,
+            "21": 53.0,
+            "22": 60.0
+        },
+        "count(id)": {
+            "0": 56,
+            "1": 56,
+            "2": 54,
+            "3": 53,
+            "4": 52,
+            "5": 50,
+            "6": 49,
+            "7": 48,
+            "8": 47,
+            "9": 47,
+            "10": 46,
+            "11": 43,
+            "12": 43,
+            "13": 43,
+            "14": 42,
+            "15": 42,
+            "16": 39,
+            "17": 39,
+            "18": 38,
+            "19": 37,
+            "20": 37,
+            "21": 36,
+            "22": 32
+        }
+    },
+    "groupby": {
+        "agg": {
+            "count": [
+                "id"
+            ]
+        },
+        "grouped": [
+            "age"
+        ]
+    },
+    "join_key": [],
+    "keyspace": "examples",
+    "s_filter": "age > 40",
+    "save": null,
+    "select": null,
+    "sortby": [
+        {
+            "count(id)": "desc"
+        }
+    ],
+    "status": 200,
+    "success": true,
+    "tablename": "mock_data"
 }
 ```
-
