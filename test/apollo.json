@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2018-04-07T09:24:21.528Z",
+	"__export_date": "2018-04-12T18:21:29.958Z",
 	"__export_source": "insomnia.desktop.app:v5.14.9",
 	"resources": [
 		{
@@ -1001,6 +1001,35 @@
 			"method": "POST",
 			"modified": 1517340292837,
 			"name": "select on multiple join",
+			"parameters": [],
+			"parentId": "fld_f34377261b624640947b73c3aceea967",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_4c3140d09e274079bc3958242b5b3dcc",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"join_a\": {\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\"join_key\": [\"id_people\"],\n\t\t\t\"select\": [{\"id\": \"id_people\"},{\"first_name\": \"name\"},\"last_name\",\"email\",\"gender\",\"drinker\"]\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"join_key\": [\"id_owner\"],\n\t\t\t\"select\": [\"car_id\"]\n\t\t},\n\t\t\"join_key\": [\"id_people\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mock_drugs\",\n\t\t\"join_key\": [\"id_people\"]\n\t}\n}\n"
+			},
+			"created": 1523302481028,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"metaSortKey": -1515967325210.25,
+			"method": "POST",
+			"modified": 1523302622055,
+			"name": "multiple join",
 			"parameters": [],
 			"parentId": "fld_f34377261b624640947b73c3aceea967",
 			"settingDisableRenderRequestBody": false,
