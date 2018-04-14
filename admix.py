@@ -46,10 +46,10 @@ def _assert_type_exception(value, msg, args=[]):
 
 
 def _str_to_column(type_str, key_type=None, value_type=None, column_def={}):
-    """
-        Converts name of Cassandra types to driver class wrapper for
-        that type.
-    """
+    '''
+    Converts name of Cassandra types to driver class wrapper for
+    that type.
+    '''
     type_str = type_str.lower()
 
     if type_str == 'integer':
@@ -117,7 +117,7 @@ def _build_fields(keyspace, tablename, columns_def):
     )
 
     for column in columns:
-        # db_type doesn't be passet to Column __init__
+        # db_type won't be passed to Column __init__
         str_type = column.pop('db_type', 'Text')
         col_name = column['db_field']
         str_key_type = column.pop('key_type', None)
@@ -204,10 +204,18 @@ def get_primary_key(keyspace, tablename):
 
 
 def describe_table(keyspace, tablename):
+    '''
+    describe keyspace.tablename
+    '''
     return cluster.metadata.keyspaces[keyspace].tables[tablename].export_as_string()
 
 
 def create_keyspace(keyspace, strategy='SimpleStrategy', replication_factor=1):
+    '''
+    creates a keyspace with keyspace name, strategy and replication_factor are regular
+    options for Cassandra Keyspaces, see Datastax documentation at 
+    https://docs.datastax.com/en/cql/3.3/cql/cql_reference/cqlCreateKeyspace.html
+    '''
     # setting up configuration
     _options = {
         'class': strategy,
@@ -223,24 +231,19 @@ def create_keyspace(keyspace, strategy='SimpleStrategy', replication_factor=1):
 
 def create_table(keyspace, tablename, columns, partition_key=None,
                  cluster_key=None, replication_factor=1,
-                 durable_writes=True, connections=None):
-
-    create_keyspace_simple(
-        keyspace,
-        replication_factor,
-        durable_writes=durable_writes,
-        connections=connections)
+                 durable_writes=True, connections=None, create_keyspace_if_not_exists=True):
+    '''
+    Creates a table with keyspade.tablename
+    columns parameter has a dictionary description for data fields
+    '''
+    if create_keyspace_if_not_exists:
+        create_keyspace_simple(
+            keyspace,
+            replication_factor,
+            durable_writes=durable_writes,
+            connections=connections)
 
     fields = _build_fields(keyspace, tablename, columns)
     metaClass = type('MetaClass', (Model, object), fields)
 
     sync_table(metaClass)
-
-
-if __name__ == '__main__':
-    columns = [
-        dict(db_field='uno', db_type='Integer', primary_key=True),
-        dict(db_field='dos')
-    ]
-
-    create_table('test_keyspace', 'table_new', columns)
