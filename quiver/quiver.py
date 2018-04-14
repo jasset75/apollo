@@ -300,7 +300,7 @@ def _join_key_building(ds_table_a, join_key_a, ds_table_b, join_key_b):
     return join_clause
 
 
-def _map_stack(h_row, stack_p_key, all_keys):
+def _map_stack(h_row, stack_p_key, primary_key):
     """
         Converts one row columns new rows, keeping keys in all rows,
         and makes new pair unique identifier in order to join related columns
@@ -309,7 +309,7 @@ def _map_stack(h_row, stack_p_key, all_keys):
     # uuid seed
     stack_p_key_value = {}
     # common elements
-    for idx, key in enumerate(all_keys):
+    for idx, key in enumerate(primary_key):
         if key in stack_p_key:
             stack_p_key_value[key] = h_row[idx]
         columns[key] = _trim_str(h_row[idx])
@@ -322,11 +322,11 @@ def _map_stack(h_row, stack_p_key, all_keys):
             # from the original dataset, so it must be part of the key to join elements associated
             # to the previous dataset's key plus column index
             quiver_column_=_trim_str(val)
-        ) for indx, val in enumerate(h_row[len(all_keys):])  # iterates over data columns
+        ) for indx, val in enumerate(h_row[len(primary_key):])  # iterates over data columns
     ]
 
 
-def _go_stacked(dataset, strategy, stack_p_key, all_keys, stack_pair, stack_column,
+def _go_stacked(dataset, strategy, stack_p_key, primary_key, stack_pair, stack_column,
                 filter_field, filter_left_value, filter_right_value):
     """
         Given all keys (partition_key plus clustering_key normally)
@@ -345,7 +345,7 @@ def _go_stacked(dataset, strategy, stack_p_key, all_keys, stack_pair, stack_colu
 
     # stack main part
     rdd = dataset.rdd.flatMap(
-        lambda row: _map_stack(row, stack_p_key, all_keys)
+        lambda row: _map_stack(row, stack_p_key, primary_key)
     )
 
     # renames internal names to definitive names
@@ -366,8 +366,8 @@ def _go_stacked(dataset, strategy, stack_p_key, all_keys, stack_pair, stack_colu
             df_stacked[filter_field] == func.lit(filter_right_value)
         )
         # building the new column shape
-        all_keys.remove(filter_field)
-        new_columns_1 = all_keys+[
+        primary_key.remove(filter_field)
+        new_columns_1 = primary_key+[
             stack_pair, {stack_column: '{}{}'.format(stack_column, 1)}
         ]
         new_columns_2 = [
@@ -414,18 +414,18 @@ def _stack(dataset, keyspace=None, tablename=None, strategy='double-value',
                 'stacked::keyspace and tablename are mandatory with auto=true'
             )
         stack_p_key = admix.get_partition_key(keyspace, tablename)
-        all_keys = admix.get_all_keys(keyspace, tablename)
+        primary_key = admix.get_primary_key(keyspace, tablename)
     else:
         if not stack_pair or not stack_p_key:
             raise Exception(
                 'stacked::stack_p_key and stack_pair are mandatory with auto=false'
             )
         elif not stack_c_key:
-            all_keys = _list_from_list_or_value(stack_p_key)
+            primary_key = _list_from_list_or_value(stack_p_key)
         else:
-            all_keys = _list_from_list_or_value(stack_p_key) + _list_from_list_or_value(stack_c_key)
+            primary_key = _list_from_list_or_value(stack_p_key) + _list_from_list_or_value(stack_c_key)
 
-    return _go_stacked(dataset, strategy, stack_p_key, all_keys, stack_pair, stack_column,
+    return _go_stacked(dataset, strategy, stack_p_key, primary_key, stack_pair, stack_column,
                        filter_field, filter_left_value, filter_right_value)
 
 

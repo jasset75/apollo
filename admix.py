@@ -148,36 +148,55 @@ def _get_name_part(column_definition):
 
 
 def get_keyspaces():
+    '''
+    returns a list of strings representing each keyspaces of Cassandra 
+    (similar to cql command `describe keyspaces;`)
+    '''
     return [
         x for x in map(str, cluster.metadata.keyspaces)
     ]
 
 
 def get_tablenames(keyspace):
+    '''
+    gets a table list of `keyspace`
+    '''
     return [
         x for x in map(str, cluster.metadata.keyspaces[keyspace].tables)
     ]
 
 
 def get_columns(keyspace, tablename):
+    '''
+    returns a list of columns from keyspace.tablename
+    '''
     return [
         x for x in map(str, cluster.metadata.keyspaces[keyspace].tables[tablename].columns)
     ]
 
 
 def get_partition_key(keyspace, tablename):
+    '''
+    gets partition key from keyspace.tablename
+    '''
     return [
         x for x in map(_get_name_part, cluster.metadata.keyspaces[keyspace].tables[tablename].partition_key)
     ]
 
 
 def get_clustering_key(keyspace, tablename):
+    '''
+    gets clustering key from keyspace.tablename
+    '''
     return [
         x for x in map(_get_name_part, cluster.metadata.keyspaces[keyspace].tables[tablename].clustering_key)
     ]
 
 
-def get_all_keys(keyspace, tablename):
+def get_primary_key(keyspace, tablename):
+    '''
+    gets primary key
+    '''
     return (
         get_partition_key(keyspace, tablename) +
         get_clustering_key(keyspace, tablename)
