@@ -11,17 +11,17 @@
         - mean: returns the average of the values in a group.
         - sumDistinct: returns the sum of distinct values in the expression.
 
-```python
-_agg_allowed_funcs = {
-    'max': func.max,
-    'min': func.min,
-    'count': func.count,
-    'sum': func.sum,
-    'avg': func.avg,
-    'mean': func.mean,
-    'sumDistinct': func.sumDistinct
-}
-```
+    ```python
+    _agg_allowed_funcs = {
+        'max': func.max,
+        'min': func.min,
+        'count': func.count,
+        'sum': func.sum,
+        'avg': func.avg,
+        'mean': func.mean,
+        'sumDistinct': func.sumDistinct
+    }
+    ```
 
 
 - Auxiliary Functions
@@ -191,19 +191,15 @@ _agg_allowed_funcs = {
 
     ```python
     def _resolve_operand(table, join, union):
-        """
-        """
     ```
 
     - `_trim_str`
+    Customizable behavior to filter prefix
+    (i.e. Web Sematic RDF prefix), specially in development environment
+    in order to fit data structures within console width, hardcopy, etc.
 
     ```python
     def _trim_str(in_str):
-        """
-            Customizable behavior to filter prefix
-            (i.e.: Web Sematic RDF prefix), specially in development environment
-            in order to fit data structures within console width, hardcopy, etc.
-        """
     ```
 
     - `_join`
@@ -254,57 +250,83 @@ _agg_allowed_funcs = {
 
     - `join`
 
+    Join function entry point:
+
+        - `join_type`
+            - `"inner"`
+            - `"outer"` <=> `"full"` <=> `"fullouter"` <=> `"full_outer"`
+            - `"leftouter"` <=> `"left"` <=> `"left_outer"`
+            - `"rightouter"` <=> `"right"` <=> `"right_outer"`
+            - `"leftsemi"` <=> `"left_semi"`
+            - `"leftanti"` <=> `"left_anti"`
+            - `"cross"`
+
+        - `format`
+            `"dict"` or `"str"` (json serialized)
+
+        - orient_results
+
+            ```
+            "split" : dict like {
+                index -> [index], 
+                columns -> [columns], 
+                data -> [values]
+            }
+            ```
+
+            ```
+            "records" : list like [
+                {column -> value},
+                ... ,
+                {column -> value}
+            ]
+            ```
+
+            ```
+            "index" : dict like 
+            {
+                index -> {
+                    column -> value
+                }
+            }
+            ```
+
+            ```
+            "columns" : dict like 
+            {
+                column -> {
+                    index -> value
+                }
+            }
+            ```
+
+            ```
+            "values" : just the values array
+            ```    
+
     ```python
     def join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
              union_b=None, calculated=None, select=None, s_filter=None,
              join_groupby=None, sortby=None, join_key=[], save=None,
              join_type='inner', format='dict', orient_results='columns'):
-        """
-            join function entry point
-
-            join_type:
-                "inner",
-                "outer" <=> "full" <=> "fullouter" <=> "full_outer"
-                "leftouter" <=> "left" <=> "left_outer"
-                "rightouter" <=> "right" <=> "right_outer"
-                "leftsemi" <=> "left_semi"
-                "leftanti" <=> "left_anti"
-                "cross"
-            format:
-                dict or str (json serialized)
-            orient_results:
-                "split" : dict like {
-                    index -> [index], 
-                    columns -> [columns], 
-                    data -> [values]
-                }
-                "records" : list like [
-                    {column -> value},
-                    ... ,
-                    {column -> value}
-                ]
-                "index" : dict like {index -> {column -> value}}
-                "columns" : dict like {column -> {index -> value}}
-                "values" : just the values array
-        """
     ```
 
     - `union`
+
+    Union function entry point
+
+        - `union_type`
+            - `"union_all"`
+            - `"intersect"`
+            - `"minus"`
+            - `"xor"`
+        - `format`
+            `"dict"` or `"str"` (json serialized)
+
 
     ```python
     def union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
               union_b=None, select=None, calculated=None, s_filter=None,
               union_groupby=None, sortby=None, join_key=[], save=None,
               union_type='union_all', format='dict', orient_results='columns'):
-        """
-            union function entry point
-
-            union_type:
-                "union_all"
-                "intersect"
-                "minus"
-                "xor"
-            format:
-                dict or str (json serialized)
-        """
     ```
