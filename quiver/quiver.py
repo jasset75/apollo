@@ -329,7 +329,7 @@ def _map_stack(h_row, stack_p_key, primary_key):
 def _go_stacked(dataset, strategy, stack_p_key, primary_key, stack_pair, stack_column,
                 filter_field, filter_left_value, filter_right_value):
     """
-        Given all keys (partition_key plus clustering_key normally)
+        Given primary_key (partition_key plus clustering_key normally)
         and stack_p_key (partition key normally) changes the shape of
         the dataset from n-value columns to n/2 rows.
         it adds pair key to uniqueness.
