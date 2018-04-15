@@ -228,14 +228,16 @@
     This function computes join between operands. It is the stub of `join` API endpoint.
 
         - `join_type`
-
-            - `"inner"`
-            - `"outer"` <=> `"full"` <=> `"fullouter"` <=> `"full_outer"`
-            - `"leftouter"` <=> `"left"` <=> `"left_outer"`
-            - `"rightouter"` <=> `"right"` <=> `"right_outer"`
-            - `"leftsemi"` <=> `"left_semi"`
-            - `"leftanti"` <=> `"left_anti"`
-            - `"cross"`
+        
+        This parameter identify
+        
+            + `"inner"`
+            + `"outer"` <=> `"full"` <=> `"fullouter"` <=> `"full_outer"`
+            + `"leftouter"` <=> `"left"` <=> `"left_outer"`
+            + `"rightouter"` <=> `"right"` <=> `"right_outer"`
+            + `"leftsemi"` <=> `"left_semi"`
+            + `"leftanti"` <=> `"left_anti"`
+            + `"cross"`
 
         - `format`
 
