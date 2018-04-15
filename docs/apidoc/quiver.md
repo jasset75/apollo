@@ -284,13 +284,13 @@
 
     This function computes union between operands. It is the stub of `/union` API endpoint.
 
-        - Union Type parameter `union_type`
+        * Union Type parameter `union_type`
             - `"union_all"`
             - `"intersect"`
             - `"minus"`
             - `"xor"`
 
-        - Format parameter `format`
+        * Format parameter `format`
             - `"dict"` or `"str"` (json serialized)
 
     ```python
