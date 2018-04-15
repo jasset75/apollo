@@ -31,6 +31,20 @@ This API implements an interface between an app client and Spark-Cassandra envir
 >[Apiary Documentation](https://apollo20.docs.apiary.io)
 >NOTE: Examples and test are based on data and examples of this [repository](https://jasset75.github.io/Spark-Cassandra-Notes/).
 
+## Internals
+
+### _admix_
+
+Python library which implements interface with Apache Cassandra.
+
++ [admix](./apidoc/admix.md) documentation.
+
+### _quiver_
+
+Python library which implements interface with Apache Spark.
+
++ [quiver](./apidoc/quiver.md) documentation.
+
 ## Useful tools
 
 ### Insomnia
