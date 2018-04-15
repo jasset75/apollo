@@ -213,11 +213,13 @@
     This function takes data from a table with optional parameters. It is the stub of `/get-table` API endpoint.
 
     `orient_results` defines output format
-        - split : dict like {index -> [index], columns -> [columns], data -> [values]}
-        - records : list like [{column -> value}, ... , {column -> value}]
-        - index : dict like {index -> {column -> value}}
-        - columns : dict like {column -> {index -> value}}
-        - values : just the values array            
+        - split : dict like `{ index -> [index], columns -> [columns], data -> [values] }`
+        - records : list like `[ { column -> value }, ... , { column -> value } ]`
+        - index : dict like `{ index -> { column -> value } }`
+        - columns : dict like `{ column -> { index -> value } }`
+        - values : just the array of values
+
+    > More parameter details on [/get-table](./get_table.md)
 
     ```python
     def get_table(keyspace, tablename, select=None, calculated=None, s_filter=None, groupby=None, sortby=None,
@@ -274,6 +276,9 @@
         "values" : just the values array
         ```
 
+    > More parameter details on [/join](./join.md)
+
+
         ```python
         def join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None, union_b=None, 
             calculated=None, select=None, s_filter=None, join_groupby=None, sortby=None, join_key=[],
@@ -284,7 +289,6 @@
 
     This function computes union between operands. It is the stub of `/union` API endpoint.
 
-
     ```
     union_type ::= "union_all" | "intersect" | "minus" | "xor"
     ```
@@ -292,6 +296,8 @@
     ```
     format ::= "dict" | "str" //json serialized
     ```  
+
+    > More parameter details on [/union](./union.md)
 
     ```python
     def union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None, union_b=None, select=None,
