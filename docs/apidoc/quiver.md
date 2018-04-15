@@ -219,7 +219,7 @@
         - columns : dict like `{ column -> { index -> value } }`
         - values : just the array of values
 
-    > More parameter details on [/get-table](./get_table.md)
+    > More parameter details on [/get-table](./get-table.md)
 
     ```python
     def get_table(keyspace, tablename, select=None, calculated=None, s_filter=None, groupby=None, sortby=None,
