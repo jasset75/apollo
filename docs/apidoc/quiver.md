@@ -208,7 +208,7 @@
 
 - Main Functions
 
-    + `get_table`
+    + Get Table function `get_table`
 
     This function takes data from a table with optional parameters. It is the stub of `get-table` API endpoint.
 
@@ -224,11 +224,11 @@
         join_key=[], format='dict', save=None, stacked=False, orient_results='columns'):
     ```
 
-    + `join`
+    + Join function `join`
 
     This function computes join between operands. It is the stub of `join` API endpoint.
 
-        * `join_type`
+        * Join Type function `join_type`
         
         This parameter identify
         
@@ -240,11 +240,11 @@
             + `"leftanti"` <=> `"left_anti"`
             + `"cross"`
 
-        * `format`
+        * Format parameter `format`
 
             `"dict"` or `"str"` (json serialized)
 
-        * orient_results
+        * Orient Results parameter `orient_results`
 
         ```
         "split" : dict like {
@@ -252,35 +252,27 @@
             columns -> [columns], 
             data -> [values]
         }
-        ```
 
-        ```
         "records" : list like [
             {column -> value},
             ... ,
             {column -> value}
         ]
-        ```
 
-        ```
         "index" : dict like 
         {
             index -> {
                 column -> value
             }
         }
-        ```
 
-        ```
         "columns" : dict like 
         {
             column -> {
                 index -> value
             }
         }
-        ```
 
-        ```
         "values" : just the values array
         ```
 
@@ -290,19 +282,18 @@
             save=None, join_type='inner', format='dict', orient_results='columns'):
         ```
 
-    + `union`
+    + Union function `union`
 
     Union function entry point
 
-        - `union_type`
+        - Union Type parameter `union_type`
             - `"union_all"`
             - `"intersect"`
             - `"minus"`
             - `"xor"`
 
-        - `format`
+        - Format parameter `format`
             - `"dict"` or `"str"` (json serialized)
-
 
     ```python
     def union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None, union_b=None, select=None,
