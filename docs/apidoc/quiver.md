@@ -140,7 +140,6 @@
     def _map_stack(h_row, stack_p_key, primary_key):
     ```
 
-
     - `_go_stacked `
     Given primary_key (partition_key plus clustering_key) and stack_p_key (partition key normally) changes the shape of
     the dataset from n-value columns to n/2 rows. It adds pair key to uniqueness.
@@ -154,7 +153,6 @@
     def _go_stacked(dataset, strategy, stack_p_key, primary_key, stack_pair, stack_column,
                     filter_field, filter_left_value, filter_right_value):
     ```
-
 
     - `_stack`
 
@@ -204,15 +202,14 @@
 
     - `_join`
 
+    Makes a join between two tables, join and table, table and join,
+    or two joins this is a recursive function which explores json structure
+
     ```python
     def _join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None,
               union_b=None, select=None, calculated=None, s_filter=None,
               join_groupby=None, sortby=None, join_key=None, save=None,
               join_type='inner', orient_results='columns'):
-        """
-            Makes a join between two tables, join and table, table and join,
-            or two joins this is a recursive function which explores json structure
-        """
     ```
 
     - `_union`
@@ -253,6 +250,7 @@
     Join function entry point:
 
         - `join_type`
+
             - `"inner"`
             - `"outer"` <=> `"full"` <=> `"fullouter"` <=> `"full_outer"`
             - `"leftouter"` <=> `"left"` <=> `"left_outer"`
@@ -262,6 +260,7 @@
             - `"cross"`
 
         - `format`
+
             `"dict"` or `"str"` (json serialized)
 
         - orient_results
@@ -320,8 +319,9 @@
             - `"intersect"`
             - `"minus"`
             - `"xor"`
+
         - `format`
-            `"dict"` or `"str"` (json serialized)
+            - `"dict"` or `"str"` (json serialized)
 
 
     ```python
