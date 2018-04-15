@@ -127,8 +127,8 @@
     ```
 
     - `_map_stack`
-    Converts one row columns new rows, keeping keys in all rows,
-    and makes new pair unique identifier in order to join related columns
+    Converts one row's columns into new rows, keeping original keys in all rows,
+    and adds new unique identifier in order to identify related columns
 
     ```python
     def _map_stack(h_row, stack_p_key, primary_key):
