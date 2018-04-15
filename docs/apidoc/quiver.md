@@ -210,7 +210,7 @@
 
     + Get Table function `get_table`
 
-    This function takes data from a table with optional parameters. It is the stub of `get-table` API endpoint.
+    This function takes data from a table with optional parameters. It is the stub of `/get-table` API endpoint.
 
     `orient_results` defines output format
         - split : dict like {index -> [index], columns -> [columns], data -> [values]}
@@ -226,7 +226,7 @@
 
     + Join function `join`
 
-    This function computes join between operands. It is the stub of `join` API endpoint.
+    This function computes join between operands. It is the stub of `/join` API endpoint.
 
         * Join Type function `join_type`
         
@@ -284,7 +284,7 @@
 
     + Union function `union`
 
-    Union function entry point
+    This function computes union between operands. It is the stub of `/union` API endpoint.
 
         - Union Type parameter `union_type`
             - `"union_all"`
