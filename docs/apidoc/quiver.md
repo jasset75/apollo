@@ -285,13 +285,12 @@
     This function computes union between operands. It is the stub of `/union` API endpoint.
 
         * Union Type parameter `union_type`
-            - `"union_all"`
-            - `"intersect"`
-            - `"minus"`
-            - `"xor"`
+
+        ```union_type ::= "union_all" | "intersect" | "minus" | "xor"```
 
         * Format parameter `format`
-            - `"dict"` or `"str"` (json serialized)
+
+        ```format ::= "dict" | "str"```  //json serialized
 
     ```python
     def union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None, union_b=None, select=None,
