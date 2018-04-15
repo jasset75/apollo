@@ -302,8 +302,8 @@ def _join_key_building(ds_table_a, join_key_a, ds_table_b, join_key_b):
 
 def _map_stack(h_row, stack_p_key, primary_key):
     """
-        Converts one row columns new rows, keeping keys in all rows,
-        and makes new pair unique identifier in order to join related columns
+        Converts one row's columns into new rows, keeping original keys in all rows,
+        and adds new unique identifier in order to identify related columns
     """
     columns = {}
     # uuid seed
