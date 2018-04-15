@@ -1,3 +1,5 @@
+[< Back](../index.md)
+
 - aggregations, allowed funcs:
     - max: returns the maximum value of the expression in a group.
     - min: returns the minimum value of the expression in a group.
