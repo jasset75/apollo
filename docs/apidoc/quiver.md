@@ -208,7 +208,7 @@
 
 - Main Functions
 
-    - `get_table`
+    + `get_table`
 
     This function takes data from a table with optional parameters. It is the stub of `get-table` API endpoint.
 
@@ -220,10 +220,11 @@
         - values : just the values array            
 
     ```python
-    def get_table(keyspace, tablename, select=None, calculated=None, s_filter=None, groupby=None, sortby=None, join_key=[], format='dict', save=None, stacked=False, orient_results='columns'):
+    def get_table(keyspace, tablename, select=None, calculated=None, s_filter=None, groupby=None, sortby=None,
+        join_key=[], format='dict', save=None, stacked=False, orient_results='columns'):
     ```
 
-    - `join`
+    + `join`
 
     This function computes join between operands. It is the stub of `join` API endpoint.
 
@@ -283,11 +284,13 @@
         "values" : just the values array
         ```
 
-    ```python
-    def join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None, union_b=None, calculated=None, select=None, s_filter=None, join_groupby=None, sortby=None, join_key=[], save=None, join_type='inner', format='dict', orient_results='columns'):
-    ```
+        ```python
+        def join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None, union_b=None, 
+            calculated=None, select=None, s_filter=None, join_groupby=None, sortby=None, join_key=[],
+            save=None, join_type='inner', format='dict', orient_results='columns'):
+        ```
 
-    - `union`
+    + `union`
 
     Union function entry point
 
@@ -302,6 +305,7 @@
 
 
     ```python
-    def union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None, union_b=None, select=None, calculated=None, s_filter=None, union_groupby=None, sortby=None, join_key=[], save=None,
+    def union(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None, union_b=None, select=None,
+              calculated=None, s_filter=None, union_groupby=None, sortby=None, join_key=[], save=None,
               union_type='union_all', format='dict', orient_results='columns'):
     ```
