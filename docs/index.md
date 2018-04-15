@@ -29,6 +29,7 @@ This API implements an interface between an app client and Spark-Cassandra envir
 
 >Updated Source at:
 >[Apiary Documentation](https://apollo20.docs.apiary.io)
+
 >NOTE: Examples and test are based on data and examples of this [repository](https://jasset75.github.io/Spark-Cassandra-Notes/).
 
 ## Internals
@@ -56,7 +57,6 @@ Insomnia is that kind of applications that is highly recommended to develop a RE
 - The whole range of HTTP verbs: GET, PUT, POST, DELETE, etc.
 - Exportable environment file with JSON format for sharing.
 - Response beautifier.
-...
 
 ```sh
 # Add to sources
