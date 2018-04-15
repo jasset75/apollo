@@ -227,7 +227,7 @@
 
     This function computes join between operands. It is the stub of `join` API endpoint.
 
-        - `join_type`
+        * `join_type`
         
         This parameter identify
         
@@ -239,49 +239,49 @@
             + `"leftanti"` <=> `"left_anti"`
             + `"cross"`
 
-        - `format`
+        * `format`
 
             `"dict"` or `"str"` (json serialized)
 
-        - orient_results
+        * orient_results
 
-            ```
-            "split" : dict like {
-                index -> [index], 
-                columns -> [columns], 
-                data -> [values]
+        ```
+        "split" : dict like {
+            index -> [index], 
+            columns -> [columns], 
+            data -> [values]
+        }
+        ```
+
+        ```
+        "records" : list like [
+            {column -> value},
+            ... ,
+            {column -> value}
+        ]
+        ```
+
+        ```
+        "index" : dict like 
+        {
+            index -> {
+                column -> value
             }
-            ```
+        }
+        ```
 
-            ```
-            "records" : list like [
-                {column -> value},
-                ... ,
-                {column -> value}
-            ]
-            ```
-
-            ```
-            "index" : dict like 
-            {
-                index -> {
-                    column -> value
-                }
+        ```
+        "columns" : dict like 
+        {
+            column -> {
+                index -> value
             }
-            ```
+        }
+        ```
 
-            ```
-            "columns" : dict like 
-            {
-                column -> {
-                    index -> value
-                }
-            }
-            ```
-
-            ```
-            "values" : just the values array
-            ```    
+        ```
+        "values" : just the values array
+        ```
 
     ```python
     def join(table_a=None, table_b=None, join_a=None, join_b=None, union_a=None, union_b=None, calculated=None, select=None, s_filter=None, join_groupby=None, sortby=None, join_key=[], save=None, join_type='inner', format='dict', orient_results='columns'):
