@@ -24,7 +24,7 @@
     ```
 
 
-- Auxiliary Functions
+1. Auxiliary Functions
 
     - `_list_from_list_or_value`
 
@@ -206,7 +206,7 @@
                union_type='union_all'):
     ```
 
-- Main Functions
+2. Main Functions
 
     + Get Table function `get_table`
 
@@ -224,13 +224,11 @@
         join_key=[], format='dict', save=None, stacked=False, orient_results='columns'):
     ```
 
-    + Join function `join`
-
-    This function computes join between operands. It is the stub of `/join` API endpoint.
-
+    + Join function `join`. This function computes join between operands. It is the stub of `/join` API endpoint.
+    
         * Join Type function `join_type`
         
-        This parameter identify
+        This parameter identifies the kind of join.
         
             + `"inner"`
             + `"outer"` <=> `"full"` <=> `"fullouter"` <=> `"full_outer"`
