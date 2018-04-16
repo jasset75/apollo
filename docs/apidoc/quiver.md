@@ -28,7 +28,7 @@
 
     - `_list_from_list_or_value`
 
-    Returns a list, regardless of the value is `string` or `list`.
+    Returns a list, regardless of the value is `str` or `list`.
 
     ```python
     def _list_from_list_or_value(value):
@@ -59,6 +59,9 @@
     - `_sort_by`
     Sort by clause: parses a sort by clause and applies it over dataset.
 
+    ```
+    ```
+
     ```python
     def _sort_by(ds_table, sortby):
     ```
@@ -78,14 +81,14 @@
     ```
 
     - `_get_term_value`
-    Gets `string` or `value` from list of value or `{ key: value }`
+    Gets `str` or `value` from list of value or `{ key: value }`
 
     ```python
     def _get_term_value(term):
     ```
 
     - `_exists_key` 
-    Checks if a key exists in a list of `string` or `{ k: v }`
+    Checks if a key exists in a list of `str` or `{ k: v }`
 
     ```python
     def _exists_key(ukey, klist):
@@ -93,7 +96,7 @@
 
     - `_include`
 
-    Include all `list_1` terms: `string` or `{ k: v }` into `list_2` if not exists.
+    Include all `list_1` terms: `str` or `{ k: v }` into `list_2` if not exists.
 
     ```python
     def _include(list_1, list_2):
@@ -118,6 +121,7 @@
     Group by clause:
         
         Parses a group by clause and applies it over dataset.
+        >see [`get-table`](./get-table.md) endpoint
 
     ```python
     def _group_by(ds_table, groupby, join_key=None):
