@@ -102,10 +102,9 @@
     - `_select`
     Executes `select` clause from `ds_table`. `join_key` fields always are included in `select`.
     When `select` is `None` all fields are selected plus `join_key`. Rename clauses are accepted.
-
     Example:
 
-    ```
+    ```json
     select -> [{ "field_a": "field_a_bis" }, "field_b"]
     join_key -> ["field_b", {"field_c": "field_c_bis"}]
     final select -> ["field_a_bis", "field_b", "field_c_bis"]
