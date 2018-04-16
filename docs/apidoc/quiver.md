@@ -121,7 +121,7 @@
     Group by clause:
         
         Parses a group by clause and applies it over dataset.
-        >see [`get-table`](./get-table.md) endpoint
+        >See [`get-table`](./get-table.md) API endpoint.
 
     ```python
     def _group_by(ds_table, groupby, join_key=None):
@@ -230,7 +230,7 @@
         - columns : dict like `{ column -> { index -> value } }`
         - values : just the array of values
 
-    > More parameter details on [/get-table](./get-table.md)
+    > More parameter details on [/get-table](./get-table.md) API endpoint.
 
     ```python
     def get_table(keyspace, tablename, select=None, calculated=None, s_filter=None, groupby=None, sortby=None,
