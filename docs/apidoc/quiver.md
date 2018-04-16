@@ -100,8 +100,16 @@
     ```
 
     - `_select`
-    Select clause always execute before join_key statement with another table; in other words: select values are
-    possible keys for join. If not `select` but `join_key`, all fields are select and include `join_key`.
+    Executes `select` clause from `ds_table`. `join_key` fields always are included in `select`.
+    When `select` is `None` all fields are selected plus `join_key`. Rename clauses are accepted.
+
+    Example:
+
+    ```
+    select -> [{ "field_a": "field_a_bis" }, "field_b"]
+    join_key -> ["field_b", {"field_c": "field_c_bis"}]
+    final select -> ["field_a_bis", "field_b", "field_c_bis"]
+    ```
 
     ```python
     def _select(ds_table, select, join_key):
@@ -127,7 +135,7 @@
     ```
 
     - `_map_stack`
-    Converts one row's columns into new rows, keeping original keys in all rows,
+    Converts one row's column into new rows, keeping original keys in all rows,
     and adds new unique identifier in order to identify related columns
 
     ```python
