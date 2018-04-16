@@ -108,9 +108,9 @@
     Example:
 
     ```json
-    select -> [{ "field_a": "field_a_bis" }, "field_b"]
-    join_key -> ["field_b", {"field_c": "field_c_bis"}]
-    final select -> ["field_a_bis", "field_b", "field_c_bis"]
+    select = [{ "field_a": "field_a_bis" }, "field_b"]
+    join_key = ["field_b", {"field_c": "field_c_bis"}]
+    final_select = ["field_a_bis", "field_b", "field_c_bis"]
     ```
 
     ```python
