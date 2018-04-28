@@ -225,11 +225,14 @@ def _include(list_1, list_2):
 
 def _select(ds_table, select, join_key):
     """
-        Select clause always execute before join_key statement
-        with another table; in other words: select values are
-        possible keys for join.
-        If not select but join_key, all fields are select and
-        include join_key.
+        Executes select clause from ds_table. join_key fields always are included in select.
+        When select is None all fields are selected plus join_key. Rename clauses are accepted.
+
+        Example:
+
+        select -> [{ "field_a": "field_a_bis" }, "field_b"]
+        join_key -> ["field_b", {"field_c": "field_c_bis"}]
+        final select -> ["field_a_bis", "field_b", "field_c_bis"]
     """
     if join_key and not select:
         select = ds_table.columns
@@ -319,7 +322,7 @@ def _map_stack(h_row, stack_p_key, primary_key):
             **columns,
             quiver_pair_=str(uuid3(NAMESPACE_URL, '{}_{}'.format(str(stack_p_key_value), indx))),
             # quiver_pair is a hash value for elements (columns) of the same key and column position
-            # from the original dataset, so it must be part of the key to join elements associated
+            # from the original dataset, so it must be part of the key to join associated elements
             # to the previous dataset's key plus column index
             quiver_column_=_trim_str(val)
         ) for indx, val in enumerate(h_row[len(primary_key):])  # iterates over data columns
