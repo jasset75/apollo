@@ -320,10 +320,11 @@ def _map_stack(h_row, stack_p_key, primary_key):
     return [
         Row(
             **columns,
-            quiver_pair_=str(uuid3(NAMESPACE_URL, '{}_{}'.format(str(stack_p_key_value), indx))),
             # quiver_pair is a hash value for elements (columns) of the same key and column position
             # from the original dataset, so it must be part of the key to join associated elements
             # to the previous dataset's key plus column index
+            quiver_pair_=str(uuid3(NAMESPACE_URL, '{}_{}'.format(str(stack_p_key_value), indx))),
+            # filter prefix, normally in development with large URLs
             quiver_column_=_trim_str(val)
         ) for indx, val in enumerate(h_row[len(primary_key):])  # iterates over data columns
     ]
