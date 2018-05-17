@@ -1,16 +1,41 @@
 import json
 from functools import wraps
 from flask import Flask, make_response, redirect, url_for, request, jsonify
+from flask.json import JSONEncoder
 from flask import Response
 # project configuration wrapper: yaml formatted file
 from misc.config import settings as conf
 from quiver import quiver
 from quiver import unpack_params as unpack
+import datetime
+import numpy as np
 import admix
 
 VERSION = 1.0
 from flask_cors import CORS
+
+class CustomizedEncoder(json.JSONEncoder):
+    """
+        Customized Encoding: numpy and datetime specific
+    """
+    def default(self, obj):
+        if isinstance(obj, (np.int_, np.intc, np.intp, np.int8,
+            np.int16, np.int32, np.int64, np.uint8,
+            np.uint16, np.uint32, np.uint64)):
+            return obj.item()
+        if isinstance(obj, (np.float_, np.float16, np.float32, 
+            np.float64)):
+            return obj.asscalar()
+        if isinstance(obj, datetime.datetime):
+            return obj.isoformat()
+        if isinstance(obj, datetime.date):
+            return obj.isoformat()
+        if isinstance(obj, datetime.timedelta):
+            return (datetime.datetime.min + obj).time().isoformat()
+        return super(self.__class__,self).default(self, obj)
+
 app = Flask(__name__)
+app.json_encoder = CustomizedEncoder
 
 # enabling Cross-Origin Resource Sharing
 CORS(app)
