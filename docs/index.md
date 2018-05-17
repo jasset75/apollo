@@ -1,8 +1,8 @@
 # Apollo Microservice v1.0 Alpha
 
-This project implements a REST API to select data from Apache Cassandra taking advantage of the power of Apache Spark. Spark cluster computes commands requested by HTTP client through Apollo API endpoints.
+This project implements a REST API to select data from Apache Cassandra taking advantage of the power of Apache Spark. Spark cluster computes commands requested by HTTP clients through Apollo API endpoints.
 
-I've written these [notes](https://jasset75.github.io/Spark-Cassandra-Notes/Environment.html) with which to follow a recipe to build a development environment. Besides, there are some examples and scripts which loads the data sources used in those and these examples.
+I've written these [notes](https://jasset75.github.io/Spark-Cassandra-Notes/Environment.html) with which to follow a recipe to build a development environment. Besides, there you can find some examples and scripts which loads the data sources used in those and these examples.
 
 > API Blueprint format. [See in Apiario.io](https://apollo20.docs.apiary.io)
 
