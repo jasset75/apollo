@@ -1,0 +1,554 @@
+{
+	"_type": "export",
+	"__export_format": 3,
+	"__export_date": "2018-05-17T22:28:23.475Z",
+	"__export_source": "insomnia.desktop.app:v5.16.2",
+	"resources": [
+		{
+			"_id": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"created": 1515967238053,
+			"description": "",
+			"modified": 1522257406506,
+			"name": "Apollo",
+			"parentId": null,
+			"_type": "workspace"
+		},
+		{
+			"_id": "env_549c1b25e4674c189d0f863f42535fa7",
+			"color": null,
+			"created": 1515967238149,
+			"data": {},
+			"isPrivate": false,
+			"modified": 1515967265983,
+			"name": "Spark",
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"_type": "environment"
+		},
+		{
+			"_id": "jar_616fc0ad94b94cbf843d3c4c18f03993",
+			"cookies": [],
+			"created": 1515967238251,
+			"modified": 1515967238251,
+			"name": "Default Jar",
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"_type": "cookie_jar"
+		},
+		{
+			"_id": "fld_939590d3b1c4499ea92a9519b2b6e7f4",
+			"created": 1522259701401,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1522259701401,
+			"modified": 1522259701401,
+			"name": "apollo",
+			"parentId": "wrk_589ece674d7f41399cfde2f433fa1f80",
+			"_type": "request_group"
+		},
+		{
+			"_id": "env_e90c924568a34906af60dc1d8f4f7d87",
+			"color": "#3400ff",
+			"created": 1516473998747,
+			"data": {},
+			"isPrivate": false,
+			"modified": 1516474032373,
+			"name": "Apollo",
+			"parentId": "env_549c1b25e4674c189d0f863f42535fa7",
+			"_type": "environment"
+		},
+		{
+			"_id": "env_b007941c673347ae91145ac212eb1189",
+			"color": "#69cb77",
+			"created": 1519597167292,
+			"data": {},
+			"isPrivate": false,
+			"modified": 1522257705483,
+			"name": "Daphne",
+			"parentId": "env_549c1b25e4674c189d0f863f42535fa7",
+			"_type": "environment"
+		},
+		{
+			"_id": "fld_4ff917511ccc496c864adde8696bea59",
+			"created": 1517339522832,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1517339522933,
+			"modified": 1522259745427,
+			"name": "basic",
+			"parentId": "fld_939590d3b1c4499ea92a9519b2b6e7f4",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_606acdb8fa674fdd969423c92620a962",
+			"created": 1517339686791,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1517339522908,
+			"modified": 1522259748612,
+			"name": "get_table",
+			"parentId": "fld_939590d3b1c4499ea92a9519b2b6e7f4",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_c1b45609b5b74252863f511f9db732b7",
+			"created": 1517339846260,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1517339522733,
+			"modified": 1522259725086,
+			"name": "join",
+			"parentId": "fld_939590d3b1c4499ea92a9519b2b6e7f4",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_e3762f9b467846fca151b331a95412ff",
+			"created": 1517340307582,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1517339522683,
+			"modified": 1522259729478,
+			"name": "union",
+			"parentId": "fld_939590d3b1c4499ea92a9519b2b6e7f4",
+			"_type": "request_group"
+		},
+		{
+			"_id": "fld_7c2a5a87683a472996b7b49718f74cf8",
+			"created": 1517345331937,
+			"description": "",
+			"environment": {},
+			"metaSortKey": -1517339522633,
+			"modified": 1522259732522,
+			"name": "hybrid",
+			"parentId": "fld_939590d3b1c4499ea92a9519b2b6e7f4",
+			"_type": "request_group"
+		},
+		{
+			"_id": "req_32d6712d87d84a428d78192d6ff2b846",
+			"authentication": {},
+			"body": {},
+			"created": 1516191223419,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1517339522858,
+			"method": "GET",
+			"modified": 1517339538975,
+			"name": "Version",
+			"parameters": [],
+			"parentId": "fld_4ff917511ccc496c864adde8696bea59",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/version",
+			"_type": "request"
+		},
+		{
+			"_id": "req_64567e6c75a64c92aa3d3ae3b1f77067",
+			"authentication": {},
+			"body": {},
+			"created": 1516472366923,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1517339522908,
+			"method": "GET",
+			"modified": 1517339545960,
+			"name": "404",
+			"parameters": [],
+			"parentId": "fld_4ff917511ccc496c864adde8696bea59",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/version_fake",
+			"_type": "request"
+		},
+		{
+			"_id": "req_81237a61c2214f769f9683bada09854c",
+			"authentication": {},
+			"body": {},
+			"created": 1517339558855,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1517339522958,
+			"method": "GET",
+			"modified": 1517339586569,
+			"name": "About",
+			"parameters": [],
+			"parentId": "fld_4ff917511ccc496c864adde8696bea59",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/about",
+			"_type": "request"
+		},
+		{
+			"_id": "req_06333bb62d7747cfb3a823b941d24565",
+			"authentication": {},
+			"body": {},
+			"created": 1517339638120,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1517339522933,
+			"method": "GET",
+			"modified": 1517339657493,
+			"name": "Root",
+			"parameters": [],
+			"parentId": "fld_4ff917511ccc496c864adde8696bea59",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/",
+			"_type": "request"
+		},
+		{
+			"_id": "req_b849cb0673b844d48e89a1c052f32dc4",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"filter\": \"email like \\\"%am%\\\"\",\n\t\"sortby\": [\n\t\t{\"gender\": \"asc\"},\n\t\t{\"first_name\": \"asc\"}\n\t],\n\t\"orient_results\": \"records\"\t\n}"
+			},
+			"created": 1515967325554,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1516310374873.75,
+			"method": "POST",
+			"modified": 1526572102893,
+			"name": "get_table mock_data",
+			"parameters": [],
+			"parentId": "fld_606acdb8fa674fdd969423c92620a962",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_cb580de802084977beac92cb9274c092",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"calculated\": {\n\t\t\"age\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t},\n\t\"filter\": \"age > 40\",\n\t\"groupby\": { \n\t\t\"grouped\": [\"age\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [{\"id\": \"total\"}]\n\t\t}\n\t},\n\t\"sortby\": [{\"total\": \"desc\"}],\n\t\"save\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"older_than_40_summarized\"\n\t},\n\t\"orient_results\": \"records\"\t\n}\t"
+			},
+			"created": 1516651434670,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1516224612493.8125,
+			"method": "POST",
+			"modified": 1526572367453,
+			"name": "group by and save",
+			"parameters": [],
+			"parentId": "fld_606acdb8fa674fdd969423c92620a962",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_b7ad8b7d47c84cac95bfd564799d0f6c",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"mock_cars\",\n\t\"select\": [],\n\t\"filter\": \"color == \\\"Blue\\\"\",\n\t\"orient_results\": \"records\"\t\n}"
+			},
+			"created": 1517249448978,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1516310374848.75,
+			"method": "POST",
+			"modified": 1526570096019,
+			"name": "get_table mock_cars",
+			"parameters": [],
+			"parentId": "fld_606acdb8fa674fdd969423c92620a962",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_bb377050166f41839a2599fa26dc6f2f",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples_bis\",\n\t\"tablename\": \"older_than_40_summarized\",\n\t\"columns\": [\n\t\t{\n\t\t\t\"db_field\": \"age\",\n\t\t\t\"db_type\": \"integer\",\n\t\t\t\"primary_key\": \"true\"\n\t\t}, \n\t\t{\n\t\t\t\"db_field\": \"total\",\n\t\t\t\"db_type\": \"Integer\" \n\t\t}\n\t]\n}"
+			},
+			"created": 1517502823572,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_209ed5abea15430da027d8209da3a3ea",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1516267493671.2812,
+			"method": "POST",
+			"modified": 1526571840225,
+			"name": "create older_than_40_summarized",
+			"parameters": [],
+			"parentId": "fld_606acdb8fa674fdd969423c92620a962",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/create-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_139f83e7dd1c4e78b6851e8f87dac131",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"keyspace\": \"examples_bis\",\n\t\"tablename\":\"older_than_40_summarized\",\n\t\"orient_results\": \"records\"\t\n}"
+			},
+			"created": 1526572422716,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1516310374861.25,
+			"method": "POST",
+			"modified": 1526572456803,
+			"name": "get_table older_than_40_summarized",
+			"parameters": [],
+			"parentId": "fld_606acdb8fa674fdd969423c92620a962",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/get-table",
+			"_type": "request"
+		},
+		{
+			"_id": "req_a1a747cd4fda458ca5af2680daeadaa9",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"table_a\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"mock_data\",\n\t\t\"join_key\": [\"id\"],\n\t\t\"select\": [\"first_name\",\"last_name\",\"email\",\"gender\",\"drinker\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples\",\n\t\t\"tablename\": \"mock_cars\",\n\t\t\"join_key\": [\"id_owner\"],\n\t\t\"select\": [\"car_make\",\"car_model\",\"car_model_year\"]\n\t},\n\t\"groupby\": { \n\t\t\"grouped\": [\"drinker\"],\n\t\t\"agg\": {\n\t\t\t\"count\": [\"id\"]\n\t\t}\n\t},\t\n\t\"orient_results\": \"records\"\n}"
+			},
+			"created": 1516473716955,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1517340167940,
+			"method": "POST",
+			"modified": 1526571232969,
+			"name": "inner join people-cars grouped",
+			"parameters": [],
+			"parentId": "fld_c1b45609b5b74252863f511f9db732b7",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_58761fa26f7f422a8638b630505136cf",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"join_a\": {\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\"join_key\": [{\"id\": \"id_person\"}],\n\t\t\t\"calculated\": {\n\t\t\t\t\"edad\": \"round(months_between(current_date(),birth_date)/12,0)\"\n\t\t\t},\n\t\t\t\"select\": [\"first_name\",\"last_name\",\"email\",\"gender\",\"drinker\",\"smoker_bool\",\"language\",\"edad\"]\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples_bis\",\n\t\t\t\"tablename\": \"mock_drugs\",\n\t\t\t\"join_key\": [\"id_patient\"],\n\t\t\t\"select\": [\"drug_name\",\"id_company\"]\n\t\t},\n\t\t\"join_key\": [\"id_company\"]\n\t},\n\t\"table_b\": {\n\t\t\"keyspace\": \"examples_bis\",\n\t\t\"tablename\": \"mock_companies\",\n\t\t\"join_key\": [\"id_company\"],\n\t\t\"select\": [\"annual_budget\",\"city\",\"company_name\",\"country\",{\"id\": \"id_company\"}]\n\t},\n\t\"filter\": \"annual_budget > 10000000000\",\t\n\t\"groupby\": { \n\t\t\"grouped\": [\"country\"],\n\t\t\"agg\": {\n\t\t\t\"sum\": [\"annual_budget\"]\n\t\t}\n\t},\n\t\"sortby\": [\n\t\t{\"sum(annual_budget)\": \"desc\"}\n\t],\n\t\"orient_results\": \"records\"\t\n}"
+			},
+			"created": 1516567662655,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1517340054355.5,
+			"method": "POST",
+			"modified": 1526571583964,
+			"name": "inner join multiple 3 groupby",
+			"parameters": [],
+			"parentId": "fld_c1b45609b5b74252863f511f9db732b7",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		},
+		{
+			"_id": "req_63d8860be3b04f828d69e1264b8ee6ea",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"select\": [],\n\t\t\t\"filter\": \"color == \\\"Blue\\\"\"\n\t\t},\n\t\t\"table_b\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"select\": [],\n\t\t\t\"filter\": \"color == \\\"Red\\\"\"\n\t\t},\n\t\"orient_results\": \"records\"\t\t\n\t}"
+			},
+			"created": 1517247264113,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1515967325054,
+			"method": "POST",
+			"modified": 1526571670526,
+			"name": "simple union",
+			"parameters": [],
+			"parentId": "fld_e3762f9b467846fca151b331a95412ff",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/union",
+			"_type": "request"
+		},
+		{
+			"_id": "req_630a612e1f934b009022bcd8d636a95e",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\"select\": [],\n\t\t\t\"filter\": \"color == \\\"Blue\\\"\"\n\t\t},\n\t\t\"union_b\": {\n\t\t\t\"table_a\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\t\"select\": [],\n\t\t\t\t\t\"filter\": \"color == \\\"Red\\\"\"\n\t\t\t},\t\t\t\n\t\t\t\"table_b\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\t\"select\": [],\n\t\t\t\t\t\"filter\": \"color == \\\"Yellow\\\"\"\n\t\t\t}\t\t\t\n\t\t},\n\t\t\"orient_results\": \"records\"\t\t\n\t}"
+			},
+			"created": 1517344178961,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1515967325004,
+			"method": "POST",
+			"modified": 1526571679419,
+			"name": "multiple union",
+			"parameters": [],
+			"parentId": "fld_e3762f9b467846fca151b331a95412ff",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/union",
+			"_type": "request"
+		},
+		{
+			"_id": "req_b5715b226bdb40d6bf9f371b938e04b8",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"join_a\": {\n\t\t\t\"table_a\": {\n\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\"join_key\": [\"id_owner\"],\n\t\t\t\t\"select\": [\"car_make\",\"car_model\",\"registration\",\"color\"],\n\t\t\t\t\"filter\": \"color == \\\"Red\\\"\"\n\t\t\t},\n\t\t\t\"table_b\": {\n\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\t\"join_key\": [{\"id\": \"id_people\"}],\n\t\t\t\t\"select\": [\"birth_date\",\"gender\",\"first_name\"]\n\t\t\t}\n\t\t},\t\t\n\t\t\"union_b\": {\n\t\t\t\"join_a\": {\n\t\t\t\t\"table_a\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\t\"join_key\": [\"id_owner\"],\n\t\t\t\t\t\"select\": [\"car_make\",\"car_model\",\"registration\",\"color\"],\n\t\t\t\t\t\"filter\": \"color == \\\"Orange\\\"\"\t\t\t\t\n\t\t\t\t},\n\t\t\t\t\"table_b\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\t\t\"join_key\": [{\"id\": \"id_people\"}],\n\t\t\t\t\t\"select\": [\"birth_date\",\"gender\",\"first_name\"]\n\t\t\t\t}\n\t\t\t},\t\t\n\t\t\t\"join_b\": {\n\t\t\t\t\"table_a\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\t\"join_key\": [\"id_owner\"],\n\t\t\t\t\t\"select\": [\"car_make\",\"car_model\",\"registration\",\"color\"],\n\t\t\t\t\t\"filter\": \"color == \\\"Purple\\\"\"\t\t\t\t\n\t\t\t\t},\n\t\t\t\t\"table_b\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\t\t\"join_key\": [{\"id\": \"id_people\"}],\n\t\t\t\t\t\"select\": [\"birth_date\",\"gender\",\"first_name\"]\n\t\t\t\t}\n\t\t\t}\t\t\n\t\t}\n\t}"
+			},
+			"created": 1517348110277,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1515967324954,
+			"method": "POST",
+			"modified": 1517350425454,
+			"name": "union table-join",
+			"parameters": [],
+			"parentId": "fld_7c2a5a87683a472996b7b49718f74cf8",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/union",
+			"_type": "request"
+		},
+		{
+			"_id": "req_e295922e4f1542879d7eb4b14cd05104",
+			"authentication": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "\t{\n\t\t\"table_a\": {\n\t\t\t\"keyspace\": \"examples\",\n\t\t\t\"tablename\": \"mock_data\",\n\t\t\t\"select\": [],\n\t\t\t\"join_key\": [{\"id\": \"id_people\"}]\n\t\t},\n\t\t\"union_b\": {\n\t\t\t\"table_a\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\t\"select\": [],\n\t\t\t\t\t\"filter\": \"color == \\\"Red\\\"\"\n\t\t\t},\t\t\t\n\t\t\t\"table_b\": {\n\t\t\t\t\t\"keyspace\": \"examples\",\n\t\t\t\t\t\"tablename\": \"mock_cars\",\n\t\t\t\t\t\"select\": [],\n\t\t\t\t\t\"filter\": \"color == \\\"Yellow\\\"\"\n\t\t\t},\n\t\t\t\"join_key\": [\"id_owner\"]\n\t\t}\n\t}"
+			},
+			"created": 1517352486194,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_e5ec2b84f9014b2b8f30fd71193fed6d",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1515967324904,
+			"method": "POST",
+			"modified": 1517352606081,
+			"name": "join table-union",
+			"parameters": [],
+			"parentId": "fld_7c2a5a87683a472996b7b49718f74cf8",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:5000/join",
+			"_type": "request"
+		}
+	]
+}

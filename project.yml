@@ -4,11 +4,11 @@ app:
   trim_str: false
 spark:
   executor:
-    cores: 6
-    memory: 4g
+    cores: 5
+    memory: 2g
   driver:
-    memory: 4g
-  max_cores: 6
+    memory: 2g
+  max_cores: 5
 cassandra:
   host: localhost
   port: 9042

@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2018-04-12T18:21:29.958Z",
+	"__export_date": "2018-05-17T15:20:12.415Z",
 	"__export_source": "insomnia.desktop.app:v5.14.9",
 	"resources": [
 		{
@@ -228,7 +228,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"filter\": \"email like \\\"%am%\\\"\",\n\t\"sortby\": [\n\t\t{\"gender\": \"asc\"},\n\t\t{\"first_name\": \"asc\"}\n\t]\n}"
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\":\"mock_data\",\n\t\"filter\": \"email like \\\"%am%\\\"\",\n\t\"sortby\": [\n\t\t{\"gender\": \"asc\"},\n\t\t{\"first_name\": \"asc\"}\n\t],\n\t\"orient_results\": \"records\"\t\n}"
 			},
 			"created": 1515967325554,
 			"description": "",
@@ -241,7 +241,7 @@
 			],
 			"metaSortKey": -1516310374873.75,
 			"method": "POST",
-			"modified": 1517500295235,
+			"modified": 1526570086531,
 			"name": "get_table mock_data",
 			"parameters": [],
 			"parentId": "fld_606acdb8fa674fdd969423c92620a962",
@@ -257,7 +257,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples_bis\",\n\t\"tablename\":\"mock_drugs\"\n}"
+				"text": "{\n\t\"keyspace\": \"examples_bis\",\n\t\"tablename\": \"mock_drugs\",\n\t\"orient_results\": \"records\"\n}"
 			},
 			"created": 1516226475916,
 			"description": "",
@@ -270,7 +270,7 @@
 			],
 			"metaSortKey": -1516310374823.75,
 			"method": "POST",
-			"modified": 1517339701432,
+			"modified": 1526570198982,
 			"name": "get_table mock_drugs",
 			"parameters": [],
 			"parentId": "fld_606acdb8fa674fdd969423c92620a962",
@@ -286,7 +286,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"mock_cars\",\n\t\"select\": [],\n\t\"filter\": \"color == \\\"Blue\\\"\"\n}"
+				"text": "{\n\t\"keyspace\": \"examples\",\n\t\"tablename\": \"mock_cars\",\n\t\"select\": [],\n\t\"filter\": \"color == \\\"Blue\\\"\",\n\t\"orient_results\": \"records\"\t\n}"
 			},
 			"created": 1517249448978,
 			"description": "",
@@ -299,7 +299,7 @@
 			],
 			"metaSortKey": -1516310374848.75,
 			"method": "POST",
-			"modified": 1517349962363,
+			"modified": 1526570096019,
 			"name": "get_table mock_cars",
 			"parameters": [],
 			"parentId": "fld_606acdb8fa674fdd969423c92620a962",
@@ -315,7 +315,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"keyspace\": \"examples_bis\",\n\t\"tablename\":\"mock_companies\"\n}"
+				"text": "{\n\t\"keyspace\": \"examples_bis\",\n\t\"tablename\":\"mock_companies\",\n\t\"orient_results\": \"records\"\t\n}"
 			},
 			"created": 1517339763403,
 			"description": "",
@@ -328,7 +328,7 @@
 			],
 			"metaSortKey": -1516138850163.875,
 			"method": "POST",
-			"modified": 1517339793435,
+			"modified": 1526570110359,
 			"name": "get_table mock_companies",
 			"parameters": [],
 			"parentId": "fld_606acdb8fa674fdd969423c92620a962",

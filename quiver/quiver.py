@@ -448,6 +448,7 @@ def _get_table(keyspace, tablename, select=None, calculated=None,
             save
             stacked
     """
+
     # dataset creation from Cassandra
     ds_table = (
         sqlContext
