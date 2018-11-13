@@ -108,7 +108,7 @@ def _str_to_column(type_str, key_type=None, value_type=None, column_def={}):
 
 def _build_fields(keyspace, tablename, columns_def):
 
-    # create copy to no modify original
+    # create copy to don't modify original
     columns = [{**col} for col in columns_def]
 
     fields = dict(
@@ -212,9 +212,9 @@ def describe_table(keyspace, tablename):
 
 def create_keyspace(keyspace, strategy='SimpleStrategy', replication_factor=1):
     '''
-    creates a keyspace with keyspace name, strategy and replication_factor are regular
-    options for Cassandra Keyspaces, see Datastax documentation at 
-    https://docs.datastax.com/en/cql/3.3/cql/cql_reference/cqlCreateKeyspace.html
+    Creates a keyspace with keyspace name. Strategy and replication_factor are regular
+    options for Cassandra Keyspaces (see Datastax documentation at 
+    https://docs.datastax.com/en/cql/3.3/cql/cql_reference/cqlCreateKeyspace.html)
     '''
     # setting up configuration
     _options = {
@@ -233,8 +233,16 @@ def create_table(keyspace, tablename, columns, partition_key=None,
                  cluster_key=None, replication_factor=1,
                  durable_writes=True, connections=None, create_keyspace_if_not_exists=True):
     '''
-    Creates a table with keyspade.tablename
-    columns parameter has a dictionary description for data fields
+    Creates a keyspace.tablename Cassamdra table.
+        keyspace: keyspace to hold the new table
+        tablename: new table name
+        columns: has a dictionary description for data fields
+        partition_key: list of partition key fields
+        cluster_key: list of clustering key fields
+        replication_factor: keyspace replication factor if not created yet
+        durable_writes: disable commmit log (increase data loss risk)
+        connections: allow to sync in more connections when multiple connections are used. Default connections if None
+        create_keyspace_if_not_exists: creates a new keyspace if `keyspace` didn't exist
     '''
     if create_keyspace_if_not_exists:
         create_keyspace_simple(
@@ -244,6 +252,9 @@ def create_table(keyspace, tablename, columns, partition_key=None,
             connections=connections)
 
     fields = _build_fields(keyspace, tablename, columns)
-    metaClass = type('MetaClass', (Model, object), fields)
+    
+    # meta_class_object has table structure
+    meta_class_object = type('MetaClass', (Model, object), fields)
 
-    sync_table(metaClass)
+    # sync Cassandra table with MetaClass structure
+    sync_table(meta_class_object)
